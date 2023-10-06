@@ -52,7 +52,7 @@ $market_cap_list = json_decode($data->market_cap_list, true);
                     <div class="line2">Share price</div>
                 </div>
                 <div class="info-box">
-                    <div class="line1"><a href="javascript:void(0);"><img class="flag" src="<?= SITEURL; ?>img/flags/<?= $data->country; ?>.png"><span class="responsive-hidden"> <?= $data->country; ?></a></span></div>
+                    <div class="line1"><a href="javascript:void(0);"><img class="flag" src="<?= SITEURL; ?>img/flags/<?= strtolower($data->country); ?>.png"><span class="responsive-hidden"> <?= $data->country; ?></a></span></div>
                     <div class="line2">Country</div>
                 </div>
             </div>
@@ -160,7 +160,7 @@ $market_cap_list = json_decode($data->market_cap_list, true);
                                     </td>
                                     <td>$<?= nice_number($plist->market_cap); ?></td>
 
-                                    <td><img class="flag" src="<?= SITEURL; ?>img/flags/<?= $plist->country; ?>.png"> <span class="responsive-hidden"><?= $plist->country; ?></span></td>
+                                    <td><img class="flag" src="<?= SITEURL; ?>img/flags/<?= strtotime($plist->country); ?>.png"> <span class="responsive-hidden"><?= $plist->country; ?></span></td>
 
 
                                 </tr>
