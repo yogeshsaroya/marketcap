@@ -37,6 +37,7 @@ class CronsController extends AppController
         } else {
             ec('Empty');
         }
+        exit;
     }
 
     /* 3: run every 1hr */
@@ -71,6 +72,7 @@ class CronsController extends AppController
         }else{
             echo "Empty";
         }
+        exit;
     }
 
     public function updateStocks()
@@ -155,6 +157,7 @@ class CronsController extends AppController
                 echo "Saved";
             }
         }
+        exit;
     }
 
     public function getStocks()
