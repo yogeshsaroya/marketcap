@@ -23,7 +23,7 @@ $theme = $this->request->getSession()->read('theme');
 
 </head>
 
-<body class="cmkt <?= $theme;?>" id="cmkt">
+<body class="cmkt <?= (empty($theme) ? 'dark' : null);?>" id="cmkt">
     <?php
     $cap = $this->Data->getCaps();
     ?>
