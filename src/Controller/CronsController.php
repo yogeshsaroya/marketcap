@@ -153,7 +153,11 @@ class CronsController extends AppController
             if (!empty($up_arr)) {
                 $chkApp = $this->fetchTable('Stocks')->find()->where(['id IN' => $app_ids])->all();
                 $appEnt = $this->fetchTable('Stocks')->patchEntities($chkApp, $up_arr, ['validate' => false]);
-                $res = $this->fetchTable('Stocks')->saveMany($appEnt);
+                try {
+                    $res = $this->fetchTable('Stocks')->saveMany($appEnt);
+                } catch (\Throwable $th) {
+                    throw $th;
+                }
                 echo "Saved";
             }
         }
