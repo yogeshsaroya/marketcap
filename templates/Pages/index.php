@@ -52,7 +52,7 @@ $cap = $this->Data->getCaps();
                         <td class="td-right" data-sort="<?= $list->market_cap; ?>">$<?= nice_number($list->market_cap); ?></td>
                         <td class="td-right" data-sort="<?= $list->stock_price; ?>">$<?= num_2($list->stock_price); ?></td>
 
-                        <td><img class="flag" src="img/flags/<?= $list->country; ?>.png"> <span class="responsive-hidden"><?= $list->country; ?></span></td>
+                        <td><img class="flag" src="img/flags/<?= strtolower($list->country); ?>.png"> <span class="responsive-hidden"><?= $list->country; ?></span></td>
                     </tr>
             <?php }
             } ?>
