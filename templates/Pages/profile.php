@@ -59,16 +59,16 @@ $market_cap_list = json_decode($data->market_cap_list, true);
             <div class="row">
 
                 <div class="info-box">
-                    <div class="line1"><span class="percentage-green"><?= (isset($company_outlook['profile']['changes']) ? "$".num_2($company_outlook['profile']['changes']*$data->usd_rate) : 'N/A') ?></span></div>
+                    <div class="line1"><span class="percentage-green"><?= (isset($company_outlook['profile']['changes']) ? "$" . num_2($company_outlook['profile']['changes'] * $data->usd_rate) : 'N/A') ?></span></div>
                     <div class="line2">Change (1 day)</div>
                 </div>
                 <div class="info-box">
-                    <div class="line1"><span class="percentage-green"><?= (isset($company_outlook['metrics']['yearHigh']) ? "$".num_2($company_outlook['metrics']['yearHigh']*$data->usd_rate) : 'N/A') ?></span></div>
+                    <div class="line1"><span class="percentage-green"><?= (isset($company_outlook['metrics']['yearHigh']) ? "$" . num_2($company_outlook['metrics']['yearHigh'] * $data->usd_rate) : 'N/A') ?></span></div>
                     <div class="line2">Year High</div>
                 </div>
 
                 <div class="info-box">
-                    <div class="line1"><span class="percentage-green"><?= (isset($company_outlook['metrics']['yearLow']) ? "$".num_2($company_outlook['metrics']['yearLow']*$data->usd_rate ): 'N/A') ?></span></div>
+                    <div class="line1"><span class="percentage-green"><?= (isset($company_outlook['metrics']['yearLow']) ? "$" . num_2($company_outlook['metrics']['yearLow'] * $data->usd_rate) : 'N/A') ?></span></div>
                     <div class="line2">Year Low</div>
                 </div>
             </div>
@@ -134,7 +134,7 @@ $market_cap_list = json_decode($data->market_cap_list, true);
     ?>
     <div>
 
-        <?php if ( isset($peers) && !$peers->isEmpty() && (empty($type) || $type == 'marketcap')) { ?>
+        <?php if (isset($peers) && !$peers->isEmpty() && (empty($type) || $type == 'marketcap')) { ?>
 
             <div style="clear:both;">
                 <h3>Market capitalization for similar companies or competitors</h3>
@@ -160,9 +160,11 @@ $market_cap_list = json_decode($data->market_cap_list, true);
                                     </td>
                                     <td>$<?= nice_number($plist->market_cap); ?></td>
 
-                                    <td><img class="flag" src="<?= SITEURL; ?>img/flags/<?= strtolower($plist->country); ?>.png"> <span class="responsive-hidden"><?= $plist->country; ?></span></td>
-
-
+                                    <td>
+                                        <?php if (!empty($plist->country)) { ?>
+                                            <img class="flag" src="<?= SITEURL; ?>img/flags/<?= strtolower($plist->country); ?>.png"> <span class="responsive-hidden"><?= $plist->country; ?></span>
+                                        <?php } ?>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -170,5 +172,4 @@ $market_cap_list = json_decode($data->market_cap_list, true);
                 </div>
             </div>
         <?php } ?>
-
     </div>

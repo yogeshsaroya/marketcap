@@ -4,6 +4,8 @@
 config/.env
 
 # /config/app_local.php
-#/logs/*
-#/tmp/*
+/logs/*
+/tmp/*
 #/vendor/*
+tmp/*
+

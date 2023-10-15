@@ -52,7 +52,11 @@ $cap = $this->Data->getCaps();
                         <td class="td-right" data-sort="<?= $list->market_cap; ?>">$<?= nice_number($list->market_cap); ?></td>
                         <td class="td-right" data-sort="<?= $list->stock_price; ?>">$<?= num_2($list->stock_price); ?></td>
 
-                        <td><img class="flag" src="img/flags/<?= strtolower($list->country); ?>.png"> <span class="responsive-hidden"><?= $list->country; ?></span></td>
+                        <td>
+                            <?php if (!empty($list->country)) { ?>
+                                <img class="flag" src="img/flags/<?= strtolower($list->country); ?>.png"> <span class="responsive-hidden"><?= $list->country; ?></span>
+                            <?php } ?>
+                        </td>
                     </tr>
             <?php }
             } ?>
@@ -66,6 +70,7 @@ $cap = $this->Data->getCaps();
         companies. Private companies are not included in our lists as it is difficult to calculate their market
         value and know their financials.</p>
 </div>
+<?php /* ?>
 <nav>
     <ul class="pagination justify-content-center">
         <li class="page-item">
@@ -75,5 +80,42 @@ $cap = $this->Data->getCaps();
             }
             ?>
         </li>
+    </ul>
+</nav>
+<?php */ ?>
+
+<style>
+    .pagination li {
+    float: left;
+    margin-left: 2px;
+    margin-right: 2px;
+    list-style-type: none;
+}
+.pagination a, .pagination span {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    font-size: 20px;
+    font-weight: 700;
+    color: #444;
+}
+.pagination li.active a, .pagination span.active {
+    color: #fff;
+    background-color: #b599f1;
+}
+.nav_pag{ margin: 30px 0;}
+</style>
+<nav class="nav_pag">
+    <ul class=" pagination justify-content-center">
+        <li class="page-item">
+            <?php
+            echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
+            echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+            echo $this->Paginator->numbers(['first' => 1, 'last' => 1],['separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a']);
+            echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+            echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
+            ?>
     </ul>
 </nav>
