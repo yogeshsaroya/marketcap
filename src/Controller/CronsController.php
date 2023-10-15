@@ -48,7 +48,7 @@ class CronsController extends AppController
         if (isset($data['currency']) && !empty($data['currency'])) {
             $usd = json_decode($data['currency'], true);
             if (!empty($usd)) {
-                $stocks = $this->fetchTable('Stocks')->find('all')->where(['currency IS NOT NULL'])->select(['id', 'currency', 'usd_rate','mkt_cap','price'])->all();
+                $stocks = $this->fetchTable('Stocks')->find('all')->where(['currency IS NOT NULL'])->select(['id', 'currency', 'usd_rate', 'mkt_cap', 'price'])->all();
                 if (!empty($stocks)) {
                     foreach ($stocks as $li) {
                         if (isset($usd[strtolower($li->currency)])) {
@@ -57,7 +57,7 @@ class CronsController extends AppController
                             $app_ids[] = $li->id;
                             $stock_price = $li->price * $usd_rate;
                             $market_cap = $li->mkt_cap * $usd_rate;
-                            $up_arr[] = ['id' => $li->id,'usd_rate' => $usd_rate,'stock_price'=>$stock_price,'market_cap'=>$market_cap];
+                            $up_arr[] = ['id' => $li->id, 'usd_rate' => $usd_rate, 'stock_price' => $stock_price, 'market_cap' => $market_cap];
                         }
                     }
                 }
@@ -69,7 +69,7 @@ class CronsController extends AppController
             $appEnt = $this->fetchTable('Stocks')->patchEntities($chkApp, $up_arr, ['validate' => false]);
             $res = $this->fetchTable('Stocks')->saveMany($appEnt);
             echo "Saved";
-        }else{
+        } else {
             echo "Empty";
         }
         exit;
@@ -159,8 +159,8 @@ class CronsController extends AppController
                     throw $th;
                 }
                 echo "Saved";
-            }
-        }
+            }else{ ec('empty.'); }
+        }else{ ec('empty'); }
         exit;
     }
 
