@@ -160,7 +160,7 @@ $market_cap_list = json_decode($data->market_cap_list, true);
                                     </td>
                                     <td>$<?= nice_number($plist->market_cap); ?></td>
 
-                                    <td><img class="flag" src="<?= SITEURL; ?>img/flags/<?= strtotime($plist->country); ?>.png"> <span class="responsive-hidden"><?= $plist->country; ?></span></td>
+                                    <td><img class="flag" src="<?= SITEURL; ?>img/flags/<?= strtolower($plist->country); ?>.png"> <span class="responsive-hidden"><?= $plist->country; ?></span></td>
 
 
                                 </tr>
