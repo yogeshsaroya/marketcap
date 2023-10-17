@@ -70,10 +70,11 @@ $theme = $this->request->getSession()->read('theme');
                     <img src="<?= SITEURL; ?>img/logo.svg" style="width: auto;height: 60px;">
                 </a>
                 <ul class="navbar-nav">
+                <?php /*?>
                     <li class="nav-item">
                         <a class="nav-link nav-link-companiesmarketcap" href="<?= SITEURL; ?>"><?= env('APP_NAME'); ?></a>
                     </li>
-                    <?php /*?>
+                    
                     <li class="nav-item dropdown megamenu-li">
                         <a class="nav-link nav-link-companiesmarketcap dropdown-toggle" href="#" id="dropdown-countries" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ranking by countries</a>
                         <div class="dropdown-menu megamenu" aria-labelledby="dropdown-countries">
