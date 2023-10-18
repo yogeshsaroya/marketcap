@@ -6,10 +6,58 @@ $cap = $this->Data->getCaps();
 
 ?>
 
+<style>
+    .search-form {
+
+        margin: auto;
+    }
+
+    .pagination li {
+        float: left;
+        margin-left: 2px;
+        margin-right: 2px;
+        list-style-type: none;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 5px;
+        background-color: #f7f7f7;
+        font-size: 20px;
+        font-weight: 700;
+        color: #444;
+    }
+
+    .pagination li.active a,
+    .pagination span.active {
+        color: #fff;
+        background-color: #b599f1;
+    }
+
+    .nav_pag {
+        margin: 30px 0;
+    }
+</style>
 <h1 class="text-center h1-title">Largest Companies by Market Cap</h1>
 <div class="category-stats-bar">
     companies: <span class="companies-count font-weight-bold"><?= number_format($cap['companies']); ?></span>
     total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
+</div>
+<div class="row align-center">
+    <form class="search-form form-inline">
+        <input id="search-input" class="form-control search-input" type="search" placeholder="Company name, ticker..." aria-label="Company name, ticker..." autocomplete="off">
+        <button onclick="return false;" class="btn-search" type="submit" disabled><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="18" height="18">
+                <g stroke-width="2" stroke="#6c6c6c" fill="none">
+                    <path d="M11.29 11.71l-4-4"></path>
+                    <circle cx="5" cy="5" r="4"></circle>
+                </g>
+            </svg></button>
+        <div id="typeahead-search-results" class="typeahead-search-results"></div>
+    </form>
+
 </div>
 <?php /* ?>
 <div class="ranking-bar"><span class="ranked-by">Rank by </span><a href="index.html"><span class="option active">Market Cap</span></a> <a href="most-profitable-companies.html"><span class="option ">Earnings</span></a> <a href="largest-companies-by-revenue.html"><span class="option ">Revenue</span></a> <a href="largest-companies-by-number-of-employees.html"><span class="option ">Employees</span></a> <a href="top-companies-by-pe-ratio.html"><span class="option ">P/E
@@ -84,36 +132,13 @@ $cap = $this->Data->getCaps();
 </nav>
 <?php */ ?>
 
-<style>
-    .pagination li {
-    float: left;
-    margin-left: 2px;
-    margin-right: 2px;
-    list-style-type: none;
-}
-.pagination a, .pagination span {
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 5px;
-    background-color: #f7f7f7;
-    font-size: 20px;
-    font-weight: 700;
-    color: #444;
-}
-.pagination li.active a, .pagination span.active {
-    color: #fff;
-    background-color: #b599f1;
-}
-.nav_pag{ margin: 30px 0;}
-</style>
 <nav class="nav_pag">
     <ul class=" pagination justify-content-center">
         <li class="page-item">
             <?php
             echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
             echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-            echo $this->Paginator->numbers(['first' => 1, 'last' => 1],['separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a']);
+            echo $this->Paginator->numbers(['first' => 1, 'last' => 1], ['separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a']);
             echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
             echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
             ?>

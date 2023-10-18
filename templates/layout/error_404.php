@@ -47,6 +47,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <?php /*?>
             <form class="search-form form-inline">
                 <input id="search-input" class="form-control search-input" type="search" placeholder="Company name, ticker..." aria-label="Company name, ticker..." autocomplete="off">
                 <button onclick="return false;" class="btn-search" type="submit" disabled><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="18" height="18">
@@ -57,6 +58,7 @@
                     </svg></button>
                 <div id="typeahead-search-results" class="typeahead-search-results"></div>
             </form>
+            <?php */?>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <a href="<?= SITEURL; ?>" title="Marketcap.tools - companies ranked by market capitalization" class="responsive-hidden">
                     <div class="companiesmarketcap-logo"></div>
