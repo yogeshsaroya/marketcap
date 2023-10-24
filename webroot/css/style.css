@@ -709,11 +709,7 @@ ul.navbar-nav {
 }
 
 @media(min-width:992px) {
-    .navbar #navbarSupportedContent {
-        float: left;
-        max-width: 650px;
-        display: flex !important
-    }
+    
 
     .navbar-expand-lg .navbar-nav {
         -ms-flex-direction: row;
@@ -1984,4 +1980,10 @@ a.text-underline {
 
 .companiesmarketcap-chart .chart-bar {
     fill: orange
+}
+
+.navbar #navbarSupportedContent {
+    float: left;
+    max-width: 650px;
+    display: flex !important
 }

@@ -14,7 +14,7 @@ searchInput.addEventListener("keyup", function (e) {
                         let searchResponse = xhr.response; document.getElementById("typeahead-search-results").style.display = "block"; var aheadHtml = ''; var darkPathSupplement; var isDarkMode = document.body.classList.contains('dark'); for (var i in searchResponse) {
                                 if (isDarkMode && searchResponse[i]["img_dark_png"] == "1") { darkPathSupplement = '.D'; } else { darkPathSupplement = ''; }
                                 aheadHtml = aheadHtml.concat('<a href="' + searchResponse[i]["url"] + '">' +
-                                        '    <div class="float-left pt-1 clear-both"><img class="company-logo" src="' + searchResponse[i]["logo"] +  '"></div>' +
+                                        '    <div class="float-left pt-1 clear-both"><img class="company-logo" src="' + searchResponse[i]["logo"] + '"></div>' +
                                         '    <div class="pl-5">' +
                                         '        <div class="company-name">' + searchResponse[i]["name"] + '</div>' +
                                         '        <div class="company-code">' + searchResponse[i]["symbol"] + '</div>' +

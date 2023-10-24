@@ -74,6 +74,7 @@ $cap = $this->Data->getCaps();
     <table class="default-table table marketcap-table dataTable" style="width:100%">
         <thead>
             <tr>
+            <th tid="1" class="th-id-1 th-name sorting">Rank</th>
                 <th tid="2" class="th-id-2 th-name sorting">Name</th>
                 <th tid="3" class="th-id-3 th-mcap sorting text-right">Market Cap</th>
                 <th tid="4" class="th-id-4 th-price sorting text-right">Price</th>
@@ -82,9 +83,11 @@ $cap = $this->Data->getCaps();
         </thead>
         <tbody>
             <?php if (!$data->isEmpty()) {
+                $num = $this->Paginator->counter('{{start}}');
                 foreach ($data as $list) {
             ?>
                     <tr>
+                    <td class="td-center" data-sort="<?= $num; ?>"><?= $num; ?></td>
                         <td class="name-td">
                             <div class="logo-container">
                                 <?php if (!empty($list->logo)) { ?>
@@ -106,7 +109,7 @@ $cap = $this->Data->getCaps();
                             <?php } ?>
                         </td>
                     </tr>
-            <?php }
+            <?php $num++;}
             } ?>
 
 
@@ -118,7 +121,8 @@ $cap = $this->Data->getCaps();
         companies. Private companies are not included in our lists as it is difficult to calculate their market
         value and know their financials.</p>
 </div>
-<?php /* ?>
+<?php 
+/* ?>
 <nav>
     <ul class="pagination justify-content-center">
         <li class="page-item">

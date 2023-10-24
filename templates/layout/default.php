@@ -7,7 +7,7 @@
     <meta name="robots" content="INDEX,FOLLOW" />
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="content-language" content="en-us">
 
     <title><?= $this->fetch('title') ?></title>
@@ -51,10 +51,12 @@ $theme = $this->request->getSession()->read('theme');
     </div>
     <nav class="navbar nav-bar-companiesmarketcap navbar-expand-lg navbar-light">
         <div class="navbar-collapse-container">
+            <div class="navbar-toggler" style="display: none;"></div>
+        <?php /*?>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <?php /*?>
+            
             <form class="search-form form-inline">
                 <input id="search-input" class="form-control search-input" type="search" placeholder="Company name, ticker..." aria-label="Company name, ticker..." autocomplete="off">
                 <button onclick="return false;" class="btn-search" type="submit" disabled><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="18" height="18">
@@ -67,7 +69,7 @@ $theme = $this->request->getSession()->read('theme');
             </form>
             <?php */?>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <a href="<?= SITEURL; ?>" title="Marketcap.tools - companies ranked by market capitalization" class="responsive-hidden">
+                <a href="<?= SITEURL; ?>" title="Marketcap.tools - companies ranked by market capitalization" class="responsive-hidden1">
                 <?php /* ?><div class="companiesmarketcap-logo"></div><?php */ ?>
                     <img src="<?= SITEURL; ?>img/logo.svg" style="width: auto;height: 60px;margin: 8px 0;">
                 </a>
