@@ -71,7 +71,7 @@ $theme = $this->request->getSession()->read('theme');
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <a href="<?= SITEURL; ?>" title="Marketcap.tools - companies ranked by market capitalization" class="responsive-hidden1">
                 <?php /* ?><div class="companiesmarketcap-logo"></div><?php */ ?>
-                    <img src="<?= SITEURL; ?>img/logo.svg" style="width: auto;height: 60px;margin: 8px 0;">
+                    <img src="<?= SITEURL; ?>img/logo.svg" style="width: auto;height: 40px;margin: 8px 0;">
                 </a>
                 <ul class="navbar-nav">
                 <?php /*?>

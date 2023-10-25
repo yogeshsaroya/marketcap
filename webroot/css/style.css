@@ -1326,7 +1326,7 @@ div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:last-child 
     }
 
     .search-form input.search-input {
-        width: 340px;
+        width: 720px;
         font-size: 18px
     }
 
@@ -1685,9 +1685,47 @@ button {
     background-color: #ccc
 }
 
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+    .search-form input.search-input {
+        width: 720px;
+        max-width: 720px;
+    }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+    .search-form input.search-input {
+        width: 720px;
+        max-width: 720px;
+    }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+    .search-form input.search-input {
+        width: 720px;
+        max-width: 720px;
+    }
+}
+@media only screen and (max-width:1459px) {
+    .search-form input.search-input {
+        width: 400px;
+        max-width: 720px;
+    }
+}
 @media only screen and (max-width:400px) {
     .search-form input.search-input {
-        width: 200px;
+        width: 280px;
+        max-width: 380px;
         padding-right: 25px
     }
 
