@@ -72,6 +72,7 @@ $cap = $this->Data->getCaps();
     <table class="default-table table marketcap-table dataTable" style="width:100%">
         <thead>
             <tr>
+            <th tid="1" ></th>
             <th tid="1" class="th-id-1 th-name sorting">Rank</th>
                 <th tid="2" class="th-id-2 th-name sorting">Name</th>
                 <th tid="3" class="th-id-3 th-mcap sorting text-right">Market Cap</th>
@@ -85,6 +86,9 @@ $cap = $this->Data->getCaps();
                 foreach ($data as $list) {
             ?>
                     <tr>
+                    <td>
+                        <img src="<?= SITEURL.( isset($star[$list->id]) ? 'img/star_dark.svg':'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= ( isset($star[$list->id]) ? 'rm_star':'add_star' ); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>"/>
+                    </td>
                     <td class="td-center" data-sort="<?= $num; ?>"><?= $num; ?></td>
                         <td class="name-td">
                             <div class="logo-container">
@@ -154,3 +158,4 @@ $cap = $this->Data->getCaps();
             ?>
     </ul>
 </nav>
+

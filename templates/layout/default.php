@@ -16,14 +16,14 @@
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>
     <?= $this->fetch('script'); ?>
-<?php 
-$theme = $this->request->getSession()->read('theme');
+    <?php
+    $theme = $this->request->getSession()->read('theme');
 
-?>
+    ?>
 
 </head>
 
-<body class="cmkt <?= (empty($theme) ? 'dark' : null);?>" id="cmkt">
+<body class="cmkt <?= (empty($theme) ? 'dark' : null); ?>" id="cmkt">
     <?php
     $cap = $this->Data->getCaps();
     ?>
@@ -52,7 +52,7 @@ $theme = $this->request->getSession()->read('theme');
     <nav class="navbar nav-bar-companiesmarketcap navbar-expand-lg navbar-light">
         <div class="navbar-collapse-container">
             <div class="navbar-toggler" style="display: none;"></div>
-        <?php /*?>
+            <?php /*?>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -67,14 +67,14 @@ $theme = $this->request->getSession()->read('theme');
                     </svg></button>
                 <div id="typeahead-search-results" class="typeahead-search-results"></div>
             </form>
-            <?php */?>
+            <?php */ ?>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <a href="<?= SITEURL; ?>" title="Marketcap.tools - companies ranked by market capitalization" class="responsive-hidden1">
-                <?php /* ?><div class="companiesmarketcap-logo"></div><?php */ ?>
-                    <img src="<?= SITEURL; ?>img/logo.svg" style="width: auto;height: 40px;margin: 8px 0;">
+                    <?php /* ?><div class="companiesmarketcap-logo"></div><?php */ ?>
+                    <img src="<?= SITEURL; ?>img/logo.svg" style="width: auto;height: 25px;margin: 8px 0;">
                 </a>
                 <ul class="navbar-nav">
-                <?php /*?>
+                    <?php /*?>
                     <li class="nav-item">
                         <a class="nav-link nav-link-companiesmarketcap" href="<?= SITEURL; ?>"><?= env('APP_NAME'); ?></a>
                     </li>
@@ -244,7 +244,7 @@ $theme = $this->request->getSession()->read('theme');
                 </div>
                 <div class="col-sm-6">
                     <h4>Contact</h4>
-                    For inquiries or if you want to report a problem write to <span class="contact-email">hel<span class="hidden">nospam</span>lo@8market<span class="hidden">(nospam)</span>cap.com</span>
+                    For inquiries or if you want to report a problem write to <span class="contact-email">in<span class="hidden">nospam</span>fo@market<span class="hidden">(nospam)</span>cap.tools</span>
                     <br /> <br />
                     <p class="social-media-icons"><a href="https://www.facebook.com/CompaniesMarketCap/" title="Companies Market Cap Facebook page">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 155 155">
@@ -266,7 +266,6 @@ $theme = $this->request->getSession()->read('theme');
         </div>
     </div>
     <script>
-        
         /*
         localStorage.setItem("theme", "dark1");
 
@@ -371,25 +370,55 @@ console.log(web_theme);
         window.addEventListener('resize', makeMobile);
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-    function web_bg(t) {
+    <script>
+        $(".is_fev").click(function() {
+            var id = $(this).attr('data-id');
+            if ($(this).hasClass("add_star") === true) {
+                $(this).removeClass("add_star").addClass("rm_star");
+                $(this).attr("src", "<?= SITEURL; ?>img/star_dark.svg");
+
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo SITEURL; ?>pages/star/add/' + id,
+                    success: function(data) { $("#cover").html(data); },
+                    error: function(comment) { $("#cover").html(comment); }
+                });
+
+
+            } else {
+                $(this).removeClass("rm_star").addClass("add_star");
+                $(this).attr("src", "<?= SITEURL; ?>img/star.svg");
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo SITEURL; ?>pages/star/rm/' + id,
+                    success: function(data) { $("#cover").html(data); },
+                    error: function(comment) { $("#cover").html(comment); }
+                });
+            }
+
+
+        });
+
+        function web_bg(t) {
             if (t == 1) {
                 $("#cmkt").removeClass('dark').addClass('dark');
             } else if (t == 2) {
                 $("#cmkt").removeClass('dark');
             }
-        $.ajax({
-            type: 'POST',
-            url: '<?php echo SITEURL; ?>pages/theme/'+t,
-            success: function(data) {
-                $("#cover").html(data);
-            },
-            error: function(comment) {
-                $("#cover").html(comment);
-            }
-        });
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo SITEURL; ?>pages/theme/' + t,
+                success: function(data) {
+                    $("#cover").html(data);
+                },
+                error: function(comment) {
+                    $("#cover").html(comment);
+                }
+            });
         }
-</script>
+    </script>
 
     <script src="<?= SITEURL; ?>js/tableScript.js"></script>
     <script src="<?= SITEURL; ?>js/script.js"></script>

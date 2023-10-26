@@ -77,7 +77,7 @@ class Application extends BaseApplication
         $csrf = new CsrfProtectionMiddleware(['httponly' => true]);
         // Token check will be skipped when callback returns `true`.
         $csrf->skipCheckCallback(function ($request) {
-            if ($request->getParam('controller') === 'Pages' && in_array($request->getParam('action'),['openPop','theme']) ) {
+            if ($request->getParam('controller') === 'Pages' && in_array($request->getParam('action'),['openPop','theme','star']) ) {
                 return true;
             }
             if ($request->getParam('controller') === 'Apis') {

@@ -780,7 +780,7 @@ ul.navbar-nav {
 }
 
 .search-form input.search-input {
-    width: 250px
+    width: 400px
 }
 
 .search-form .btn-search {
@@ -986,7 +986,7 @@ td .mover.down i {
 }
 
 .dark .search-form input.search-input {
-    background-color: #343e59;
+    background-color: #fff;
     border-color: #6c6c6c;
     color: #fff
 }
@@ -1179,16 +1179,6 @@ table.dataTable thead .sorting_desc_disabled:after {
     opacity: .3
 }
 
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting_asc:before,
-table.dataTable thead .sorting_desc:before,
-table.dataTable thead .sorting_asc_disabled:before,
-table.dataTable table.dataTable thead .sorting:after,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_desc:after,
-table.dataTable thead .sorting_asc_disabled:after,
-table.dataTable thead .sorting_desc_disabled:after {}
-
 table.dataTable thead .sorting_asc:before,
 table.dataTable thead .sorting_desc:after {
     opacity: 1
@@ -1326,7 +1316,7 @@ div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:last-child 
     }
 
     .search-form input.search-input {
-        width: 720px;
+        width: 1200px;
         font-size: 18px
     }
 
@@ -1685,10 +1675,19 @@ button {
     background-color: #ccc
 }
 
+@media only screen 
+and (min-device-width : 300px) 
+and (max-device-width : 425px) {
+    .search-form input.search-input {
+        width: 300px;
+        max-width: 400px;
+    }
+}
+
 /* iPads (portrait and landscape) ----------- */
 @media only screen 
 and (min-device-width : 768px) 
-and (max-device-width : 1024px) {
+and (max-device-width : 1440px) {
     .search-form input.search-input {
         width: 720px;
         max-width: 720px;
@@ -1716,12 +1715,7 @@ and (orientation : portrait) {
         max-width: 720px;
     }
 }
-@media only screen and (max-width:1459px) {
-    .search-form input.search-input {
-        width: 400px;
-        max-width: 720px;
-    }
-}
+
 @media only screen and (max-width:400px) {
     .search-form input.search-input {
         width: 280px;
@@ -2024,4 +2018,8 @@ a.text-underline {
     float: left;
     max-width: 650px;
     display: flex !important
+}
+
+.is_fev{
+    cursor: pointer;
 }

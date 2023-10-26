@@ -159,8 +159,53 @@ class CronsController extends AppController
                     throw $th;
                 }
                 echo "Saved";
-            }else{ ec('empty.'); }
-        }else{ ec('empty'); }
+            } else {
+                ec('empty.');
+            }
+        } else {
+            ec('empty');
+        }
+        exit;
+    }
+
+    public function updateLogo()
+    {
+
+        $data = file_get_contents("logos.json");
+        $logos = json_decode($data, true);
+
+        $uploadPath = "logo";
+        if (!file_exists($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+        $data = $this->fetchTable('Stocks')->find('all')
+            ->limit(20)
+            ->where(['logo_bright IS NULL', 'type' => 'stock', 'symbol IS NOT NULL'])->all();
+        if (!$data->isEmpty()) {
+            foreach ($data as $li) {
+                $arr = search($logos, 'symbol', strtoupper($li->symbol));
+                $slug = strtolower(Text::slug($li->symbol));
+                if (isset($arr[0]['png']['icon']['for_bright_background']['64'])) {
+                    $logo1 = 'https://companieslogo.com' . $arr[0]['png']['icon']['for_bright_background']['64'];
+                    file_put_contents($uploadPath . "/$slug.png", fopen($logo1, 'r'));
+                    $li->logo_bright =  $slug . ".png";
+                }
+
+                if (isset($arr[0]['png']['icon']['for_dark_background']['64'])) {
+                    $logo2 = 'https://companieslogo.com' . $arr[0]['png']['icon']['for_dark_background']['64'];
+                    file_put_contents($uploadPath . "/" . $slug . "-dark.png", fopen($logo1, 'r'));
+                    $li->logo_dark =  $slug . "-dark.png";
+                }
+                $this->fetchTable('Stocks')->save($li);
+                ec("Logo Saved for ".$li->name);
+            }
+        } else {
+            ec('Empty');
+        }
+
+
+
+
         exit;
     }
 

@@ -9,3 +9,4 @@ config/.env
 #/vendor/*
 tmp/*
 
+/webroot/logo/*

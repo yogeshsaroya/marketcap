@@ -51,8 +51,33 @@ class PagesController extends AppController
     }
 
 
+    public function star($type = null, $id = null ){
+        $this->disableAutoRender();
+        $session = $this->request->getSession();
+        $arr = $session->read('star');
+        if(!empty($type) && !empty($id)){
+            if($type == 'add'){
+                $arr[$id] = $id;
+                $session->write('star',$arr);
+                ec($arr);
+            }
+            elseif($type == 'rm'){
+                unset($arr[$id]);
+                $session->write('star',$arr);
+                ec($arr);
+            }
+        }
+        
+
+        exit;
+
+    }
+
+
     public function index()
     {
+        $session = $this->request->getSession();
+        $star = $session->read('star');
         $data = [];
         try {
             $this->paginate = ['conditions' => ['type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
@@ -61,7 +86,7 @@ class PagesController extends AppController
         } catch (\Throwable $th) {
             //throw $th;
         }
-        $this->set(compact('data'));
+        $this->set(compact('data','star'));
     }
 
     public function search()
