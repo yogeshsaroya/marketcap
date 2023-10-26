@@ -168,6 +168,18 @@ class CronsController extends AppController
         exit;
     }
 
+    function curl_get_file_contents($URL)
+    {
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_URL, $URL);
+        $contents = curl_exec($c);
+        curl_close($c);
+
+        if ($contents) return $contents;
+        else return FALSE;
+    }
+
     public function updateLogo()
     {
 
@@ -187,17 +199,17 @@ class CronsController extends AppController
                 $slug = strtolower(Text::slug($li->symbol));
                 if (isset($arr[0]['png']['icon']['for_bright_background']['64'])) {
                     $logo1 = 'https://companieslogo.com' . $arr[0]['png']['icon']['for_bright_background']['64'];
-                    file_put_contents($uploadPath . "/$slug.png", file_get_contents($logo1));
+                    file_put_contents($uploadPath . "/$slug.png", $this->curl_get_file_contents($logo1));
                     $li->logo_bright =  $slug . ".png";
                 }
 
                 if (isset($arr[0]['png']['icon']['for_dark_background']['64'])) {
                     $logo2 = 'https://companieslogo.com' . $arr[0]['png']['icon']['for_dark_background']['64'];
-                    file_put_contents($uploadPath . "/" . $slug . "-dark.png", file_get_contents($logo2));
+                    file_put_contents($uploadPath . "/" . $slug . "-dark.png", $this->curl_get_file_contents($logo2));
                     $li->logo_dark =  $slug . "-dark.png";
                 }
                 $this->fetchTable('Stocks')->save($li);
-                ec("Logo Saved for ".$li->name);
+                ec("Logo Saved for " . $li->name);
             }
         } else {
             ec('Empty');
