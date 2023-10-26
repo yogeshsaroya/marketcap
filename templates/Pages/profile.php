@@ -5,7 +5,7 @@ $price_history = json_decode($data->price_history, true);
 $stock_peers = json_decode($data->stock_peers, true);
 $company_outlook = json_decode($data->company_outlook, true);
 $market_cap_list = json_decode($data->market_cap_list, true);
-
+$theme = $this->request->getSession()->read('theme');
 ?>
 <style>
     .profile-container.margin-lr-15px.pt-3 {
@@ -35,16 +35,18 @@ $market_cap_list = json_decode($data->market_cap_list, true);
         <div class="col-lg-2">
             <div class="company-logo-container">
                 <?php
-                $clogo = $data->logo;
+                $clogo = $logo_dark = $logo_nrm =  $data->logo;
+                if (!empty($data->logo_bright)) {
+                    $logo_nrm = SITEURL."logo/".$data->logo_bright;
+                }
                 if (!empty($data->logo_dark)) {
-                    $clogo = SITEURL."logo/".$data->logo_dark;
+                    $logo_dark = SITEURL."logo/".$data->logo_dark;
                 }
-                elseif (!empty($data->logo_bright)) {
-                    $clogo = SITEURL . "logo/" . $data->logo_bright;
-                }
+                $clogo = (empty($theme) || $theme == 'dark' ? $logo_dark : $logo_nrm);
+
                 if (!empty($clogo)) { ?>
 
-                    <img loading="lazy" class="company-profile-logo" title="Logo" alt="Logo" src="<?= $clogo; ?>" />
+                    <img loading="lazy" class="company-profile-logo" title="Logo" alt="Logo" src="<?= $clogo; ?>" data-img-path="<?= $logo_nrm; ?>" data-img-dark-path="<?= $logo_dark; ?>" />
                 <?php } ?>
             </div>
             <div class="company-title-container">
@@ -161,20 +163,22 @@ $market_cap_list = json_decode($data->market_cap_list, true);
                         <tbody>
                             <?php foreach ($peers as $plist) {
 
-                                $logo = $plist->logo;
+
+                                $logo = $logo_dark = $logo_nrm =  $plist->logo;
+                                if (!empty($plist->logo_bright)) {
+                                    $logo_nrm = SITEURL . "logo/" . $plist->logo_bright;
+                                }
                                 if (!empty($plist->logo_dark)) {
-                                    $logo = SITEURL."logo/".$plist->logo_dark;
+                                    $logo_dark = SITEURL . "logo/" . $plist->logo_dark;
                                 }
-                                elseif (!empty($plist->logo_bright)) {
-                                    $logo = SITEURL . "logo/" . $plist->logo_bright;
-                                }
+                                $logo = (empty($theme) || $theme == 'dark' ? $logo_dark : $logo_nrm);
 
                             ?>
                                 <tr>
                                     <td class="name-td"><a href="<?= SITEURL . $plist->slug; ?>">
                                             <div class="float-left pt-1">
                                                 <?php if (!empty($logo)) { ?>
-                                                    <img loading="lazy" class="company-logo" alt=" Logo" src="<?= $logo; ?>" />
+                                                    <img loading="lazy" class="company-logo" alt=" Logo" src="<?= $logo; ?>" data-img-path="<?= $logo_nrm; ?>" data-img-dark-path="<?= $logo_dark; ?>"/>
                                                 <?php } ?>
                                             </div>
                                             <div class="name-div">

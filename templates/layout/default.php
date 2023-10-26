@@ -18,12 +18,11 @@
     <?= $this->fetch('script'); ?>
     <?php
     $theme = $this->request->getSession()->read('theme');
-
     ?>
 
 </head>
 
-<body class="cmkt <?= (empty($theme) ? 'dark' : null); ?>" id="cmkt">
+<body class="cmkt <?= (empty($theme) || $theme == 'dark' ? 'dark' : null); ?>" id="cmkt">
     <?php
     $cap = $this->Data->getCaps();
     ?>

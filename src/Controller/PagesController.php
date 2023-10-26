@@ -94,20 +94,25 @@ class PagesController extends AppController
         $this->disableAutoRender();
         $arr = [];
         $q = $this->request->getQuery('query');
+        $session = $this->request->getSession();
+        $theme = $session->read('theme');
+
         if(!empty($q)){
             $data = $this->fetchTable('Stocks')->find()
-            ->select(['id','name','slug','symbol','logo'])
+            ->select(['id','name','slug','symbol','logo','logo_bright','logo_dark'])
             ->where(['type' => 'stock', 'name !=' => '','name LIKE' =>"%" . trim($q) . "%"])
             ->all();
             if (!$data->isEmpty()) {
                 foreach ($data as $list) {
-                    $logo = $list->logo;
+                    
+                    $logo = $logo_dark = $logo_nrm =  $list->logo;
+                    if (!empty($list->logo_bright)) {
+                        $logo_nrm = SITEURL."logo/".$list->logo_bright;
+                    }
                     if (!empty($list->logo_dark)) {
-                        $logo = SITEURL."logo/".$list->logo_dark;
+                        $logo_dark = SITEURL."logo/".$list->logo_dark;
                     }
-                    elseif (!empty($list->logo_bright)) {
-                        $logo = SITEURL."logo/".$list->logo_bright;
-                    }
+                    $logo = (empty($theme) || $theme == 'dark' ? $logo_dark : $logo_nrm);
 
                     $arr[]= ['name'=>$list->name,'symbol'=>$list->symbol,'logo'=>$logo,'url'=>$list->slug];
                 }

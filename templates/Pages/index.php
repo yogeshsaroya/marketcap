@@ -2,6 +2,8 @@
 $this->assign('title', 'Companies ranked by Market Cap');
 $this->assign('description', "Ranking the world's top companies by market cap, market value, revenue and many more metrics");
 $cap = $this->Data->getCaps();
+$theme = $this->request->getSession()->read('theme');
+
 ?>
 
 <style>
@@ -85,23 +87,26 @@ $cap = $this->Data->getCaps();
                 $num = $this->Paginator->counter('{{start}}');
                 foreach ($data as $list) {
 
-                    $logo = $list->logo;
+                    $logo = $logo_dark = $logo_nrm =  $list->logo;
+                    if (!empty($list->logo_bright)) {
+                        $logo_nrm = SITEURL."logo/".$list->logo_bright;
+                    }
                     if (!empty($list->logo_dark)) {
-                        $logo = SITEURL."logo/".$list->logo_dark;
+                        $logo_dark = SITEURL."logo/".$list->logo_dark;
                     }
-                    elseif (!empty($list->logo_bright)) {
-                        $logo = SITEURL."logo/".$list->logo_bright;
-                    }
+                    $logo = (empty($theme) || $theme == 'dark' ? $logo_dark : $logo_nrm);
+                    
             ?>
                     <tr>
                         <td>
                             <img src="<?= SITEURL . (isset($star[$list->id]) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= (isset($star[$list->id]) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>" />
+                            
                         </td>
                         <td class="td-center" data-sort="<?= $num; ?>"><?= $num; ?></td>
                         <td class="name-td">
                             <div class="logo-container">
                                 <?php if (!empty($logo)) { ?>
-                                    <img loading="lazy" class="company-logo" alt="logo" src="<?= $logo; ?>" />
+                                    <img loading="lazy" alt="logo" loading="lazy" class="company-logo" data-img-path="<?= $logo_nrm; ?>" data-img-dark-path="<?= $logo_dark; ?>" src="<?= $logo; ?>" />
                                 <?php } ?>
                             </div>
 
