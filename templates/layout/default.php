@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="cmkt <?= (empty($theme) || $theme == 'dark' ? 'dark' : null); ?>" id="cmkt">
+<body class="cmkt <?= ($theme == 'dark' ? 'dark' : null); ?>" id="cmkt">
     <?php
     $cap = $this->Data->getCaps();
     ?>

@@ -112,7 +112,7 @@ class PagesController extends AppController
                     if (!empty($list->logo_dark)) {
                         $logo_dark = SITEURL."logo/".$list->logo_dark;
                     }
-                    $logo = (empty($theme) || $theme == 'dark' ? $logo_dark : $logo_nrm);
+                    $logo = ($theme == 'dark' ? $logo_dark : $logo_nrm);
 
                     $arr[]= ['name'=>$list->name,'symbol'=>$list->symbol,'logo'=>$logo,'url'=>$list->slug];
                 }

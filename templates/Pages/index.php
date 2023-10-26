@@ -94,7 +94,7 @@ $theme = $this->request->getSession()->read('theme');
                     if (!empty($list->logo_dark)) {
                         $logo_dark = SITEURL."logo/".$list->logo_dark;
                     }
-                    $logo = (empty($theme) || $theme == 'dark' ? $logo_dark : $logo_nrm);
+                    $logo = ($theme == 'dark' ? $logo_dark : $logo_nrm);
                     
             ?>
                     <tr>
