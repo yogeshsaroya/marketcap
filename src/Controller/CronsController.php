@@ -193,7 +193,7 @@ class CronsController extends AppController
 
                 if (isset($arr[0]['png']['icon']['for_dark_background']['64'])) {
                     $logo2 = 'https://companieslogo.com' . $arr[0]['png']['icon']['for_dark_background']['64'];
-                    file_put_contents($uploadPath . "/" . $slug . "-dark.png", fopen($logo1, 'r'));
+                    file_put_contents($uploadPath . "/" . $slug . "-dark.png", fopen($logo2, 'r'));
                     $li->logo_dark =  $slug . "-dark.png";
                 }
                 $this->fetchTable('Stocks')->save($li);

@@ -988,7 +988,7 @@ td .mover.down i {
 .dark .search-form input.search-input {
     background-color: #fff;
     border-color: #6c6c6c;
-    color: #fff
+    color: #000
 }
 
 .dark .marketcap-table th {

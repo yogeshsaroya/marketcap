@@ -72,8 +72,8 @@ $cap = $this->Data->getCaps();
     <table class="default-table table marketcap-table dataTable" style="width:100%">
         <thead>
             <tr>
-            <th tid="1" ></th>
-            <th tid="1" class="th-id-1 th-name sorting">Rank</th>
+                <th tid="1"></th>
+                <th tid="1" class="th-id-1 th-name sorting">Rank</th>
                 <th tid="2" class="th-id-2 th-name sorting">Name</th>
                 <th tid="3" class="th-id-3 th-mcap sorting text-right">Market Cap</th>
                 <th tid="4" class="th-id-4 th-price sorting text-right">Price</th>
@@ -84,16 +84,24 @@ $cap = $this->Data->getCaps();
             <?php if (!$data->isEmpty()) {
                 $num = $this->Paginator->counter('{{start}}');
                 foreach ($data as $list) {
+
+                    $logo = $list->logo;
+                    if (!empty($list->logo_dark)) {
+                        $logo = SITEURL."logo/".$list->logo_dark;
+                    }
+                    elseif (!empty($list->logo_bright)) {
+                        $logo = SITEURL."logo/".$list->logo_bright;
+                    }
             ?>
                     <tr>
-                    <td>
-                        <img src="<?= SITEURL.( isset($star[$list->id]) ? 'img/star_dark.svg':'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= ( isset($star[$list->id]) ? 'rm_star':'add_star' ); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>"/>
-                    </td>
-                    <td class="td-center" data-sort="<?= $num; ?>"><?= $num; ?></td>
+                        <td>
+                            <img src="<?= SITEURL . (isset($star[$list->id]) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= (isset($star[$list->id]) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>" />
+                        </td>
+                        <td class="td-center" data-sort="<?= $num; ?>"><?= $num; ?></td>
                         <td class="name-td">
                             <div class="logo-container">
-                                <?php if (!empty($list->logo)) { ?>
-                                    <img loading="lazy" class="company-logo" alt="logo" src="<?= $list->logo; ?>" />
+                                <?php if (!empty($logo)) { ?>
+                                    <img loading="lazy" class="company-logo" alt="logo" src="<?= $logo; ?>" />
                                 <?php } ?>
                             </div>
 
@@ -111,7 +119,8 @@ $cap = $this->Data->getCaps();
                             <?php } ?>
                         </td>
                     </tr>
-            <?php $num++;}
+            <?php $num++;
+                }
             } ?>
 
 
@@ -123,7 +132,7 @@ $cap = $this->Data->getCaps();
         companies. Private companies are not included in our lists as it is difficult to calculate their market
         value and know their financials.</p>
 </div>
-<?php 
+<?php
 /* ?>
 <nav>
     <ul class="pagination justify-content-center">
@@ -142,20 +151,18 @@ $cap = $this->Data->getCaps();
     <ul class=" pagination justify-content-center">
         <li class="page-item">
             <?php
-            if($this->request->is('mobile')){
+            if ($this->request->is('mobile')) {
                 echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
                 echo $this->Paginator->prev('Prev', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
                 echo $this->Paginator->next('Next', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
                 echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
-
-            }else{
+            } else {
                 echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
                 echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-                echo $this->Paginator->numbers(['first' => 1, 'last' => 1],[['separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a']]);
+                echo $this->Paginator->numbers(['first' => 1, 'last' => 1], [['separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a']]);
                 echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
                 echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
             }
             ?>
     </ul>
 </nav>
-

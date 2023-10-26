@@ -101,7 +101,15 @@ class PagesController extends AppController
             ->all();
             if (!$data->isEmpty()) {
                 foreach ($data as $list) {
-                    $arr[]= ['name'=>$list->name,'symbol'=>$list->symbol,'logo'=>$list->logo,'url'=>$list->slug];
+                    $logo = $list->logo;
+                    if (!empty($list->logo_dark)) {
+                        $logo = SITEURL."logo/".$list->logo_dark;
+                    }
+                    elseif (!empty($list->logo_bright)) {
+                        $logo = SITEURL."logo/".$list->logo_bright;
+                    }
+
+                    $arr[]= ['name'=>$list->name,'symbol'=>$list->symbol,'logo'=>$logo,'url'=>$list->slug];
                 }
             }
         }

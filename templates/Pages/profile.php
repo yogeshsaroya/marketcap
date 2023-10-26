@@ -34,7 +34,18 @@ $market_cap_list = json_decode($data->market_cap_list, true);
     <div class="row">
         <div class="col-lg-2">
             <div class="company-logo-container">
-                <img loading="lazy" class="company-profile-logo" title="Logo" alt="Logo" src="<?= $data->logo; ?>" />
+                <?php
+                $clogo = $data->logo;
+                if (!empty($data->logo_dark)) {
+                    $clogo = SITEURL."logo/".$data->logo_dark;
+                }
+                elseif (!empty($data->logo_bright)) {
+                    $clogo = SITEURL . "logo/" . $data->logo_bright;
+                }
+                if (!empty($clogo)) { ?>
+
+                    <img loading="lazy" class="company-profile-logo" title="Logo" alt="Logo" src="<?= $clogo; ?>" />
+                <?php } ?>
             </div>
             <div class="company-title-container">
                 <div class="company-name"><?= $data->name; ?></div>
@@ -148,10 +159,24 @@ $market_cap_list = json_decode($data->market_cap_list, true);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($peers as $plist) { ?>
+                            <?php foreach ($peers as $plist) {
+
+                                $logo = $plist->logo;
+                                if (!empty($plist->logo_dark)) {
+                                    $logo = SITEURL."logo/".$plist->logo_dark;
+                                }
+                                elseif (!empty($plist->logo_bright)) {
+                                    $logo = SITEURL . "logo/" . $plist->logo_bright;
+                                }
+
+                            ?>
                                 <tr>
                                     <td class="name-td"><a href="<?= SITEURL . $plist->slug; ?>">
-                                            <div class="float-left pt-1"><img loading="lazy" class="company-logo" alt=" Logo" src="<?= $plist->logo; ?>"></div>
+                                            <div class="float-left pt-1">
+                                                <?php if (!empty($logo)) { ?>
+                                                    <img loading="lazy" class="company-logo" alt=" Logo" src="<?= $logo; ?>" />
+                                                <?php } ?>
+                                            </div>
                                             <div class="name-div">
                                                 <div class="company-name"><?= $plist->name; ?></div>
                                                 <div class="company-code"><span class="rank d-none"></span>MSFT</div>
