@@ -37,7 +37,7 @@ $theme = $this->request->getSession()->read('theme');
                 <?php
                 $clogo = $logo_dark = $logo_nrm =  $data->logo;
                 if (!empty($data->logo_bright)) {
-                    $logo_nrm = SITEURL."logo/".$data->logo_bright;
+                    $logo_dark = $logo_nrm = SITEURL."logo/".$data->logo_bright;
                 }
                 if (!empty($data->logo_dark)) {
                     $logo_dark = SITEURL."logo/".$data->logo_dark;
@@ -166,7 +166,7 @@ $theme = $this->request->getSession()->read('theme');
 
                                 $logo = $logo_dark = $logo_nrm =  $plist->logo;
                                 if (!empty($plist->logo_bright)) {
-                                    $logo_nrm = SITEURL . "logo/" . $plist->logo_bright;
+                                    $logo_dark = $logo_nrm = SITEURL . "logo/" . $plist->logo_bright;
                                 }
                                 if (!empty($plist->logo_dark)) {
                                     $logo_dark = SITEURL . "logo/" . $plist->logo_dark;

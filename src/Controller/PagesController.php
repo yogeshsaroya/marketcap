@@ -107,7 +107,7 @@ class PagesController extends AppController
                     
                     $logo = $logo_dark = $logo_nrm =  $list->logo;
                     if (!empty($list->logo_bright)) {
-                        $logo_nrm = SITEURL."logo/".$list->logo_bright;
+                        $logo_dark = $logo_nrm = SITEURL."logo/".$list->logo_bright;
                     }
                     if (!empty($list->logo_dark)) {
                         $logo_dark = SITEURL."logo/".$list->logo_dark;
