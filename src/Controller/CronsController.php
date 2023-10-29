@@ -189,7 +189,8 @@ class CronsController extends AppController
         }
         $data = $this->fetchTable('Stocks')->find('all')
             ->limit(20)
-            ->where(['logo_bright IS NULL', 'type' => 'stock', 'symbol IS NOT NULL'])->all();
+            ->order(['market_cap' => 'desc'])
+            ->where(['logo_bright IS NULL', 'type' => 'stock','name !=' => '', 'symbol IS NOT NULL'])->all();
         if (!$data->isEmpty()) {
             foreach ($data as $li) {
 
