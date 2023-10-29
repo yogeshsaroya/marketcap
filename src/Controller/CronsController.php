@@ -194,7 +194,7 @@ class CronsController extends AppController
             foreach ($data as $li) {
 
                 $u = 'https://companieslogo.com/api/1.0/?symbol='.strtoupper($li->symbol).'&api_key=1c6923454b9e996ea78572';
-                $res = file_get_contents($u);
+                $res = $this->curl_get_file_contents($u);
                 
                 $logos = json_decode($res, true);
                 ec($logos);die;
