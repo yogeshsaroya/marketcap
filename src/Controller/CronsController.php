@@ -195,20 +195,16 @@ class CronsController extends AppController
 
                 $u = 'https://companieslogo.com/api/1.0/?symbol='.strtoupper($li->symbol).'&api_key=1c6923454b9e996ea78572';
                 $res = $this->curl_get_file_contents($u);
-                
                 $logos = json_decode($res, true);
-                ec($logos);die;
-
-                $arr = search($logos, 'symbol', strtoupper($li->symbol));
                 $slug = strtolower(Text::slug($li->symbol));
-                if (isset($arr[0]['png']['icon']['for_bright_background']['64'])) {
-                    $logo1 = 'https://companieslogo.com' . $arr[0]['png']['icon']['for_bright_background']['64'];
+                if (isset($arr['png']['icon']['for_bright_background']['64'])) {
+                    $logo1 = 'https://companieslogo.com' . $arr['png']['icon']['for_bright_background']['64'];
                     file_put_contents($uploadPath . "/$slug.png", $this->curl_get_file_contents($logo1));
                     $li->logo_bright =  $slug . ".png";
                 }
 
-                if (isset($arr[0]['png']['icon']['for_dark_background']['64'])) {
-                    $logo2 = 'https://companieslogo.com' . $arr[0]['png']['icon']['for_dark_background']['64'];
+                if (isset($arr['png']['icon']['for_dark_background']['64'])) {
+                    $logo2 = 'https://companieslogo.com' . $arr['png']['icon']['for_dark_background']['64'];
                     file_put_contents($uploadPath . "/" . $slug . "-dark.png", $this->curl_get_file_contents($logo2));
                     $li->logo_dark =  $slug . "-dark.png";
                 }
