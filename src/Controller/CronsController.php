@@ -195,7 +195,7 @@ class CronsController extends AppController
 
                 $u = 'https://companieslogo.com/api/1.0/?symbol='.strtoupper($li->symbol).'&api_key=1c6923454b9e996ea78572';
                 $res = $this->curl_get_file_contents($u);
-                $logos = json_decode($res, true);
+                $arr = json_decode($res, true);
                 $slug = strtolower(Text::slug($li->symbol));
                 if (isset($arr['png']['icon']['for_bright_background']['64'])) {
                     $logo1 = 'https://companieslogo.com' . $arr['png']['icon']['for_bright_background']['64'];
