@@ -209,7 +209,7 @@ class CronsController extends AppController
                     $li->logo_dark =  $slug . "-dark.png";
                 }
                 $this->fetchTable('Stocks')->save($li);
-                ec("Logo Saved for " . $li->name);
+                ec("Logo Saved for ( ".$li->symbol." )" . $li->name);
             }
         } else {
             ec('Empty');
