@@ -183,9 +183,6 @@ class CronsController extends AppController
     public function updateLogo()
     {
 
-        $data = file_get_contents("logos.json");
-        $logos = json_decode($data, true);
-
         $uploadPath = "logo";
         if (!file_exists($uploadPath)) {
             mkdir($uploadPath, 0777, true);
@@ -195,6 +192,13 @@ class CronsController extends AppController
             ->where(['logo_bright IS NULL', 'type' => 'stock', 'symbol IS NOT NULL'])->all();
         if (!$data->isEmpty()) {
             foreach ($data as $li) {
+
+                $u = 'https://companieslogo.com/api/1.0/?symbol='.strtoupper($li->symbol).'&api_key=1c6923454b9e996ea78572';
+                $res = file_get_contents($u);
+                
+                $logos = json_decode($res, true);
+                ec($logos);die;
+
                 $arr = search($logos, 'symbol', strtoupper($li->symbol));
                 $slug = strtolower(Text::slug($li->symbol));
                 if (isset($arr[0]['png']['icon']['for_bright_background']['64'])) {
