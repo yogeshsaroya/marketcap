@@ -1871,6 +1871,12 @@ tr.cryptocurrency-outliner {
     padding-right: 25px
 }
 
+
+.table td.td-center {
+    text-align: center;
+    padding-right: 25px
+}
+
 .lexicon-container {
     font-size: 18px
 }

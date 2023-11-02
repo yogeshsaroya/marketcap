@@ -45,6 +45,9 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Auth');
+        
+
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
@@ -56,6 +59,10 @@ class AppController extends Controller
     function beforeRender(\Cake\Event\EventInterface $event)
     {
 
+        if ($this->request->isAjax()) {
+            $this->viewBuilder()->setLayout('ajax');
+        }
+        
         /* Redirect to www and https */
         $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 

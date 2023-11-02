@@ -18,6 +18,7 @@ class CronsController extends AppController
     {
         parent::beforeFilter($event);
         $this->disableAutoRender();
+        $this->Auth->allow();
     }
 
     /* 1: run every 6hrs */

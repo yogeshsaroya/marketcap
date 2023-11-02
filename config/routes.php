@@ -50,14 +50,24 @@ return static function (RouteBuilder $routes) {
          * its action called 'display', and we pass a param to select the view file
          * to use (in this case, templates/Pages/home.php)...
          */
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'index']);
-        $builder->connect('/{slug}/*', ['controller' => 'Pages', 'action' => 'profile']);
+        $builder->connect('/', ['controller' => 'Homes', 'action' => 'index']);
+        $builder->connect('/{slug}/*', ['controller' => 'Homes', 'action' => 'profile']);
 
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
          */
+        $builder->connect('/homes/{action}/*', ['controller' => 'Homes']);
         $builder->connect('/pages/{action}/*', ['controller' => 'Pages']);
         $builder->connect('/crons/{action}/*', ['controller' => 'Crons']);
+
+
+        $builder->connect('/register/*', ['controller' => 'Users', 'action' => 'register']);
+        $builder->connect('/login/*', ['controller' => 'Users', 'action' => 'login']);
+        $builder->connect('/reset-password/*', ['controller' => 'Users', 'action' => 'resetPassword']);
+
+        
+        $builder->connect('/dashboard/*', ['controller' => 'Users', 'action' => 'dashboard']);
+        $builder->connect('/backend/*', ['controller' => 'users', 'action' => 'backend']);
 
         /*
          * Connect catchall routes for all controllers.

@@ -10,7 +10,7 @@ function lightOff() {
 addListener("#light-on-btn", "click", function (e) { lightOn(); }); addListener("#light-off-btn", "click", function (e) { lightOff(); }); var searchInput = document.getElementById("search-input"); var xhr = new XMLHttpRequest()
 searchInput.addEventListener("keyup", function (e) {
         xhr.abort(); if (searchInput.value.length == 0) { document.getElementById("typeahead-search-results").style.display = "none"; } else {
-                xhr.open('GET', 'pages/search?action=search&query=' + searchInput.value); xhr.responseType = 'json'; xhr.send(); xhr.onload = function () {
+                xhr.open('GET', 'homes/search?action=search&query=' + searchInput.value); xhr.responseType = 'json'; xhr.send(); xhr.onload = function () {
                         let searchResponse = xhr.response; document.getElementById("typeahead-search-results").style.display = "block"; var aheadHtml = ''; var darkPathSupplement; var isDarkMode = document.body.classList.contains('dark'); for (var i in searchResponse) {
                                 if (isDarkMode && searchResponse[i]["img_dark_png"] == "1") { darkPathSupplement = '.D'; } else { darkPathSupplement = ''; }
                                 aheadHtml = aheadHtml.concat('<a href="' + searchResponse[i]["url"] + '">' +
