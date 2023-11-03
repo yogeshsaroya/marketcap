@@ -56,12 +56,15 @@ class UsersController extends AppController
 
     public function dashboard()
     {
+        
         /*
         $this->paginate = ['limit' => 100, 'order' => ['id' => 'desc']];
-        $data = $this->paginate($this->fetchTable('Reports')->find());
+        $data = $this->paginate($this->fetchTable('Stocks')->find());
         $settings = $this->fetchTable('Settings')->findById('1')->firstOrFail();
         $this->set(compact('data', 'settings'));
+        */
 
+        /*
         if ($this->request->is('ajax') && !empty($this->request->getData())) {
             $post_data = $this->request->getData();
             if (!$this->_valid_domain_name(trim($post_data['domain']))) {
@@ -178,7 +181,7 @@ class UsersController extends AppController
                     $user->reset_password_key_expiry = null;
                     $user->password = $post_data['new_password'];
                     $this->Users->save($user);
-                    $str = '<div><span>Password changed successfully! Click here to <a href="' . SITEURL . 'login">Login</a></span></div>';
+                    $str = '<div class="bg-light-success"><span>Password changed successfully! Click here to <a href="' . SITEURL . 'login">Login</a></span></div>';
                     echo "<script>$('#rst').html('$str');</script>";
                 } else {
                     echo '<div class="alert bg-danger">Account Not Found</div>';
@@ -211,7 +214,7 @@ class UsersController extends AppController
                 $st = null;
                 foreach ($chkData->getErrors() as $elist) {
                     foreach ($elist as $k => $v); {
-                        $st .= "<div class='alert bg-danger'>" . ucwords($v) . "</div>";
+                        $st .= "<div class='alert bg-danger'>" . $v . "</div>";
                     }
                 }
                 echo $st;
@@ -271,6 +274,8 @@ class UsersController extends AppController
      */
     public function login()
     {
+
+        
         if ($this->Auth->User('id') != "") {
             if ($this->request->is('ajax')) {
                 $u = SITEURL . "dashboard";

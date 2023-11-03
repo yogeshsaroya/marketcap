@@ -1,34 +1,37 @@
-<?php $this->assign('title', 'Register | ' . env('APP_NAME')); ?>
-
-<main class="pb-12">
-  <div class="bg-dark-sec pb-12"></div>
-
-  <div class="container mt--50">
-    <div class="card formWrap mx-440 m-auto">
-      <div class="card-body ">
-        <h4 class="card-title mb-3">Register</h4>
-        <?= $this->Form->create(null, ['url' => ['controller' => 'users', 'action' => 'register'], 'autocomplete' => 'off', 'id' => 'e_frm']); ?>
-        <div class="mb-2 form-group"><?= $this->Form->control('email', ['label' => 'Email', 'type' => 'email', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-email']); ?></div>
-        <div class="mb-2 form-group"><?= $this->Form->control('username', ['label' => 'Username', 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-username']); ?></div>
-        <div class="mb-2 form-group"><?= $this->Form->control('password', ['label' => 'Enter Password', 'type' => 'password', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-password']); ?></div>
-        <div class="mb-2 form-group"><?= $this->Form->control('re_password', ['data-v-equal' => '#password', 'label' => 'Repeat Password', 'type' => 'password', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-password1']); ?></div>
-        <div class="mb-2"><?= $this->Form->control('terms', ['type' => 'checkbox', 'label' => 'Agree Terms', 'value' => 1, 'class' => 'form-check-input', 'required' => true]); ?></div>
-        <div class="mb-2"><div id="f_err"></div></div>
-        <input type="button" class="btn btn-primary w-100 mb-2" value="Register" id="login_sbtn">
-        <?php echo $this->Form->end(); ?>
-      </div>
+<?php
+$this->assign('title', 'Register | ' . env('APP_NAME'));
+$cap = $this->Data->getCaps();
+$theme = $this->request->getSession()->read('theme');
+echo $this->Html->css(['login'], ['block' => 'css'])
+?>
+<div class="login-page">
+  <div class="form">
+    <h2>Register</h2>
+    <br>
+    <?= $this->Form->create(null, ['url' => ['controller' => 'users', 'action' => 'register'], 'autocomplete' => 'off', 'class' => 'login-form', 'id' => 'e_frm']); ?>
+    <div class="mb-2 form-group"><?= $this->Form->control('first_name', ['label' => 'First Name', 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-first-name']); ?></div>
+    <div class="mb-2 form-group"><?= $this->Form->control('last_name', ['label' => 'Last Name', 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-last-name']); ?></div>
+    <div class="mb-2 form-group"><?= $this->Form->control('email', ['label' => 'Email', 'type' => 'email', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-email']); ?></div>
+    <div class="mb-2 form-group"><?= $this->Form->control('password', ['label' => 'Enter Password', 'type' => 'password', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-password']); ?></div>
+    <div class="mb-2">
+      <div id="f_err"></div>
     </div>
+    <input type="button" class="btn btn-primary w-100 mb-2 login_sbtn" value="Sign Up" id="login_sbtn">
+    <div class="text-center">
+      <a href="<?= SITEURL ?>login" class="btn btn-secondary w-100">already have account? Sign in</a>
+      <br>
+
+    </div>
+    <?php echo $this->Form->end(); ?>
   </div>
-</main>
+</div>
+
+
+
 
 <?php $this->append('scriptBottom');  ?>
 <script>
   $(document).ready(function() {
-    let validator = $('#e_frm').jbvalidator({
-      errorMessage: true,
-      successClass: true,
-    });
-
 
     $("#login_sbtn").click(function() {
       $("#e_frm").ajaxForm({

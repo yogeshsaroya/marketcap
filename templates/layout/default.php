@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= SITEURL;?>favicon.png" type="image/x-icon">
     <meta name="robots" content="INDEX,FOLLOW" />
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
@@ -18,7 +18,10 @@
     <?= $this->fetch('script'); ?>
     <?php 
     $theme = $this->request->getSession()->read('theme');
-    $cap = $this->Data->getCaps(); ?>
+    $cap = $this->Data->getCaps(); 
+    $auth = $this->request->getSession()->read('Auth.User');
+    
+    ?>
 
 </head>
 
@@ -29,7 +32,14 @@
             total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
 
             <div class="header-actions responsive-hidden1">
-                <?= $this->html->link('Login','/login',['class'=>'login_btn']);?>
+                <?php 
+                if( isset($auth->email) && !empty($auth->email) ){
+                    echo $this->html->link('Dashboard','/dashboard',['class'=>'login_btn']);
+                }else{
+                    echo $this->html->link('Login','/login',['class'=>'login_btn']);
+                }
+                
+                ?>
                 <a href="javascript:void(0);" onclick="web_bg(2)" class="dark-hidden" id="light-off-btn" title="change to dark mode">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 70 1000 1000" width="16" height="16">
                         <path d="M525.3,989.5C241.2,989.5,10,758.3,10,474.1c0-196.8,109.6-373.6,285.9-461.4c7.9-3.9,17.5-2.4,23.7,3.8c6.2,6.2,7.9,15.8,4,23.7c-32.2,65.4-48.5,135.7-48.5,208.9c0,261.4,212.7,474.1,474.1,474.1c74,0,145-16.7,211-49.5c7.9-3.9,17.5-2.4,23.7,3.8c6.3,6.3,7.9,15.8,3.9,23.7C900.5,879,723.3,989.5,525.3,989.5z">

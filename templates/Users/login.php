@@ -18,9 +18,10 @@ echo $this->Html->css(['login'], ['block' => 'css'])
       <div class="mb-2"><div id="f_err"></div></div>
       <input type="button" class="btn btn-primary w-100 mb-2 login_sbtn" value="Sign in" id="login_sbtn">
       <div class="text-center">
-        <a href="<?= SITEURL ?>register" class="btn btn-secondary w-100">Sign up instead</a>
+        <a href="<?= SITEURL ?>register" class="btn btn-secondary w-100">No account?   Sign Up →</a>
         <br>
-        <a href="#">Forgot your password?</a>
+        
+        <a href="<?= SITEURL ?>reset-password" class="linkTxt">Forgot your password?</a>
       </div>
       <?php echo $this->Form->end(); ?>
   </div>

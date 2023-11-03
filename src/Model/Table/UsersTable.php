@@ -21,6 +21,13 @@ class UsersTable extends Table
     {
         // adding model validation for fields
         $validator
+        ->requirePresence("first_name")
+        ->notEmptyString("first_name", "First name is required")
+
+        ->requirePresence("last_name")
+        ->notEmptyString("last_name", "Last name is required")
+        
+
 
             ->requirePresence("email")
             ->notEmptyString("email", "Email is required")
@@ -29,9 +36,11 @@ class UsersTable extends Table
                 "valid_email" => ["rule" => ["email"], "message" => "Email Address is not valid"]
             ])
 
+            /*
             ->requirePresence("username")
             ->notEmptyString("username", "Username is required")
             ->add("username", ['unique' => ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'Username is already in use']])
+            */
 
             ->requirePresence("password")
             ->notEmptyString("password", "Password is required")

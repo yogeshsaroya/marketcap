@@ -10,10 +10,10 @@
     position: relative;
     filter: drop-shadow(0 0 2px #000000);
     border-radius: 5px;
-    width: 360px;
+    width: 500px;
     height: auto;
     background-color: #ffffff;
-    padding: 40px;
+    padding: 20px;
 }
 
 .dark .form {
@@ -85,7 +85,7 @@ span {
 }
 
 .login-page a {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .alert {
@@ -93,4 +93,22 @@ span {
     padding: 0;
     margin-bottom: 1rem;
     color: #ff3b3b;
+}
+
+.bg-light-success{
+    color: #008000 !important;
+}
+
+@media only screen and (min-width: 425px)  {
+    .form {
+        padding: 40px;
+    }
+}
+
+
+
+form .required label:after {
+    color: #e32;
+    content: '*';
+    display: inline
 }
