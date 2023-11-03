@@ -43,7 +43,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         /* https://book.cakephp.org/4/en/controllers/components/authentication.html#AuthComponent::allow */
-        $this->Auth->allow(['index', 'dashboard', 'register', 'resetPassword', 'login', 'backend', 'logout', 'setPassword']);
+        $this->Auth->allow(['index', 'register', 'resetPassword', 'login', 'backend', 'logout', 'setPassword']);
         //$this->Auth->allow();
         // Form helper https://codethepixel.com/tutorial/cakephp/cakephp-4-common-helpers
         /* https://codethepixel.com/tutorial/cakephp/cakephp-4-find-sort-count */
@@ -56,6 +56,7 @@ class UsersController extends AppController
 
     public function dashboard()
     {
+        /*
         $this->paginate = ['limit' => 100, 'order' => ['id' => 'desc']];
         $data = $this->paginate($this->fetchTable('Reports')->find());
         $settings = $this->fetchTable('Settings')->findById('1')->firstOrFail();
@@ -102,7 +103,7 @@ class UsersController extends AppController
 
 
             exit;
-        }
+        }*/
     }
 
     public function resetPassword($type = null, $id = null)
@@ -330,7 +331,7 @@ class UsersController extends AppController
         if ($this->request->is('ajax') && !empty($this->request->getData())) {
 
             $post_data = $this->request->getData();
-            $s = "<script>s();</script>";
+            
             if (empty($post_data['email'])) {
                 echo $s;
                 echo '<div class="alert alert-danger">Please enter email id.</div>';
@@ -350,11 +351,11 @@ class UsersController extends AppController
                         echo '<script>$("#login_sbtn").remove();window.location.href = "' . $q_url . '"</script>';
                         exit;
                     } else {
-                        echo $s;
+                        
                         echo '<div class="alert alert-danger">Password is invalid</div>';
                     }
                 } else {
-                    echo $s;
+                    
                     echo '<div class="alert alert-danger">User id or password is incorrect</div>';
                 }
             }

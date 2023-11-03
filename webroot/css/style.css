@@ -2029,3 +2029,14 @@ a.text-underline {
 .is_fev{
     cursor: pointer;
 }
+
+a.login_btn {
+    margin-right: 20px;
+    color: #000;
+    background-color: #efefef;
+    font-size: 14px;
+    font-weight: 500;
+    
+    padding: 15px;
+}
+.dark a.login_btn { color: #fff; background-color: unset;}

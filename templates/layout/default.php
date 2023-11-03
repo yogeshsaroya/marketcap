@@ -16,24 +16,20 @@
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>
     <?= $this->fetch('script'); ?>
-    <?php
+    <?php 
     $theme = $this->request->getSession()->read('theme');
-    ?>
+    $cap = $this->Data->getCaps(); ?>
 
 </head>
 
 <body class="cmkt <?= ($theme == 'dark' ? 'dark' : null); ?>" id="cmkt">
-    <?php
-    $cap = $this->Data->getCaps();
-    ?>
-
-
-
     <div class="row site-header-row">
         <div class="site-header">
             companies: <span class="font-weight-bold"><?= number_format($cap['companies']); ?></span> &nbsp;&nbsp;&nbsp;
             total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
-            <div class="header-actions responsive-hidden">
+
+            <div class="header-actions responsive-hidden1">
+                <?= $this->html->link('Login','/login',['class'=>'login_btn']);?>
                 <a href="javascript:void(0);" onclick="web_bg(2)" class="dark-hidden" id="light-off-btn" title="change to dark mode">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 70 1000 1000" width="16" height="16">
                         <path d="M525.3,989.5C241.2,989.5,10,758.3,10,474.1c0-196.8,109.6-373.6,285.9-461.4c7.9-3.9,17.5-2.4,23.7,3.8c6.2,6.2,7.9,15.8,4,23.7c-32.2,65.4-48.5,135.7-48.5,208.9c0,261.4,212.7,474.1,474.1,474.1c74,0,145-16.7,211-49.5c7.9-3.9,17.5-2.4,23.7,3.8c6.3,6.3,7.9,15.8,3.9,23.7C900.5,879,723.3,989.5,525.3,989.5z">
@@ -45,6 +41,7 @@
                         <path d="M120,189.697c-38.492,0-69.696-31.205-69.696-69.697S81.508,50.303,120,50.303c38.494,0,69.699,31.205,69.699,69.697 S158.494,189.697,120,189.697z M203.975,140L240,120l-36.025-20V140z M36.025,100L0,120l36.025,20V100z M120,240l20-36.025h-40 L120,240z M120,0l-20,36.025h40L120,0z M46.481,165.238l-11.333,39.615l39.616-11.33L46.481,165.238z M165.238,46.477l28.283,28.285 l11.332-39.613L165.238,46.477z M35.148,35.148L46.48,74.762l28.283-28.285L35.148,35.148z M165.238,193.523l39.615,11.33 l-11.332-39.615L165.238,193.523z" />
                     </svg>
                 </a>
+
             </div>
         </div>
     </div>
@@ -264,111 +261,13 @@
             </div>
         </div>
     </div>
-    <script>
-        /*
-        localStorage.setItem("theme", "dark1");
-
-var web_theme = localStorage.getItem("theme");
-console.log('Hello');
-console.log(web_theme);
-*/
-        const table = document.querySelector('.marketcap-table');
-        const thRank = table.querySelector('.th-rank');
-        const thPrice = table.querySelector('.th-price');
-        const thMcap = table.querySelector('.th-mcap');
-        const thMcapLoss = table.querySelector('.th-mcap-loss');
-        const thMcapGain = table.querySelector('.th-mcap-gain');
-        const th1d = table.querySelector('.th-1d');
-        const thCountry = table.querySelector('.th-country');
-        var rankIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(thRank);
-        var priceIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(thPrice);
-        var th1dIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(th1d);
-        var addedMovers = false;
-
-        function makeMobile() {
-            //unmake mobile
-            if (window.innerWidth > 996) {
-                // add movers
-                if (!addedMovers) {
-                    table.querySelectorAll('tr td:nth-child(' + (rankIndex + 1) + ')').forEach(function(td) {
-                        var moves = td.getAttribute('moves')
-                        if (moves != null) {
-                            if (moves > 0) {
-                                td.innerHTML = '<span class="mover up responsive-hidden"><i class="arrow"></i> ' + Math.abs(moves) + '</span>' + td.innerHTML
-                            } else if (moves < 0) {
-                                td.innerHTML = '<span class="mover down responsive-hidden"><i class="arrow"></i> ' + Math.abs(moves) + '</span>' + td.innerHTML
-                            }
-                        }
-                    });
-                    addedMovers = true;
-                }
-                thRank.innerHTML = 'Rank';
-                if (thMcap != null) {
-                    thMcap.innerHTML = 'Market Cap';
-                }
-                if (thMcapGain != null) {
-                    thMcapGain.innerHTML = 'Market Cap gain';
-                }
-                if (thMcapLoss != null) {
-                    thMcapLoss.innerHTML = 'Market Cap loss';
-                }
-                th1d.innerHTML = 'Today';
-                thCountry.innerHTML = 'Country';
-                table.querySelectorAll('tr').forEach(function(tr) {
-                    tr.querySelector('th:nth-child(' + (rankIndex + 1) + '), td:nth-child(' + (rankIndex + 1) + ')').classList.remove("d-none")
-                    const spanRank = tr.querySelector('td span.rank');
-                    if (spanRank != null) {
-                        spanRank.classList.add('d-none');
-                        spanRank.innerHtml = '';
-                    }
-                });
-            }
-            //make mobile
-            if (window.innerWidth <= 996) {
-                thRank.innerHTML = '#';
-                if (thMcap != null) {
-                    thMcap.innerHTML = 'M. Cap';
-                }
-                if (thMcapGain != null) {
-                    thMcapGain.innerHTML = 'M. Cap gain';
-                }
-                if (thMcapLoss != null) {
-                    thMcapLoss.innerHTML = 'M. Cap loss';
-                }
-                th1d.innerHTML = '1d';
-                thCountry.innerHTML = 'C.';
-                table.querySelectorAll('tr').forEach(function(tr) {
-                    tr.querySelector('th:nth-child(' + (rankIndex + 1) + '), td:nth-child(' + (rankIndex + 1) + ')').classList.add("d-none")
-                    const spanRank = tr.querySelector('td span.rank');
-                    if (spanRank != null) {
-                        spanRank.classList.remove('d-none');
-                        spanRank.innerHTML = tr.querySelector('td:nth-child(' + (rankIndex + 1) + ')').getAttribute('data-sort');
-                    }
-                    const priceTd = tr.querySelector('td:nth-child(' + (priceIndex + 1) + ')');
-                    if (priceTd != null) {
-                        if (window.innerWidth <= 650) {
-                            if (!priceTd.classList.contains('pt-2')) {
-                                priceTd.classList.add('pt-2');
-                                if (priceTd != null) {
-                                    priceTd.innerHTML = '<div class="price">' + priceTd.innerHTML + '</div><div>' + tr.querySelector('td:nth-child(' + (th1dIndex + 1) + ')').innerHTML + '</div>';
-                                }
-                            }
-                        } else {
-                            if (priceTd.classList.contains('pt-2')) {
-                                priceTd.classList.remove('pt-2');
-                                if (priceTd != null) {
-                                    priceTd.innerHTML = priceTd.querySelector('.price').innerHTML;
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-        }
-        makeMobile();
-        window.addEventListener('resize', makeMobile);
-    </script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    
+    
+    <?php echo $this->Html->script(['jquery-3.6.3.min','jquery.form.min']); ?>
+    <script src="<?= SITEURL; ?>js/script.js"></script>
+    
+    
     <script>
         $(".is_fev").click(function() {
             var id = $(this).attr('data-id');
@@ -379,8 +278,12 @@ console.log(web_theme);
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo SITEURL; ?>pages/star/add/' + id,
-                    success: function(data) { $("#cover").html(data); },
-                    error: function(comment) { $("#cover").html(comment); }
+                    success: function(data) {
+                        $("#cover").html(data);
+                    },
+                    error: function(comment) {
+                        $("#cover").html(comment);
+                    }
                 });
 
 
@@ -392,8 +295,12 @@ console.log(web_theme);
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo SITEURL; ?>pages/star/rm/' + id,
-                    success: function(data) { $("#cover").html(data); },
-                    error: function(comment) { $("#cover").html(comment); }
+                    success: function(data) {
+                        $("#cover").html(data);
+                    },
+                    error: function(comment) {
+                        $("#cover").html(comment);
+                    }
                 });
             }
 
@@ -408,7 +315,7 @@ console.log(web_theme);
             }
             $.ajax({
                 type: 'POST',
-                url: '<?php echo SITEURL; ?>pages/theme/' + t,
+                url: '<?php echo SITEURL; ?>homes/theme/' + t,
                 success: function(data) {
                     $("#cover").html(data);
                 },
@@ -419,6 +326,6 @@ console.log(web_theme);
         }
     </script>
 
-    <script src="<?= SITEURL; ?>js/tableScript.js"></script>
-    <script src="<?= SITEURL; ?>js/script.js"></script>
+    
+    <?= $this->fetch('scriptBottom'); ?>
 </body>

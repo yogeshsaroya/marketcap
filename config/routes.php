@@ -56,9 +56,11 @@ return static function (RouteBuilder $routes) {
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
          */
-        $builder->connect('/homes/{action}/*', ['controller' => 'Homes']);
+        $builder->connect('/pages', ['controller' => 'Pages', 'action' => 'index']);
         $builder->connect('/pages/{action}/*', ['controller' => 'Pages']);
+        $builder->connect('/homes/{action}/*', ['controller' => 'Homes']);
         $builder->connect('/crons/{action}/*', ['controller' => 'Crons']);
+        $builder->connect('/users/{action}/*', ['controller' => 'Users']);
 
 
         $builder->connect('/register/*', ['controller' => 'Users', 'action' => 'register']);

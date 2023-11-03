@@ -215,7 +215,7 @@
                 404
             </div>
             <div style="font-size:80px;">
-                Page not found :-(
+                Page not Found :-(
             </div>
         </div>
     </div>

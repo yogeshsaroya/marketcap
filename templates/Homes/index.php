@@ -75,7 +75,7 @@ $theme = $this->request->getSession()->read('theme');
         <thead>
             <tr>
                 <th tid="1" class="th-id-1 th-name sorting"></th>
-                <th tid="2" class="th-id-2 th-name sorting">Rank</th>
+                <th tid="2" class="th-id-2 th-rank sorting">Rank</th>
                 <th tid="3" class="th-id-3 th-name sorting">Name</th>
                 <th tid="4" class="th-id-4 th-name sorting">Symbol</th>
                 <th tid="5" class="th-id-5 th-mcap sorting text-right">Market Cap</th>
@@ -173,3 +173,135 @@ $theme = $this->request->getSession()->read('theme');
             ?>
     </ul>
 </nav>
+
+<?php
+echo $this->Html->script(['tableScript'], ['block' => 'scriptBottom']);
+$this->append('scriptBottom');  ?>
+<script>
+    const table = document.querySelector('.marketcap-table');
+    const thRank = table.querySelector('.th-rank');
+    const thPrice = table.querySelector('.th-price');
+    const thMcap = table.querySelector('.th-mcap');
+    const thMcapLoss = table.querySelector('.th-mcap-loss');
+    const thMcapGain = table.querySelector('.th-mcap-gain');
+    const th1d = table.querySelector('.th-1d');
+    const thCountry = table.querySelector('.th-country');
+    var rankIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(thRank);
+    var priceIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(thPrice);
+    var th1dIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(th1d);
+    var addedMovers = false;
+
+    function makeMobile() {
+        //unmake mobile
+        if (window.innerWidth > 996) {
+            // add movers
+            if (!addedMovers) {
+                table.querySelectorAll('tr td:nth-child(' + (rankIndex + 1) + ')').forEach(function(td) {
+                    var moves = td.getAttribute('moves')
+                    if (moves != null) {
+                        if (moves > 0) {
+                            td.innerHTML = '<span class="mover up responsive-hidden"><i class="arrow"></i> ' + Math.abs(moves) + '</span>' + td.innerHTML
+                        } else if (moves < 0) {
+                            td.innerHTML = '<span class="mover down responsive-hidden"><i class="arrow"></i> ' + Math.abs(moves) + '</span>' + td.innerHTML
+                        }
+                    }
+                });
+                addedMovers = true;
+            }
+            thRank.innerHTML = 'Rank';
+            if (thMcap != null) {
+                thMcap.innerHTML = 'Market Cap';
+            }
+            if (thMcapGain != null) {
+                thMcapGain.innerHTML = 'Market Cap gain';
+            }
+            if (thMcapLoss != null) {
+                thMcapLoss.innerHTML = 'Market Cap loss';
+            }
+            
+            thCountry.innerHTML = 'Country';
+            table.querySelectorAll('tr').forEach(function(tr) {
+                tr.querySelector('th:nth-child(' + (rankIndex + 1) + '), td:nth-child(' + (rankIndex + 1) + ')').classList.remove("d-none")
+                const spanRank = tr.querySelector('td span.rank');
+                if (spanRank != null) {
+                    spanRank.classList.add('d-none');
+                    spanRank.innerHtml = '';
+                }
+            });
+        }
+        //make mobile
+        if (window.innerWidth <= 996) {
+            thRank.innerHTML = '#';
+            if (thMcap != null) {
+                thMcap.innerHTML = 'M. Cap';
+            }
+            if (thMcapGain != null) {
+                thMcapGain.innerHTML = 'M. Cap gain';
+            }
+            if (thMcapLoss != null) {
+                thMcapLoss.innerHTML = 'M. Cap loss';
+            }
+            th1d.innerHTML = '1d';
+            thCountry.innerHTML = 'C.';
+            table.querySelectorAll('tr').forEach(function(tr) {
+                tr.querySelector('th:nth-child(' + (rankIndex + 1) + '), td:nth-child(' + (rankIndex + 1) + ')').classList.add("d-none")
+                const spanRank = tr.querySelector('td span.rank');
+                if (spanRank != null) {
+                    spanRank.classList.remove('d-none');
+                    spanRank.innerHTML = tr.querySelector('td:nth-child(' + (rankIndex + 1) + ')').getAttribute('data-sort');
+                }
+                const priceTd = tr.querySelector('td:nth-child(' + (priceIndex + 1) + ')');
+                if (priceTd != null) {
+                    if (window.innerWidth <= 650) {
+                        if (!priceTd.classList.contains('pt-2')) {
+                            priceTd.classList.add('pt-2');
+                            if (priceTd != null) {
+                                priceTd.innerHTML = '<div class="price">' + priceTd.innerHTML + '</div><div>' + tr.querySelector('td:nth-child(' + (th1dIndex + 1) + ')').innerHTML + '</div>';
+                            }
+                        }
+                    } else {
+                        if (priceTd.classList.contains('pt-2')) {
+                            priceTd.classList.remove('pt-2');
+                            if (priceTd != null) {
+                                priceTd.innerHTML = priceTd.querySelector('.price').innerHTML;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+    makeMobile();
+    window.addEventListener('resize', makeMobile);
+
+
+var searchInput = document.getElementById("search-input"); var xhr = new XMLHttpRequest()
+searchInput.addEventListener("keyup", function (e) {
+        xhr.abort(); if (searchInput.value.length == 0) { document.getElementById("typeahead-search-results").style.display = "none"; } else {
+                xhr.open('GET', 'homes/search?action=search&query=' + searchInput.value); xhr.responseType = 'json'; xhr.send(); xhr.onload = function () {
+                        let searchResponse = xhr.response; document.getElementById("typeahead-search-results").style.display = "block"; var aheadHtml = ''; var darkPathSupplement; var isDarkMode = document.body.classList.contains('dark'); for (var i in searchResponse) {
+                                if (isDarkMode && searchResponse[i]["img_dark_png"] == "1") { darkPathSupplement = '.D'; } else { darkPathSupplement = ''; }
+                                aheadHtml = aheadHtml.concat('<a href="' + searchResponse[i]["url"] + '">' +
+                                        '    <div class="float-left pt-1 clear-both"><img class="company-logo" src="' + searchResponse[i]["logo"] + '"></div>' +
+                                        '    <div class="pl-5">' +
+                                        '        <div class="company-name">' + searchResponse[i]["name"] + '</div>' +
+                                        '        <div class="company-code">' + searchResponse[i]["symbol"] + '</div>' +
+                                        '    </div>' +
+                                        '</a>');
+                        }
+                        document.getElementById("typeahead-search-results").innerHTML = aheadHtml;
+                };
+        }
+}); searchInput.onfocus = function () { if (searchInput.value.length > 0) { document.getElementById("typeahead-search-results").style.display = "block"; } }; var dropdowns = document.querySelectorAll(".dropdown-toggle"); var currentlyOpenedDropdown; for (var i = 0; i < dropdowns.length; i++) {
+        console.log(dropdowns); dropdowns[i].addEventListener("click", function (evt) {
+                evt.preventDefault(); var newCurrentlyOpenedDropdown = evt.target.parentNode; var wasOpen = false; if (newCurrentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) { wasOpen = true; }
+                if (typeof currentlyOpenedDropdown != 'undefined' && currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show"); }
+                currentlyOpenedDropdown = newCurrentlyOpenedDropdown; if (!wasOpen) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.add("show"); }
+        }); window.addEventListener('click', function (e) {
+                if (typeof currentlyOpenedDropdown != 'undefined' && !currentlyOpenedDropdown.contains(e.target)) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show"); }
+                if (!document.querySelector('.search-form').contains(e.target)) { document.querySelector("#typeahead-search-results").style.display = 'none'; }
+        });
+}
+</script>
+
+<?php $this->end();  ?>

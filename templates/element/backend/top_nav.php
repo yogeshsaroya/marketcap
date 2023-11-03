@@ -101,9 +101,8 @@
     <div class="shadow-bottom"></div>
     <div class="navbar-container main-menu-content" data-menu="menu-container">
       <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
-        <li class=" nav-item <?php echo (isset($menu_act) && $menu_act == 'index' ? 'active' : null); ?>"><a class="d-flex align-items-center" href="<?php echo SITEURL; ?>pages">Reports</a></li>
-        <li class=" nav-item <?php echo (isset($menu_act) && $menu_act == 'contact' ? 'active' : null); ?>"><a class="d-flex align-items-center" href="<?php echo SITEURL; ?>pages/contact">Contact</a></li>
-        <li class=" nav-item <?php echo (isset($menu_act) && $menu_act == 'wallet' ? 'active' : null); ?>"><a class="d-flex align-items-center" href="<?php echo SITEURL; ?>pages/wallet">Wallet</a></li>
+        <li class=" nav-item <?php echo (isset($menu_act) && $menu_act == 'index' ? 'active' : null); ?>"><a class="d-flex align-items-center" href="<?php echo SITEURL; ?>pages">Stocks</a></li>
+        <li class=" nav-item <?php echo (isset($menu_act) && $menu_act == 'users' ? 'active' : null); ?>"><a class="d-flex align-items-center" href="<?php echo SITEURL; ?>pages/users">Users</a></li>
         <li class=" nav-item <?php echo (isset($menu_act) && $menu_act == 'settings' ? 'active' : null); ?>"><a class="d-flex align-items-center" href="<?php echo SITEURL; ?>pages/settings">Settings</a></li>
         <li class=" nav-item"><a class="d-flex align-items-center" href="<?php echo SITEURL; ?>users/logout">Logout</a></li>
       </ul>

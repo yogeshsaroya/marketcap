@@ -7,33 +7,8 @@ function lightOff() {
         document.body.classList.add('dark'); document.cookie = 'darkmode=1;  max-age=91536000000; path=/;'; var companyLogos = document.querySelectorAll(".company-logo, .company-profile-logo"); for (i = 0; i < companyLogos.length; i++) { if (companyLogos[i].hasAttribute("data-img-dark-path")) { companyLogos[i].src = companyLogos[i].getAttribute("data-img-dark-path"); } }
         return false;
 }
-addListener("#light-on-btn", "click", function (e) { lightOn(); }); addListener("#light-off-btn", "click", function (e) { lightOff(); }); var searchInput = document.getElementById("search-input"); var xhr = new XMLHttpRequest()
-searchInput.addEventListener("keyup", function (e) {
-        xhr.abort(); if (searchInput.value.length == 0) { document.getElementById("typeahead-search-results").style.display = "none"; } else {
-                xhr.open('GET', 'homes/search?action=search&query=' + searchInput.value); xhr.responseType = 'json'; xhr.send(); xhr.onload = function () {
-                        let searchResponse = xhr.response; document.getElementById("typeahead-search-results").style.display = "block"; var aheadHtml = ''; var darkPathSupplement; var isDarkMode = document.body.classList.contains('dark'); for (var i in searchResponse) {
-                                if (isDarkMode && searchResponse[i]["img_dark_png"] == "1") { darkPathSupplement = '.D'; } else { darkPathSupplement = ''; }
-                                aheadHtml = aheadHtml.concat('<a href="' + searchResponse[i]["url"] + '">' +
-                                        '    <div class="float-left pt-1 clear-both"><img class="company-logo" src="' + searchResponse[i]["logo"] + '"></div>' +
-                                        '    <div class="pl-5">' +
-                                        '        <div class="company-name">' + searchResponse[i]["name"] + '</div>' +
-                                        '        <div class="company-code">' + searchResponse[i]["symbol"] + '</div>' +
-                                        '    </div>' +
-                                        '</a>');
-                        }
-                        document.getElementById("typeahead-search-results").innerHTML = aheadHtml;
-                };
-        }
-}); searchInput.onfocus = function () { if (searchInput.value.length > 0) { document.getElementById("typeahead-search-results").style.display = "block"; } }; var dropdowns = document.querySelectorAll(".dropdown-toggle"); var currentlyOpenedDropdown; for (var i = 0; i < dropdowns.length; i++) {
-        console.log(dropdowns); dropdowns[i].addEventListener("click", function (evt) {
-                evt.preventDefault(); var newCurrentlyOpenedDropdown = evt.target.parentNode; var wasOpen = false; if (newCurrentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) { wasOpen = true; }
-                if (typeof currentlyOpenedDropdown != 'undefined' && currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show"); }
-                currentlyOpenedDropdown = newCurrentlyOpenedDropdown; if (!wasOpen) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.add("show"); }
-        }); window.addEventListener('click', function (e) {
-                if (typeof currentlyOpenedDropdown != 'undefined' && !currentlyOpenedDropdown.contains(e.target)) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show"); }
-                if (!document.querySelector('.search-form').contains(e.target)) { document.querySelector("#typeahead-search-results").style.display = 'none'; }
-        });
-}
+addListener("#light-on-btn", "click", function (e) { lightOn(); }); addListener("#light-off-btn", "click", function (e) { lightOff(); }); 
+
 navCollapseVisible = false; document.querySelector(".navbar .navbar-toggler").addEventListener("click", function (evt) { if (!navCollapseVisible) { document.querySelector(".navbar .navbar-collapse").classList.add("show"); navCollapseVisible = true; } else { document.querySelector(".navbar .navbar-collapse").classList.remove("show"); navCollapseVisible = false; } }); var getCellValue = function (tr, idx) { return tr.children[idx].getAttribute('data-sort') || tr.children[idx].innerText || tr.children[idx].textContent; }
 var comparer = function (idx, asc) { return function (a, b) { return function (v1, v2) { return v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2); }(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx)); } }; function resetSortings() { document.querySelectorAll('.marketcap-table th.sorting').forEach(sortingTH => { sortingTH.classList.remove("sorting_asc"); sortingTH.classList.remove("sorting_desc"); }); }
 function updateSortingOfTH(th, sortClass) { if (th.hasAttribute("tid")) { document.querySelectorAll(".th-id-" + th.getAttribute("tid")).forEach(nTH => { nTH.classList.add(sortClass); }); } else { th.classList.add(sortClass); } }
