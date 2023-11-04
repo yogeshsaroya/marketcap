@@ -282,8 +282,8 @@
         $(".is_fev").click(function() {
             var id = $(this).attr('data-id');
             if ($(this).hasClass("add_star") === true) {
-                $(this).removeClass("add_star").addClass("rm_star");
-                $(this).attr("src", "<?= SITEURL; ?>img/star_dark.svg");
+                // $(this).removeClass("add_star").addClass("rm_star");
+                // $(this).attr("src", "<?= SITEURL; ?>img/star_dark.svg");
 
                 $.ajax({
                     type: 'POST',
@@ -298,8 +298,8 @@
 
 
             } else {
-                $(this).removeClass("rm_star").addClass("add_star");
-                $(this).attr("src", "<?= SITEURL; ?>img/star.svg");
+                // $(this).removeClass("rm_star").addClass("add_star");
+                // $(this).attr("src", "<?= SITEURL; ?>img/star.svg");
 
 
                 $.ajax({
@@ -338,4 +338,5 @@
 
     
     <?= $this->fetch('scriptBottom'); ?>
+    <div id="cover"></div>
 </body>

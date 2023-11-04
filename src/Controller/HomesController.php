@@ -60,22 +60,36 @@ class HomesController extends AppController
 
     public function star($type = null, $id = null ){
         $this->disableAutoRender();
-        $session = $this->request->getSession();
-        $arr = $session->read('star');
-        if(!empty($type) && !empty($id)){
-            if($type == 'add'){
-                $arr[$id] = $id;
-                $session->write('star',$arr);
-                ec($arr);
+        if ($this->Auth->User('id') != "") {
+            if(!empty($type) && !empty($id)){
+                $query = $this->fetchTable('Watchlists')->find('all', [ 'conditions' => ['user_id' => $this->Auth->User('id'),'stock_id'=>$id] ]);
+                $row = $query->first();
+                if($type == 'add'){
+                    if(empty($row)){
+                        $watchlist = $this->fetchTable('Watchlists')->newEmptyEntity();
+                        $watchlist->user_id = $this->Auth->User('id') ;
+                        $watchlist->stock_id = $id;
+                        $this->fetchTable('Watchlists')->save($watchlist);
+                        echo '<script>$("#sel_'.$id.'").removeClass("add_star").addClass("rm_star");$("#sel_'.$id.'").attr("src", "'.SITEURL.'img/star_dark.svg");</script>';
+                    }
+                }
+                elseif($type == 'rm'){
+                    if(!empty($row)){
+                        $this->fetchTable('Watchlists')->delete($row);
+                        echo '<script>$("#sel_'.$id.'").removeClass("rm_star").addClass("add_star"); $("#sel_'.$id.'").attr("src", "'.SITEURL.'img/star.svg");</script>';
+                    }
+                }
             }
-            elseif($type == 'rm'){
-                unset($arr[$id]);
-                $session->write('star',$arr);
-                ec($arr);
+            
+        }else{
+            if ($this->request->is('ajax')) {
+                $u = SITEURL . "login";
+                echo "<script>window.location.href ='" . $u . "'; </script>";
+                exit;
+            } else {
+                $this->redirect('/login');
             }
         }
-        
-
         exit;
 
     }
@@ -83,9 +97,11 @@ class HomesController extends AppController
 
     public function index()
     {
-        $session = $this->request->getSession();
-        $star = $session->read('star');
-        $data = [];
+        $star = $data = [];
+        if ($this->Auth->User('id') != "") {
+            $query = $this->fetchTable('Watchlists')->find('list', ['conditions'=>['user_id'=>$this->Auth->User('id')], 'keyField' => 'stock_id','valueField' => 'stock_id']);
+            $star = $query->toArray();
+        }
         try {
             $this->paginate = ['conditions' => ['type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
             $data = $this->paginate($this->fetchTable('Stocks')->find('all'));

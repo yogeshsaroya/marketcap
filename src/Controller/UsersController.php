@@ -51,40 +51,80 @@ class UsersController extends AppController
 
     public function index()
     {
-        $session = $this->request->getSession();
-        $auth = $session->read('Auth.User');
         $data = [];
-        $query = $this->fetchTable('Portfolios')->find('list', ['conditions'=>['user_id'=>$auth->id], 'keyField' => 'stock_id','valueField' => 'stock_id']);
+        $query = $this->fetchTable('Portfolios')->find('list', ['conditions' => ['user_id' => $this->Auth->User('id')], 'keyField' => 'stock_id', 'valueField' => 'stock_id']);
         $arr = $query->toArray();
-        if(!empty($arr)){
+        if (!empty($arr)) {
             try {
-                $this->paginate = ['conditions' => ['id IN'=>$arr, 'type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
+                $this->paginate = ['conditions' => ['id IN' => $arr, 'type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
                 $data = $this->paginate($this->fetchTable('Stocks')->find('all'));
             } catch (\Throwable $th) {
             }
         }
-        $this->set(compact('data','arr'));
+        $this->set(compact('data', 'arr'));
     }
 
 
     public function watchlist()
     {
-        $session = $this->request->getSession();
-        $auth = $session->read('Auth.User');
-        $data = [];
-        $query = $this->fetchTable('Watchlists')->find('list', ['conditions'=>['user_id'=>$auth->id], 'keyField' => 'stock_id','valueField' => 'stock_id']);
+        $data = null;
+        $query = $this->fetchTable('Watchlists')->find('list', ['conditions' => ['user_id' => $this->Auth->User('id')], 'keyField' => 'stock_id', 'valueField' => 'stock_id']);
         $arr = $query->toArray();
-        if(!empty($arr)){
+        if (!empty($arr)) {
             try {
-                $this->paginate = ['conditions' => ['id IN'=>$arr, 'type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
+                $this->paginate = ['conditions' => ['id IN' => $arr, 'type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
                 $data = $this->paginate($this->fetchTable('Stocks')->find('all'));
             } catch (\Throwable $th) {
             }
         }
-        $this->set(compact('data','arr'));
+        $this->set(compact('data', 'arr'));
     }
 
-    
+    public function profile()
+    {
+        if ($this->request->is('ajax')) {
+            if (!empty($this->request->getData())) {
+                $postData = $this->request->getData();
+
+                $validate = ['validate' => true];
+                if (!empty($postData['password1'])) {
+                    $postData['password'] = $postData['password1'];
+                } else {
+                    $validate = ['validate' => 'OnlyCheck'];
+                }
+
+
+                $getData = $this->fetchTable('Users')->get($postData['id']);
+                $chkData = $this->fetchTable('Users')->patchEntity($getData, $postData, $validate);
+
+
+                if ($chkData->getErrors()) {
+                    $st = null;
+                    foreach ($chkData->getErrors() as $elist) {
+                        foreach ($elist as $k => $v); {
+                            $st .= "<div class='alert alert-danger'>" . $v . "</div>";
+                        }
+                    }
+                    echo $st;
+                    exit;
+                } else {
+                    if ($this->fetchTable('Users')->save($chkData)) {
+                        echo "<div class='alert alert-success'>Saved</div>";
+                        echo "<script> setTimeout(function(){ location.reload(); }, 1000);</script>";
+                    } else {
+                        echo '<div class="alert alert-danger" role="alert"> Not saved.</div>';
+                    }
+                }
+              
+            } 
+            exit;
+        }
+
+        $profile = $this->fetchTable('Users')->find('all')->where(['Users.id' => $this->Auth->User('id')])->first();
+        $this->set(compact('profile'));
+    }
+
+
 
     public function resetPassword($type = null, $id = null)
     {
@@ -168,7 +208,7 @@ class UsersController extends AppController
         }
         exit;
     }
-   
+
 
     public function register()
     {
@@ -252,7 +292,6 @@ class UsersController extends AppController
     public function login()
     {
 
-        
         if ($this->Auth->User('id') != "") {
             if ($this->request->is('ajax')) {
                 $u = SITEURL . "dashboard";
@@ -313,7 +352,7 @@ class UsersController extends AppController
         if ($this->request->is('ajax') && !empty($this->request->getData())) {
 
             $post_data = $this->request->getData();
-            
+
             if (empty($post_data['email'])) {
                 echo $s;
                 echo '<div class="alert alert-danger">Please enter email id.</div>';
@@ -333,11 +372,11 @@ class UsersController extends AppController
                         echo '<script>$("#login_sbtn").remove();window.location.href = "' . $q_url . '"</script>';
                         exit;
                     } else {
-                        
+
                         echo '<div class="alert alert-danger">Password is invalid</div>';
                     }
                 } else {
-                    
+
                     echo '<div class="alert alert-danger">User id or password is incorrect</div>';
                 }
             }

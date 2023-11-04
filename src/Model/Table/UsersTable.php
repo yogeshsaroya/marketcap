@@ -49,4 +49,11 @@ class UsersTable extends Table
 
         return $validator;
     }
+
+
+    public function validationOnlyCheck(Validator $validator) {
+        $validator = $this->validationDefault($validator);
+        $validator->remove('password');
+        return $validator;
+    }
 }

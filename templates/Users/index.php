@@ -22,13 +22,14 @@ $theme = $this->request->getSession()->read('theme');
   <table class="default-table table marketcap-table dataTable" style="width:100%">
     <thead>
       <tr>
-        <th tid="1" class="th-id-1 th-name sorting"></th>
+        <th tid="1" class="th-id-1 th-name sorting">Watchlist</th>
         <th tid="2" class="th-id-2 th-rank sorting">Rank</th>
         <th tid="3" class="th-id-3 th-name sorting">Name</th>
         <th tid="4" class="th-id-4 th-name sorting">Symbol</th>
         <th tid="5" class="th-id-5 th-mcap sorting text-right">Market Cap</th>
         <th tid="6" class="th-id-6 th-price sorting text-right">Price</th>
         <th tid="7" class="th-id-7 th-country sorting">Country</th>
+        <th tid="8" class="th-id-8">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -48,7 +49,7 @@ $theme = $this->request->getSession()->read('theme');
       ?>
           <tr>
             <td>
-              <img src="<?= SITEURL . (isset($star[$list->id]) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= (isset($star[$list->id]) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>" />
+              <img src="<?= SITEURL . (isset($arr[$list->id]) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= (isset($arr[$list->id]) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>" />
 
             </td>
             <td class="td-center" data-sort="<?= $num; ?>"><?= $num; ?></td>
@@ -64,7 +65,7 @@ $theme = $this->request->getSession()->read('theme');
                   <div class="company-code"><span class="rank d-none"></span><?= $list->symbol; ?></div>
                 </a></div>
             </td>
-            <td class="td-left"><?= strtoupper($list->symbol); ?></td>
+            <td class="td-left"> <span class="badge badge-company"><?= strtoupper($list->symbol); ?></span></td>
             <td class="td-left" data-sort="<?= $list->market_cap; ?>">$<?= nice_number($list->market_cap); ?></td>
             <td class="td-left" data-sort="<?= $list->stock_price; ?>">$<?= num_2($list->stock_price); ?></td>
 
@@ -73,10 +74,15 @@ $theme = $this->request->getSession()->read('theme');
                 <img class="flag" src="img/flags/<?= strtolower($list->country); ?>.png"> <span class="responsive-hidden"><?= $list->country; ?></span>
               <?php } ?>
             </td>
+            <td class="td-left">
+              <a href="javascript:void(0);">Edit</a>
+            </td>
           </tr>
-      <?php $num++;
+          <?php $num++;
         }
-      } ?>
+      } else { ?>
+        <td colspan="8" align="center">Portfolio is empty</td>
+      <?php } ?>
 
 
     </tbody>

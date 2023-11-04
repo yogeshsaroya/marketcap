@@ -11,29 +11,30 @@ $theme = $this->request->getSession()->read('theme');
 <br>
 
 <div class="ranking-bar">
-  
-  <a href="<?= SITEURL?>dashboard"><span class="option">Portfolio</span></a> 
-  <a href="<?= SITEURL?>watchlist"><span class="option active">Watchlist</span></a> 
-  <a href="<?= SITEURL?>users/profile"><span class="option ">Profile</span></a> 
-  <a href="<?= SITEURL?>users/logout"><span class="option ">Logout</span></a> 
-  
+
+  <a href="<?= SITEURL ?>dashboard"><span class="option">Portfolio</span></a>
+  <a href="<?= SITEURL ?>watchlist"><span class="option active">Watchlist</span></a>
+  <a href="<?= SITEURL ?>users/profile"><span class="option ">Profile</span></a>
+  <a href="<?= SITEURL ?>users/logout"><span class="option ">Logout</span></a>
+
 </div>
 
 <div class="table-container shadow">
   <table class="default-table table marketcap-table dataTable" style="width:100%">
     <thead>
       <tr>
-        <th tid="1" class="th-id-1 th-name sorting"></th>
+        <th tid="1" class="th-id-1 th-name sorting">Watchlist</th>
         <th tid="2" class="th-id-2 th-rank sorting">Rank</th>
         <th tid="3" class="th-id-3 th-name sorting">Name</th>
         <th tid="4" class="th-id-4 th-name sorting">Symbol</th>
         <th tid="5" class="th-id-5 th-mcap sorting text-right">Market Cap</th>
         <th tid="6" class="th-id-6 th-price sorting text-right">Price</th>
         <th tid="7" class="th-id-7 th-country sorting">Country</th>
+        <th tid="8" class="th-id-8">Action</th>
       </tr>
     </thead>
     <tbody>
-      <?php if (!$data->isEmpty()) {
+      <?php if (isset($data) && !$data->isEmpty()) {
         $num = $this->Paginator->counter('{{start}}');
         foreach ($data as $list) {
 
@@ -49,7 +50,7 @@ $theme = $this->request->getSession()->read('theme');
       ?>
           <tr>
             <td>
-              <img src="<?= SITEURL . (isset($star[$list->id]) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= (isset($star[$list->id]) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>" />
+              <img src="<?= SITEURL . (isset($arr[$list->id]) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= (isset($arr[$list->id]) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>" />
 
             </td>
             <td class="td-center" data-sort="<?= $num; ?>"><?= $num; ?></td>
@@ -65,7 +66,7 @@ $theme = $this->request->getSession()->read('theme');
                   <div class="company-code"><span class="rank d-none"></span><?= $list->symbol; ?></div>
                 </a></div>
             </td>
-            <td class="td-left"><?= strtoupper($list->symbol); ?></td>
+            <td class="td-left"> <span class="badge badge-company"><?= strtoupper($list->symbol); ?></span></td>
             <td class="td-left" data-sort="<?= $list->market_cap; ?>">$<?= nice_number($list->market_cap); ?></td>
             <td class="td-left" data-sort="<?= $list->stock_price; ?>">$<?= num_2($list->stock_price); ?></td>
 
@@ -74,20 +75,21 @@ $theme = $this->request->getSession()->read('theme');
                 <img class="flag" src="img/flags/<?= strtolower($list->country); ?>.png"> <span class="responsive-hidden"><?= $list->country; ?></span>
               <?php } ?>
             </td>
+            <td class="td-left">
+              <a href="javascript:void(0);">Add to Portfolio</a>
+            </td>
           </tr>
-      <?php $num++;
+        <?php $num++;
         }
-      } ?>
+      } else { ?>
+        <td colspan="8" align="center">Watchlist is empty</td>
+      <?php } ?>
 
 
     </tbody>
   </table>
 </div>
-<div class="bottom-table-description">
-  <p>This is the list of the world's biggest companies by market capitalization. It ranks the most valuable public
-    companies. Private companies are not included in our lists as it is difficult to calculate their market
-    value and know their financials.</p>
-</div>
+
 <?php
 /* ?>
 <nav>
@@ -107,17 +109,19 @@ $theme = $this->request->getSession()->read('theme');
   <ul class=" pagination justify-content-center">
     <li class="page-item">
       <?php
-      if ($this->request->is('mobile')) {
-        echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
-        echo $this->Paginator->prev('Prev', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->next('Next', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
-      } else {
-        echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
-        echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->numbers(['first' => 1, 'last' => 1], [['separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a']]);
-        echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
+      if (isset($data) && !$data->isEmpty()) {
+        if ($this->request->is('mobile')) {
+          echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
+          echo $this->Paginator->prev('Prev', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+          echo $this->Paginator->next('Next', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+          echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
+        } else {
+          echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
+          echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+          echo $this->Paginator->numbers(['first' => 1, 'last' => 1], [['separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a']]);
+          echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+          echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
+        }
       }
       ?>
   </ul>
@@ -222,75 +226,6 @@ $this->append('scriptBottom');  ?>
   }
   makeMobile();
   window.addEventListener('resize', makeMobile);
-
-
-  var searchInput = document.getElementById("search-input");
-  var xhr = new XMLHttpRequest()
-  searchInput.addEventListener("keyup", function(e) {
-    xhr.abort();
-    if (searchInput.value.length == 0) {
-      document.getElementById("typeahead-search-results").style.display = "none";
-    } else {
-      xhr.open('GET', 'homes/search?action=search&query=' + searchInput.value);
-      xhr.responseType = 'json';
-      xhr.send();
-      xhr.onload = function() {
-        let searchResponse = xhr.response;
-        document.getElementById("typeahead-search-results").style.display = "block";
-        var aheadHtml = '';
-        var darkPathSupplement;
-        var isDarkMode = document.body.classList.contains('dark');
-        for (var i in searchResponse) {
-          if (isDarkMode && searchResponse[i]["img_dark_png"] == "1") {
-            darkPathSupplement = '.D';
-          } else {
-            darkPathSupplement = '';
-          }
-          aheadHtml = aheadHtml.concat('<a href="' + searchResponse[i]["url"] + '">' +
-            '    <div class="float-left pt-1 clear-both"><img class="company-logo" src="' + searchResponse[i]["logo"] + '"></div>' +
-            '    <div class="pl-5">' +
-            '        <div class="company-name">' + searchResponse[i]["name"] + '</div>' +
-            '        <div class="company-code">' + searchResponse[i]["symbol"] + '</div>' +
-            '    </div>' +
-            '</a>');
-        }
-        document.getElementById("typeahead-search-results").innerHTML = aheadHtml;
-      };
-    }
-  });
-  searchInput.onfocus = function() {
-    if (searchInput.value.length > 0) {
-      document.getElementById("typeahead-search-results").style.display = "block";
-    }
-  };
-  var dropdowns = document.querySelectorAll(".dropdown-toggle");
-  var currentlyOpenedDropdown;
-  for (var i = 0; i < dropdowns.length; i++) {
-    console.log(dropdowns);
-    dropdowns[i].addEventListener("click", function(evt) {
-      evt.preventDefault();
-      var newCurrentlyOpenedDropdown = evt.target.parentNode;
-      var wasOpen = false;
-      if (newCurrentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) {
-        wasOpen = true;
-      }
-      if (typeof currentlyOpenedDropdown != 'undefined' && currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) {
-        currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show");
-      }
-      currentlyOpenedDropdown = newCurrentlyOpenedDropdown;
-      if (!wasOpen) {
-        currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.add("show");
-      }
-    });
-    window.addEventListener('click', function(e) {
-      if (typeof currentlyOpenedDropdown != 'undefined' && !currentlyOpenedDropdown.contains(e.target)) {
-        currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show");
-      }
-      if (!document.querySelector('.search-form').contains(e.target)) {
-        document.querySelector("#typeahead-search-results").style.display = 'none';
-      }
-    });
-  }
 </script>
 
 <?php $this->end();  ?>
