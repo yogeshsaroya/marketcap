@@ -287,7 +287,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '<?php echo SITEURL; ?>pages/star/add/' + id,
+                    url: '<?php echo SITEURL; ?>homes/star/add/' + id,
                     success: function(data) {
                         $("#cover").html(data);
                     },
@@ -304,7 +304,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '<?php echo SITEURL; ?>pages/star/rm/' + id,
+                    url: '<?php echo SITEURL; ?>homes/star/rm/' + id,
                     success: function(data) {
                         $("#cover").html(data);
                     },

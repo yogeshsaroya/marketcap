@@ -51,63 +51,40 @@ class UsersController extends AppController
 
     public function index()
     {
+        $session = $this->request->getSession();
+        $auth = $session->read('Auth.User');
+        $data = [];
+        $query = $this->fetchTable('Portfolios')->find('list', ['conditions'=>['user_id'=>$auth->id], 'keyField' => 'stock_id','valueField' => 'stock_id']);
+        $arr = $query->toArray();
+        if(!empty($arr)){
+            try {
+                $this->paginate = ['conditions' => ['id IN'=>$arr, 'type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
+                $data = $this->paginate($this->fetchTable('Stocks')->find('all'));
+            } catch (\Throwable $th) {
+            }
+        }
+        $this->set(compact('data','arr'));
     }
 
 
-    public function dashboard()
+    public function watchlist()
     {
-        
-        /*
-        $this->paginate = ['limit' => 100, 'order' => ['id' => 'desc']];
-        $data = $this->paginate($this->fetchTable('Stocks')->find());
-        $settings = $this->fetchTable('Settings')->findById('1')->firstOrFail();
-        $this->set(compact('data', 'settings'));
-        */
-
-        /*
-        if ($this->request->is('ajax') && !empty($this->request->getData())) {
-            $post_data = $this->request->getData();
-            if (!$this->_valid_domain_name(trim($post_data['domain']))) {
-                echo "<div class='alert bg-danger'>Domain name is not valid.</div>";
-                exit;
+        $session = $this->request->getSession();
+        $auth = $session->read('Auth.User');
+        $data = [];
+        $query = $this->fetchTable('Watchlists')->find('list', ['conditions'=>['user_id'=>$auth->id], 'keyField' => 'stock_id','valueField' => 'stock_id']);
+        $arr = $query->toArray();
+        if(!empty($arr)){
+            try {
+                $this->paginate = ['conditions' => ['id IN'=>$arr, 'type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
+                $data = $this->paginate($this->fetchTable('Stocks')->find('all'));
+            } catch (\Throwable $th) {
             }
-
-            if (isset($settings->hcaptcha_secret) && !empty($settings->hcaptcha_secret)) {
-                if (isset($post_data['h-captcha-response']) && !empty($post_data['h-captcha-response'])) {
-                    $verifyResponse = file_get_contents('https://hcaptcha.com/siteverify?secret=' . $settings->hcaptcha_secret . '&response=' . $post_data['h-captcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR']);
-                    $responseData = json_decode($verifyResponse);
-                    if ($responseData->success) {
-
-                        $getData = $this->fetchTable('Reports')->newEmptyEntity();
-                        $chkData = $this->fetchTable('Reports')->patchEntity($getData, $post_data, ['validate' => true]);
-                        if ($chkData->getErrors()) {
-                            $st = null;
-                            foreach ($chkData->getErrors() as $elist) {
-                                foreach ($elist as $k => $v); {
-                                    $st .= "<div class='alert bg-danger'>$v</div>";
-                                }
-                            }
-                            echo $st;
-                            exit;
-                        } else {
-                            $verify = $this->fetchTable('Reports')->save($chkData);
-                            echo "<div class='alert alert-success'>Submitted<div>";
-                            echo '<script>$("#login_sbtn").remove(); location.reload(); </script>';
-                        }
-                    }
-                } else {
-                    echo "<div class='alert bg-danger'>Invalid Captcha</div>";
-                    exit;
-                }
-            } else {
-                echo "<div class='alert bg-danger'>Invalid Captcha</div>";
-                exit;
-            }
-
-
-            exit;
-        }*/
+        }
+        $this->set(compact('data','arr'));
     }
+
+    
 
     public function resetPassword($type = null, $id = null)
     {

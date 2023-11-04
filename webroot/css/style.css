@@ -2040,3 +2040,48 @@ a.login_btn {
     padding: 15px;
 }
 .dark a.login_btn { color: #fff; background-color: unset;}
+
+.badge-company {
+    background-color: #b599f1;
+}
+.badge {
+    border-radius: 14px;
+    padding: 3px 15px;
+    
+    color: #fff;
+}
+
+
+.search-form {
+
+    margin: auto;
+}
+
+.pagination li {
+    float: left;
+    margin-left: 2px;
+    margin-right: 2px;
+    list-style-type: none;
+}
+
+.pagination a,
+.pagination span {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    font-size: 20px;
+    font-weight: 700;
+    color: #444;
+}
+
+.pagination li.active a,
+.pagination span.active {
+    color: #fff;
+    background-color: #b599f1;
+}
+
+.nav_pag {
+    margin: 30px 0;
+}

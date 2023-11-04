@@ -68,7 +68,8 @@ return static function (RouteBuilder $routes) {
         $builder->connect('/reset-password/*', ['controller' => 'Users', 'action' => 'resetPassword']);
 
         
-        $builder->connect('/dashboard/*', ['controller' => 'Users', 'action' => 'dashboard']);
+        $builder->connect('/dashboard/*', ['controller' => 'Users', 'action' => 'index']);
+        $builder->connect('/watchlist/*', ['controller' => 'Users', 'action' => 'watchlist']);
         $builder->connect('/backend/*', ['controller' => 'users', 'action' => 'backend']);
 
         /*

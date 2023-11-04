@@ -7,39 +7,7 @@ $theme = $this->request->getSession()->read('theme');
 ?>
 
 <style>
-    .search-form {
-
-        margin: auto;
-    }
-
-    .pagination li {
-        float: left;
-        margin-left: 2px;
-        margin-right: 2px;
-        list-style-type: none;
-    }
-
-    .pagination a,
-    .pagination span {
-        padding: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-        border-radius: 5px;
-        background-color: #f7f7f7;
-        font-size: 20px;
-        font-weight: 700;
-        color: #444;
-    }
-
-    .pagination li.active a,
-    .pagination span.active {
-        color: #fff;
-        background-color: #b599f1;
-    }
-
-    .nav_pag {
-        margin: 30px 0;
-    }
+   
 </style>
 <h1 class="text-center h1-title">Largest Companies by Market Cap</h1>
 <div class="category-stats-bar">
@@ -116,7 +84,7 @@ $theme = $this->request->getSession()->read('theme');
                                     <div class="company-code"><span class="rank d-none"></span><?= $list->symbol; ?></div>
                                 </a></div>
                         </td>
-                        <td class="td-left"><?= strtoupper($list->symbol); ?></td>
+                        <td class="td-left"> <span class="badge badge-company"><?= strtoupper($list->symbol); ?></span></td>
                         <td class="td-left" data-sort="<?= $list->market_cap; ?>">$<?= nice_number($list->market_cap); ?></td>
                         <td class="td-left" data-sort="<?= $list->stock_price; ?>">$<?= num_2($list->stock_price); ?></td>
 

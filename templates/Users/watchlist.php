@@ -1,18 +1,19 @@
 <?php
-$this->assign('title', 'Portfolio Summary');
+$this->assign('title', 'Watchlist');
 
 $cap = $this->Data->getCaps();
 $theme = $this->request->getSession()->read('theme');
 
 ?>
+
 <br>
-<h1 class="text-center h1-title">Portfolio Summary</h1>
+<h1 class="text-center h1-title">Watchlist</h1>
 <br>
 
 <div class="ranking-bar">
   
-  <a href="<?= SITEURL?>dashboard"><span class="option active">Portfolio</span></a> 
-  <a href="<?= SITEURL?>watchlist"><span class="option ">Watchlist</span></a> 
+  <a href="<?= SITEURL?>dashboard"><span class="option">Portfolio</span></a> 
+  <a href="<?= SITEURL?>watchlist"><span class="option active">Watchlist</span></a> 
   <a href="<?= SITEURL?>users/profile"><span class="option ">Profile</span></a> 
   <a href="<?= SITEURL?>users/logout"><span class="option ">Logout</span></a> 
   
