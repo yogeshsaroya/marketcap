@@ -303,4 +303,19 @@ class HomesController extends AppController
         } else {
         }
     }
+
+     /* open new popup on ajax request */
+     public function openPop($id = null)
+     {
+         $this->autoRender = false;
+         $getData = $this->request->getData();
+         if (isset($getData['url']) && !empty($getData['url'])) {
+             if ($id == 1) {
+                 echo "<script> $.magnificPopup.open({items: { src: '" . urldecode($getData['url']) . "',type: 'ajax'}, closeOnContentClick: false, closeOnBgClick: false, showCloseBtn: false, enableEscapeKey: false, }); </script>";
+             } else {
+                 echo "<script> $.magnificPopup.open({items: { src: '" . urldecode($getData['url']) . "',type: 'ajax'}, closeMarkup: '<button class=\"mfp-close mfp-new-close\" type=\"button\" title=\"Close\">x</button>', closeOnContentClick: false, closeOnBgClick: false, showCloseBtn: true, enableEscapeKey: false}); </script>";
+             }
+         }
+         exit;
+     }
 }

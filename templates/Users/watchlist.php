@@ -3,6 +3,8 @@ $this->assign('title', 'Watchlist');
 
 $cap = $this->Data->getCaps();
 $theme = $this->request->getSession()->read('theme');
+echo $this->Html->css(['//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css','login'], ['block' => 'css']);
+echo $this->Html->script(['imask'], ['block' => 'script']);
 
 ?>
 
@@ -12,8 +14,9 @@ $theme = $this->request->getSession()->read('theme');
 
 <div class="ranking-bar">
 
+<a href="<?= SITEURL ?>watchlist"><span class="option active">Watchlist</span></a>
   <a href="<?= SITEURL ?>dashboard"><span class="option">Portfolio</span></a>
-  <a href="<?= SITEURL ?>watchlist"><span class="option active">Watchlist</span></a>
+  
   <a href="<?= SITEURL ?>users/profile"><span class="option ">Profile</span></a>
   <a href="<?= SITEURL ?>users/logout"><span class="option ">Logout</span></a>
 
@@ -24,7 +27,7 @@ $theme = $this->request->getSession()->read('theme');
     <thead>
       <tr>
         <th tid="1" class="th-id-1 th-name sorting">Watchlist</th>
-        <th tid="2" class="th-id-2 th-rank sorting">Rank</th>
+        
         <th tid="3" class="th-id-3 th-name sorting">Name</th>
         <th tid="4" class="th-id-4 th-name sorting">Symbol</th>
         <th tid="5" class="th-id-5 th-mcap sorting text-right">Market Cap</th>
@@ -35,7 +38,6 @@ $theme = $this->request->getSession()->read('theme');
     </thead>
     <tbody>
       <?php if (isset($data) && !$data->isEmpty()) {
-        $num = $this->Paginator->counter('{{start}}');
         foreach ($data as $list) {
 
           $logo = $logo_dark = $logo_nrm =  $list->logo;
@@ -53,7 +55,6 @@ $theme = $this->request->getSession()->read('theme');
               <img src="<?= SITEURL . (isset($arr[$list->id]) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" width="32px" alt="" class="is_fev <?= (isset($arr[$list->id]) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $list->id; ?>" data-id="<?= $list->id; ?>" />
 
             </td>
-            <td class="td-center" data-sort="<?= $num; ?>"><?= $num; ?></td>
             <td class="name-td">
               <div class="logo-container">
                 <?php if (!empty($logo)) { ?>
@@ -76,10 +77,10 @@ $theme = $this->request->getSession()->read('theme');
               <?php } ?>
             </td>
             <td class="td-left">
-              <a href="javascript:void(0);">Add to Portfolio</a>
+              <a href="javascript:void(0);" onclick="add_to_portfolio(<?= $list->id; ?>);">Add to Portfolio</a>
             </td>
           </tr>
-        <?php $num++;
+        <?php 
         }
       } else { ?>
         <td colspan="8" align="center">Watchlist is empty</td>
@@ -127,10 +128,32 @@ $theme = $this->request->getSession()->read('theme');
   </ul>
 </nav>
 
+
+
+
 <?php
-echo $this->Html->script(['tableScript'], ['block' => 'scriptBottom']);
+echo $this->Html->script(['tableScript','https://code.jquery.com/ui/1.13.2/jquery-ui.js'], ['block' => 'scriptBottom']);
 $this->append('scriptBottom');  ?>
 <script>
+    function add_to_portfolio(id) {
+        var d = "<?php echo urlencode(SITEURL . "users/add_to_portfolio/"); ?>" + id;
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo SITEURL; ?>homes/open_pop/2',
+            data: {
+                url: d
+            },
+            success: function(data) {
+                $("#cover").html(data);
+            },
+            error: function(comment) {
+                $("#cover").html(comment);
+            }
+        });
+    }
+
+   
+
   const table = document.querySelector('.marketcap-table');
   const thRank = table.querySelector('.th-rank');
   const thPrice = table.querySelector('.th-price');

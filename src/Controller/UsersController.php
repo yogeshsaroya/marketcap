@@ -43,7 +43,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         /* https://book.cakephp.org/4/en/controllers/components/authentication.html#AuthComponent::allow */
-        $this->Auth->allow(['index', 'register', 'resetPassword', 'login', 'backend', 'logout', 'setPassword']);
+        $this->Auth->allow(['register', 'resetPassword', 'login', 'backend', 'logout', 'setPassword']);
         //$this->Auth->allow();
         // Form helper https://codethepixel.com/tutorial/cakephp/cakephp-4-common-helpers
         /* https://codethepixel.com/tutorial/cakephp/cakephp-4-find-sort-count */
@@ -51,7 +51,11 @@ class UsersController extends AppController
 
     public function index()
     {
-        $data = [];
+        $arr = $data = [];
+        $data = $this->fetchTable('Portfolios')->find()->where(['user_id' => $this->Auth->User('id')])->contain(['Stocks'])->limit(5000)->all();
+        $query = $this->fetchTable('Watchlists')->find('list', ['conditions' => ['user_id' => $this->Auth->User('id')], 'keyField' => 'stock_id', 'valueField' => 'stock_id']);
+        $arr = $query->toArray();
+        /*
         $query = $this->fetchTable('Portfolios')->find('list', ['conditions' => ['user_id' => $this->Auth->User('id')], 'keyField' => 'stock_id', 'valueField' => 'stock_id']);
         $arr = $query->toArray();
         if (!empty($arr)) {
@@ -61,6 +65,7 @@ class UsersController extends AppController
             } catch (\Throwable $th) {
             }
         }
+        */
         $this->set(compact('data', 'arr'));
     }
 
@@ -115,13 +120,90 @@ class UsersController extends AppController
                         echo '<div class="alert alert-danger" role="alert"> Not saved.</div>';
                     }
                 }
-              
-            } 
+            }
             exit;
         }
 
         $profile = $this->fetchTable('Users')->find('all')->where(['Users.id' => $this->Auth->User('id')])->first();
         $this->set(compact('profile'));
+    }
+
+    public function addToPortfolio($id = null)
+    {
+        if (!empty($id)) {
+            $data = $this->fetchTable('Stocks')->find('all')->where(['id' => $id])->first();
+            $this->set(compact('data'));
+        }
+    }
+    
+
+    public function editPortfolio($id = null )
+    {
+        if ($this->request->is('ajax')) {
+
+            $postData = $this->request->getData();
+
+        }
+
+        if (!empty($id)) {
+            $data = $this->fetchTable('Portfolios')->find('all')->where(['id' => $id])->first();
+            ec($data);die;
+            $this->set(compact('data'));
+        }
+    }
+
+    public function updatePortfolio()
+    {
+        if ($this->request->is('ajax')) {
+            if (!empty($this->request->getData())) {
+                $postData = $this->request->getData();
+
+                $is_data = $this->fetchTable('Portfolios')->find('all')->where(['user_id' =>$this->Auth->User('id'),'stock_id'=>$postData['stock_id']])->first();
+                if(!empty($is_data)){
+                    echo '<div class="alert alert-danger" role="alert"> This stock already in your portfolio. Please check at Portfolio section.</div>';
+                    exit; 
+                }
+
+                if (empty($postData['buy_date'])) {
+                    echo '<div class="alert alert-danger" role="alert"> Please entere buy date.</div>';
+                    exit;
+                } elseif (empty($postData['qty']) && (int)$postData['qty'] <= 0) {
+                    echo '<div class="alert alert-danger" role="alert"> Please entere quantity.</div>';
+                    exit;
+                } elseif (empty($postData['rate']) && floatval($postData['rate']) <= 0) {
+                    echo '<div class="alert alert-danger" role="alert"> Please entere but price.</div>';
+                    exit;
+                } else {
+                    $postData['total'] = $postData['qty'] * $postData['rate'];
+                    $postData['user_id'] = $this->Auth->User('id');
+                    $postData['buy_date'] = date('Y-m-d', strtotime($postData['buy_date']));
+
+                    $getData = $this->fetchTable('Portfolios')->newEmptyEntity();
+                    $chkData = $this->fetchTable('Portfolios')->patchEntity($getData, $postData, ['validate' => false]);
+
+
+                    if ($chkData->getErrors()) {
+                        $st = null;
+                        foreach ($chkData->getErrors() as $elist) {
+                            foreach ($elist as $k => $v); {
+                                $st .= "<div class='alert alert-danger'>" . $v . "</div>";
+                            }
+                        }
+                        echo $st;
+                        exit;
+                    } else {
+                        if ($this->fetchTable('Portfolios')->save($chkData)) {
+                            echo "<div class='alert alert-success'>Saved</div>";
+                            echo "<script> setTimeout(function(){ location.reload(); }, 1000);</script>";
+                        } else {
+                            echo '<div class="alert alert-danger" role="alert"> Not saved.</div>';
+                        }
+                    }
+                }
+            }
+            
+        }
+        exit;
     }
 
 

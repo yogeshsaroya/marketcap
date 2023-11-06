@@ -27,12 +27,12 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '4.4.2',
-    'version' => '4.4.2.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '136c41c7ac3804cd407aa537d91dc8879ed3d8c9',
     'name' => 'cakephp/app',
   ),
   'versions' => 
@@ -48,12 +48,12 @@ private static $installed = array (
     ),
     'cakephp/app' => 
     array (
-      'pretty_version' => '4.4.2',
-      'version' => '4.4.2.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '136c41c7ac3804cd407aa537d91dc8879ed3d8c9',
     ),
     'cakephp/bake' => 
     array (
@@ -68,17 +68,17 @@ private static $installed = array (
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/cakephp' => 
     array (
-      'pretty_version' => '4.4.17',
-      'version' => '4.4.17.0',
+      'pretty_version' => '4.4.18',
+      'version' => '4.4.18.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9ff254d6d60720089dec1e10aa1907e24e39a98e',
+      'reference' => '34b4920bc8c13f8897434003e8aaaa605153d051',
     ),
     'cakephp/cakephp-codesniffer' => 
     array (
@@ -91,113 +91,113 @@ private static $installed = array (
     ),
     'cakephp/chronos' => 
     array (
-      'pretty_version' => '2.4.0',
-      'version' => '2.4.0.0',
+      'pretty_version' => '2.4.3',
+      'version' => '2.4.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9c7e438cba4eed1796ec19ad3874defa9eb9aeac',
+      'reference' => '96f28ddfceba2ff56e0d2405c28d789bd546ff55',
     ),
     'cakephp/collection' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/console' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/core' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/database' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/datasource' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/debug_kit' => 
     array (
-      'pretty_version' => '4.9.4',
-      'version' => '4.9.4.0',
+      'pretty_version' => '4.9.5',
+      'version' => '4.9.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '663491edec4a6b9111f1cf4733ebd471450df71e',
+      'reference' => '4ffcdd20eb46d24308be28b9160f20a754fbcc54',
     ),
     'cakephp/event' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/filesystem' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/form' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/http' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/i18n' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/log' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/migrations' => 
     array (
-      'pretty_version' => '3.8.2',
-      'version' => '3.8.2.0',
+      'pretty_version' => '3.9.0',
+      'version' => '3.9.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '1c7c060f8d91d62b0716f9b08e3d41bfece5386e',
+      'reference' => '58446fdd096087ddf7752c0317731b8725d1dc28',
     ),
     'cakephp/orm' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/plugin-installer' => 
@@ -222,14 +222,14 @@ private static $installed = array (
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'cakephp/validation' => 
     array (
       'replaced' => 
       array (
-        0 => '4.4.17',
+        0 => '4.4.18',
       ),
     ),
     'composer/ca-bundle' => 
@@ -252,12 +252,12 @@ private static $installed = array (
     ),
     'composer/composer' => 
     array (
-      'pretty_version' => '2.5.8',
-      'version' => '2.5.8.0',
+      'pretty_version' => '2.6.5',
+      'version' => '2.6.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4c516146167d1392c8b9b269bb7c24115d262164',
+      'reference' => '4b0fe89db9e65b1e64df633a992e70a7a215ab33',
     ),
     'composer/metadata-minifier' => 
     array (
@@ -270,12 +270,12 @@ private static $installed = array (
     ),
     'composer/pcre' => 
     array (
-      'pretty_version' => '3.1.0',
-      'version' => '3.1.0.0',
+      'pretty_version' => '3.1.1',
+      'version' => '3.1.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4bff79ddd77851fe3cdd11616ed3f92841ba5bd2',
+      'reference' => '00104306927c7a0919b4ced2aaa6782c1e61a3c9',
     ),
     'composer/semver' => 
     array (
@@ -351,30 +351,30 @@ private static $installed = array (
     ),
     'justinrainbow/json-schema' => 
     array (
-      'pretty_version' => '5.2.12',
-      'version' => '5.2.12.0',
+      'pretty_version' => 'v5.2.13',
+      'version' => '5.2.13.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ad87d5a5ca981228e0e205c2bc7dfb8e24559b60',
+      'reference' => 'fbbe7e5d79f618997bc3332a6f49246036c45793',
     ),
     'laminas/laminas-diactoros' => 
     array (
-      'pretty_version' => '2.25.2',
-      'version' => '2.25.2.0',
+      'pretty_version' => '2.26.0',
+      'version' => '2.26.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9f3f4bf5b99c9538b6f1dbcc20f6fec357914f9e',
+      'reference' => '6584d44eb8e477e89d453313b858daac6183cddc',
     ),
     'laminas/laminas-httphandlerrunner' => 
     array (
-      'pretty_version' => '2.7.0',
-      'version' => '2.7.0.0',
+      'pretty_version' => '2.9.0',
+      'version' => '2.9.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ab1fe48f1c367953d7e8f5cfbaf902672551d524',
+      'reference' => 'd3e84755a17e563b1c5f8290cbfb150210501a77',
     ),
     'league/container' => 
     array (
@@ -396,12 +396,12 @@ private static $installed = array (
     ),
     'mobiledetect/mobiledetectlib' => 
     array (
-      'pretty_version' => '2.8.41',
-      'version' => '2.8.41.0',
+      'pretty_version' => '2.8.43',
+      'version' => '2.8.43.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'fc9cccd4d3706d5a7537b562b59cc18f9e4c0cb1',
+      'reference' => 'fa96dd52859f03ee2dea002ddd75f8e4e7e9c9da',
     ),
     'myclabs/deep-copy' => 
     array (
@@ -448,21 +448,21 @@ private static $installed = array (
     ),
     'phpstan/phpdoc-parser' => 
     array (
-      'pretty_version' => '1.23.1',
-      'version' => '1.23.1.0',
+      'pretty_version' => '1.24.2',
+      'version' => '1.24.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '846ae76eef31c6d7790fac9bc399ecee45160b26',
+      'reference' => 'bcad8d995980440892759db0c32acae7c8e79442',
     ),
     'phpunit/php-code-coverage' => 
     array (
-      'pretty_version' => '9.2.27',
-      'version' => '9.2.27.0',
+      'pretty_version' => '9.2.29',
+      'version' => '9.2.29.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'b0a88255cb70d52653d80c890bd7f38740ea50d1',
+      'reference' => '6a3a87ac2bbe33b25042753df8195ba4aa534c76',
     ),
     'phpunit/php-file-iterator' => 
     array (
@@ -502,12 +502,12 @@ private static $installed = array (
     ),
     'phpunit/phpunit' => 
     array (
-      'pretty_version' => '9.6.11',
-      'version' => '9.6.11.0',
+      'pretty_version' => '9.6.13',
+      'version' => '9.6.13.0',
       'aliases' => 
       array (
       ),
-      'reference' => '810500e92855eba8a7a5319ae913be2da6f957b0',
+      'reference' => 'f3d767f7f9e191eab4189abe41ab37797e30b1be',
     ),
     'psr/container' => 
     array (
@@ -528,12 +528,12 @@ private static $installed = array (
     ),
     'psr/http-client' => 
     array (
-      'pretty_version' => '1.0.2',
-      'version' => '1.0.2.0',
+      'pretty_version' => '1.0.3',
+      'version' => '1.0.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => '0955afe48220520692d2d09f7ab7e0f93ffd6a31',
+      'reference' => 'bb5906edc1c324c9a05aa0873d40117941e5fa90',
     ),
     'psr/http-client-implementation' => 
     array (
@@ -619,8 +619,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '^1.0 || ^2.0',
-        1 => '1.0|2.0|3.0',
+        0 => '1.0|2.0|3.0',
+        1 => '^1.0 || ^2.0',
       ),
     ),
     'psr/simple-cache' => 
@@ -641,12 +641,12 @@ private static $installed = array (
     ),
     'react/promise' => 
     array (
-      'pretty_version' => 'v2.10.0',
-      'version' => '2.10.0.0',
+      'pretty_version' => 'v3.0.0',
+      'version' => '3.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f913fb8cceba1e6644b7b90c4bfb678ed8a3ef38',
+      'reference' => 'c86753c76fd3be465d93b308f18d189f01a22be4',
     ),
     'robmorgan/phinx' => 
     array (
@@ -821,21 +821,21 @@ private static $installed = array (
     ),
     'seld/signal-handler' => 
     array (
-      'pretty_version' => '2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => '2.0.2',
+      'version' => '2.0.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f69d119511dc0360440cdbdaa71829c149b7be75',
+      'reference' => '04a6112e883ad76c0ada8e4a9f7520bbfdb6bb98',
     ),
     'slevomat/coding-standard' => 
     array (
-      'pretty_version' => '8.13.4',
-      'version' => '8.13.4.0',
+      'pretty_version' => '8.14.1',
+      'version' => '8.14.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4b2af2fb17773656d02fbfb5d18024ebd19fe322',
+      'reference' => 'fea1fd6f137cc84f9cba0ae30d549615dbc6a926',
     ),
     'squizlabs/php_codesniffer' => 
     array (
@@ -884,12 +884,12 @@ private static $installed = array (
     ),
     'symfony/finder' => 
     array (
-      'pretty_version' => 'v6.3.3',
-      'version' => '6.3.3.0',
+      'pretty_version' => 'v6.3.5',
+      'version' => '6.3.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9915db259f67d21eefee768c1abcf1cc61b1fc9e',
+      'reference' => 'a1b31d88c0e998168ca7792f222cbecee47428c4',
     ),
     'symfony/polyfill-ctype' => 
     array (
@@ -974,12 +974,12 @@ private static $installed = array (
     ),
     'symfony/string' => 
     array (
-      'pretty_version' => 'v6.3.2',
-      'version' => '6.3.2.0',
+      'pretty_version' => 'v6.3.5',
+      'version' => '6.3.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '53d1a83225002635bca3482fcbf963001313fb68',
+      'reference' => '13d76d0fb049051ed12a04bef4f9de8715bea339',
     ),
     'theseer/tokenizer' => 
     array (

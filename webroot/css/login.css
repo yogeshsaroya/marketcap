@@ -43,11 +43,11 @@
     box-shadow: 0 0 5px 0 rgba(106, 98, 210);
 }
 
-span {
+/* span {
     color: red;
     margin: 10px 0;
     font-size: 14px;
-}
+} */
 
 .form .login_sbtn {
     outline: 0;

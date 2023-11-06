@@ -12,7 +12,7 @@
 
     <title><?= $this->fetch('title') ?></title>
     <meta name="description" content="Ranking the world's top companies by market cap, market value, revenue and many more metrics">
-    <?= $this->Html->css(['bt-replacement', 'style']) ?>
+    <?= $this->Html->css(['bt-replacement', 'style','magnific-popup']) ?>
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>
     <?= $this->fetch('script'); ?>
@@ -274,9 +274,7 @@
     
     
     
-    <?php echo $this->Html->script(['jquery-3.6.3.min','jquery.form.min']); ?>
-    <script src="<?= SITEURL; ?>js/script.js"></script>
-    
+    <?php echo $this->Html->script(['jquery-3.6.3.min','jquery.form.min','script', 'jquery.magnific-popup.min']); ?>
     
     <script>
         $(".is_fev").click(function() {

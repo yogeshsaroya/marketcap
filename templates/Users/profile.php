@@ -12,8 +12,9 @@ echo $this->Html->css(['login'], ['block' => 'css'])
 
 <div class="ranking-bar">
 
+<a href="<?= SITEURL ?>watchlist"><span class="option ">Watchlist</span></a>
     <a href="<?= SITEURL ?>dashboard"><span class="option active">Portfolio</span></a>
-    <a href="<?= SITEURL ?>watchlist"><span class="option ">Watchlist</span></a>
+    
     <a href="<?= SITEURL ?>users/profile"><span class="option ">Profile</span></a>
     <a href="<?= SITEURL ?>users/logout"><span class="option ">Logout</span></a>
 

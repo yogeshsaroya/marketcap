@@ -2085,3 +2085,5 @@ a.login_btn {
 .nav_pag {
     margin: 30px 0;
 }
+
+.alert-success{ color: green !important;}
