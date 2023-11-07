@@ -3,11 +3,15 @@ $this->assign('title', 'Portfolio Summary');
 
 $cap = $this->Data->getCaps();
 $theme = $this->request->getSession()->read('theme');
+$auth = $this->request->getSession()->read('Auth.User');
+
 echo $this->Html->css(['//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css','login'], ['block' => 'css']);
 echo $this->Html->script(['imask'], ['block' => 'script']);
-
-
 ?>
+<style>
+tfoot tr>td {font-weight: 700;}
+
+</style>
 <br>
 <h1 class="text-center h1-title">Portfolio Summary</h1>
 <br>
@@ -41,6 +45,7 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
     </thead>
     <tbody>
       <?php if (!$data->isEmpty()) {
+        $a =$b =$c = $d  = 0;
         foreach ($data as $list) {
           $logo = $logo_dark = $logo_nrm =  $list->stock->logo;
           if (!empty($list->stock->logo_bright)) {
@@ -52,7 +57,9 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
           $logo = ($theme == 'dark' ? $logo_dark : $logo_nrm);
 
           $inv_val = num_2($list->qty * $list->rate);
+          $a = $a + $inv_val;
           $live_val = num_2($list->qty * $list->stock->stock_price);
+          $b = $b + $live_val; 
           $profit = num_2($live_val - $inv_val);
           $gain = num_2(($live_val - $inv_val) / $inv_val);
       ?>
@@ -80,14 +87,29 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
             <td class="td-left <?= ($profit < 0 ? 'text-red':'text-green');?>" data-sort="<?= $profit; ?>">$<?= $profit; ?></td>
             <td class="td-left <?= ($gain < 0 ? 'text-red':'text-green');?>" data-sort="<?= $gain; ?>"><?= $gain; ?>%</td>
 
-            
-
             <td class="td-left">
-              <a href="javascript:void(0);" onclick="add_to_portfolio(<?= $list->stock->id; ?>);">Edit</a>
+              <a href="javascript:void(0);" onclick="add_to_portfolio(<?= $list->id; ?>);">Edit</a>
             </td>
           </tr>
           <?php 
-        }
+        } ?> 
+        <tfoot>
+<?php 
+$a_pro = num_2($b - $a);
+$a_gain = num_2(($b - $a) / $a);
+?>
+        <tr>
+          <td colspan="5" align="right"> Overall Summary </td>
+          <td colspan="1"></td>
+          <td colspan="1">$<?= $a;?></td>
+          <td colspan="1">$<?= $b;?></td>
+          <td colspan="1" class="<?= ($a_pro < 0 ? 'text-red':'text-green');?>">$<?= $a_pro;?></td>
+          <td colspan="1" class="<?= ($a_gain < 0 ? 'text-red':'text-green');?>"><?= $a_gain;?>%</td>
+          <td colspan="1"></td>
+      </tr>
+        </tfoot>
+        
+        <?php 
       } else { ?>
         <td colspan="8" align="center">Portfolio is empty</td>
       <?php } ?>
@@ -97,9 +119,9 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
   </table>
 </div>
 <div class="bottom-table-description">
-  <p>This is the list of the world's biggest companies by market capitalization. It ranks the most valuable public
-    companies. Private companies are not included in our lists as it is difficult to calculate their market
-    value and know their financials.</p>
+  <p>
+    Share your portfolio by using this url. <?= $this->Html->link(SITEURL."verified-pnl/".base64_encode($auth->id),SITEURL."verified-pnl/".base64_encode($auth->id));?>
+  </p>
 </div>
 <?php
 /* ?>
@@ -116,30 +138,10 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
 </nav>
 <?php */ ?>
 
-<nav class="nav_pag">
-  <ul class=" pagination justify-content-center">
-    <li class="page-item">
-      <?php
-      /*
-      if ($this->request->is('mobile')) {
-        echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
-        echo $this->Paginator->prev('Prev', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->next('Next', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
-      } else {
-        echo $this->Paginator->first(__('First', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
-        echo $this->Paginator->prev('&laquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&laquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->numbers(['first' => 1, 'last' => 1], [['separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a']]);
-        echo $this->Paginator->next('&raquo;', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-        echo $this->Paginator->last(__('Last', true), array('tag' => 'li', 'escape' => false), array('type' => "button", 'class' => "page-link"));
-      } */
-      ?>
-  </ul>
-</nav>
 
 <?php
 echo $this->Html->script(['tableScript','https://code.jquery.com/ui/1.13.2/jquery-ui.js'], ['block' => 'scriptBottom']);
-echo $this->Html->script(['tableScript'], ['block' => 'scriptBottom']);
+
 $this->append('scriptBottom');  ?>
 <script>
 

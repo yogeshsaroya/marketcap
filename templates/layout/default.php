@@ -11,7 +11,8 @@
     <meta http-equiv="content-language" content="en-us">
 
     <title><?= $this->fetch('title') ?></title>
-    <meta name="description" content="Ranking the world's top companies by market cap, market value, revenue and many more metrics">
+    <meta name="description" content="<?= $this->fetch('description') ?>"/>
+
     <?= $this->Html->css(['bt-replacement', 'style','magnific-popup']) ?>
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>

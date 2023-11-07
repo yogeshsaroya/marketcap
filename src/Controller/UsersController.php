@@ -135,19 +135,64 @@ class UsersController extends AppController
             $this->set(compact('data'));
         }
     }
-    
 
-    public function editPortfolio($id = null )
+
+    public function editPortfolio($id = null)
     {
-        if ($this->request->is('ajax')) {
-
+        if ($this->request->is('ajax') && !empty($this->request->getData())) {
             $postData = $this->request->getData();
 
+
+            $checkData = $this->fetchTable('Portfolios')->get($postData['id']);
+            if (empty($checkData)) {
+                echo '<div class="alert alert-danger" role="alert">Error. Please try again later.</div>';
+                exit;
+            }
+
+            if ($postData['type'] == 'del') {
+                $this->fetchTable('Portfolios')->delete($checkData);
+                echo "<div class='alert alert-success'>Stock removed from portfolio.</div>";
+                echo "<script>$('#login_sbtn, #del_sbtn').remove(); setTimeout(function(){ location.reload(); }, 1000);</script>";
+                exit;
+            }
+
+            if (empty($postData['buy_date'])) {
+                echo '<div class="alert alert-danger" role="alert"> Please entere buy date.</div>';
+                exit;
+            } elseif (empty($postData['qty']) && (int)$postData['qty'] <= 0) {
+                echo '<div class="alert alert-danger" role="alert"> Please entere quantity.</div>';
+                exit;
+            } elseif (empty($postData['rate']) && floatval($postData['rate']) <= 0) {
+                echo '<div class="alert alert-danger" role="alert"> Please entere but price.</div>';
+                exit;
+            } else {
+                $postData['total'] = $postData['qty'] * $postData['rate'];
+                $postData['buy_date'] = date('Y-m-d', strtotime($postData['buy_date']));
+
+                $chkData = $this->fetchTable('Portfolios')->patchEntity($checkData, $postData, ['validate' => false]);
+                if ($chkData->getErrors()) {
+                    $st = null;
+                    foreach ($chkData->getErrors() as $elist) {
+                        foreach ($elist as $k => $v); {
+                            $st .= "<div class='alert alert-danger'>" . $v . "</div>";
+                        }
+                    }
+                    echo $st;
+                    exit;
+                } else {
+                    if ($this->fetchTable('Portfolios')->save($chkData)) {
+                        echo "<div class='alert alert-success'>Saved</div>";
+                        echo "<script>$('#login_sbtn, #del_sbtn').remove(); setTimeout(function(){ location.reload(); }, 1000);</script>";
+                    } else {
+                        echo '<div class="alert alert-danger" role="alert"> Not saved.</div>';
+                    }
+                }
+            }
+            exit;
         }
 
         if (!empty($id)) {
-            $data = $this->fetchTable('Portfolios')->find('all')->where(['id' => $id])->first();
-            ec($data);die;
+            $data = $this->fetchTable('Portfolios')->find()->where(['Portfolios.id' => $id])->contain(['Stocks'])->first();
             $this->set(compact('data'));
         }
     }
@@ -158,10 +203,10 @@ class UsersController extends AppController
             if (!empty($this->request->getData())) {
                 $postData = $this->request->getData();
 
-                $is_data = $this->fetchTable('Portfolios')->find('all')->where(['user_id' =>$this->Auth->User('id'),'stock_id'=>$postData['stock_id']])->first();
-                if(!empty($is_data)){
+                $is_data = $this->fetchTable('Portfolios')->find('all')->where(['user_id' => $this->Auth->User('id'), 'stock_id' => $postData['stock_id']])->first();
+                if (!empty($is_data)) {
                     echo '<div class="alert alert-danger" role="alert"> This stock already in your portfolio. Please check at Portfolio section.</div>';
-                    exit; 
+                    exit;
                 }
 
                 if (empty($postData['buy_date'])) {
@@ -193,15 +238,14 @@ class UsersController extends AppController
                         exit;
                     } else {
                         if ($this->fetchTable('Portfolios')->save($chkData)) {
-                            echo "<div class='alert alert-success'>Saved</div>";
-                            echo "<script> setTimeout(function(){ location.reload(); }, 1000);</script>";
+                            echo "<div class='alert alert-success'>Stock added to portfolio.</div>";
+                            echo "<script>$('#login_sbtn, #del_sbtn').remove(); setTimeout(function(){ location.reload(); }, 1000);</script>";
                         } else {
                             echo '<div class="alert alert-danger" role="alert"> Not saved.</div>';
                         }
                     }
                 }
             }
-            
         }
         exit;
     }
@@ -299,7 +343,7 @@ class UsersController extends AppController
                 $u = SITEURL . "dashboard";
                 echo "<script>window.location.href ='" . $u . "'; </script>";
             } else {
-                return $this->redirect('/dashboard');
+                return $this->redirect('/watchlist');
             }
             exit;
         }
@@ -321,7 +365,7 @@ class UsersController extends AppController
             } else {
                 $verify = $this->Users->save($chkData);
                 $this->Auth->setUser($verify);
-                $q_url = SITEURL . "dashboard";
+                $q_url = SITEURL . "watchlist";
                 echo '<script>$("#login_sbtn").remove(); window.location.href = "' . $q_url . '"</script>';
             }
             exit;
@@ -336,7 +380,7 @@ class UsersController extends AppController
                 if (!empty($data->email_address) && !empty($data->email_password) && !empty($data->email_host) && !empty($data->email_port)) {
                     TransportFactory::setConfig('Manual', [
                         /*'className' => 'Debug', 'auth' => true, */
-                        'className' => 'Smtp', 'tls' => true,
+                        'className' => 'Smtp', 'tls' => false,
                         'port' => $data->email_port, 'host' => $data->email_host, 'username' => $data->email_address, 'password' => $data->email_password
                     ]);
                     $mailer = new Mailer('default');
@@ -345,12 +389,13 @@ class UsersController extends AppController
                         try {
                             $res = $mailer
                                 ->setEmailFormat('both')
-                                ->setFrom([$data->email_address => 'CosmoRecovery Password Reset'])
+                                ->setFrom([$data->email_address => 'Support'])
                                 ->setTo($to)
                                 ->setSubject($subject)
                                 ->deliver($body);
                             $msg = ['status' => 1, 'msg' => 'Email has been sent.'];
                         } catch (\Throwable $th) {
+                            ec($th);die;
                             $msg = ['status' => 2, 'msg' => 'Email not sent.'];
                         }
                     } else {
@@ -376,11 +421,11 @@ class UsersController extends AppController
 
         if ($this->Auth->User('id') != "") {
             if ($this->request->is('ajax')) {
-                $u = SITEURL . "dashboard";
+                $u = SITEURL . "watchlist";
                 echo "<script>window.location.href ='" . $u . "'; </script>";
                 exit;
             } else {
-                $this->redirect('/dashboard');
+                $this->redirect('/watchlist');
             }
         }
 

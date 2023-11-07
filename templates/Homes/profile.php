@@ -1,6 +1,6 @@
 <?php
 $this->assign('title', $data->name . ' - Market capitalization');
-$this->assign('description', "Ranking the world's top companies by market cap, market value, revenue and many more metrics");
+$this->assign('description', substr($data->description,0,120));
 $price_history = json_decode($data->price_history, true);
 $stock_peers = json_decode($data->stock_peers, true);
 $company_outlook = json_decode($data->company_outlook, true);

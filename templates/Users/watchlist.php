@@ -104,8 +104,6 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
         </li>
     </ul>
 </nav>
-<?php */ ?>
-
 <nav class="nav_pag">
   <ul class=" pagination justify-content-center">
     <li class="page-item">
@@ -128,6 +126,9 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
   </ul>
 </nav>
 
+<?php */ ?>
+
+<br><br>
 
 
 

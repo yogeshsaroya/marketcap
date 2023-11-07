@@ -59,12 +59,15 @@
                                         <div class="col-md-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h4 class="card-title">WHOIS API</h4>
+                                                    <h4 class="card-title">SEO</h4>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div class="col-md-3 col-12 form-group mb-2"><?= $this->Form->control('whois_api_key', ['label' => ['escape' => false, 'text' => 'DOMAIN WHOIS API Key <small>(From whoisxmlapi.com)</small>'], 'class' => 'form-control', 'required' => true]); ?><div class="help-block with-errors"></div>
+                                                        <div class="col-md-6 col-12 form-group mb-2"><?= $this->Form->control('meta_title', ['label' => ['escape' => false, 'text' => 'Meta Title'], 'class' => 'form-control', 'required' => true]); ?><div class="help-block with-errors"></div>
                                                         </div>
+                                                        <div class="col-md-6 col-12 form-group mb-2"><?= $this->Form->control('meta_des', ['label' => ['escape' => false, 'text' => 'Meta Description<small>(120 - 158 characters)</small>'], 'class' => 'form-control', 'required' => true]); ?><div class="help-block with-errors"></div>
+                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

@@ -34,20 +34,23 @@
                     <div class="table-container shadow1">
                         <div class="login-page">
                             <div class="form">
-                                <h4><?= $data->name?> <small>(<?= strtoupper($data->symbol)?>)</small></h4>
+                                <h4><?= $data->stock->name?> <small>(<?= strtoupper($data->stock->symbol)?>)</small></h4>
                                 <br>
 
                                 <?php
-                                echo $this->Form->create($data, ['url' => ['controller' => 'users', 'action' => 'updatePortfolio'], 'autocomplete' => 'off', 'class' => 'login-form', 'id' => 'e_frm']);
+                                echo $this->Form->create($data, ['url' => ['controller' => 'users', 'action' => 'editPortfolio'], 'autocomplete' => 'off', 'class' => 'login-form', 'id' => 'e_frm']);
                                 echo $this->Form->hidden('id');
+                                
                                 ?>
-                                <div class="mb-2 form-group"><?= $this->Form->control('buy_date', ['label' => 'Buy Date', 'readonly' => true, 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-buy-date']); ?></div>
+                                <div class="mb-2 form-group"><?= $this->Form->control('buy_date', ['value'=>(!empty($data->buy_date) ? $data->buy_date->format('m/d/Y') : null), 'label' => 'Buy Date', 'readonly' => true, 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-buy-date']); ?></div>
                                 <div class="mb-2 form-group"><?= $this->Form->control('qty', ['label' => 'Total Quantity', 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-qty']); ?></div>
                                 <div class="mb-2 form-group"><?= $this->Form->control('rate', ['label' => 'Buy Price', 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-rate']); ?></div>
                                 <div class="mb-2">
                                     <div id="f_err"></div>
                                 </div>
                                 <input type="button" class="btn btn-primary w-100 mb-2 login_sbtn" value="Save" id="login_sbtn">
+
+                                <input type="button" class="btn btn-default w-100 mb-2" value="Delete" id="del_sbtn">
 
                                 <?php echo $this->Form->end(); ?>
                             </div>
@@ -92,12 +95,38 @@
             changeYear: true
         });
 
+        
+
+        $("#del_sbtn").click(function() {
+            $("#e_frm").ajaxForm({
+                target: '#f_err',
+                headers: {
+                    'X-CSRF-Token': $('[name="_csrfToken"]').val()
+                },
+                data:{'type':'del'},
+                beforeSubmit: function() {
+                    $("#del_sbtn, #login_sbtn").prop("disabled", true);
+                    $("#del_sbtn").val('Please wait..');
+                },
+                success: function(response) {
+                    $("#del_sbtn, #login_sbtn").prop("disabled", false);
+                    $("#del_sbtn").val('Delete');
+                },
+                error: function(response) {
+                    $('#f_err').html('<div class="alert alert-danger">Sorry, this is not working at the moment. Please try again later.</div>');
+                    $("#del_sbtn, #login_sbtn").prop("disabled", false);
+                    $("#del_sbtn").val('Delete');
+                },
+            }).submit();
+        });
+
         $("#login_sbtn").click(function() {
             $("#e_frm").ajaxForm({
                 target: '#f_err',
                 headers: {
                     'X-CSRF-Token': $('[name="_csrfToken"]').val()
                 },
+                data:{'type':'edit'},
                 beforeSubmit: function() {
                     $("#login_sbtn").prop("disabled", true);
                     $("#login_sbtn").val('Please wait..');

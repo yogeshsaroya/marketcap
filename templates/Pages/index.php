@@ -1,8 +1,8 @@
 <?php $this->assign('title', 'Stocks'); ?>
 <div class="app-content content ">
     <div class="content-wrapper">
-        <div class="content-header row">
-            <div class="content-header-left col-md-6 col-12 mb-2">
+    <div class="content-header row">
+            <div class="content-header-left col-md-4 col-12">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
                         <h2 class="content-header-title float-left mb-0">Stocks</h2>
@@ -10,9 +10,32 @@
                     </div>
                 </div>
             </div>
-            <div class="content-header-right text-md-right col-md-6 col-12  ">
+            <div class="content-header-right text-md-right col-md-8 col-12">
                 <div class="form-group breadcrumb-right">
+                    <div class="dropdown">
+                        <?php echo $this->Html->link('Add New Stock', 'javascript:void(0);', ['onclick' => 'mkEnt("")', 'class' => 'btn btn-primary']); ?>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h5 class="card-header">Search Filter</h5>
+            <div class="d-flex justify-content-between align-items-center mx-50 row pt-0 pb-2">
+                <div class="col-md-12 user_role">
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-1">
+                            <div class="input-group">
+                                <input type="search" class="form-control" id="search_text" value="<?= $search; ?>" placeholder="Search by stock name or symbol" aria-describedby="button-addon2">
+                                <div class="input-group-append" id="button-addon2">
+                                    <button class="btn btn-outline-primary waves-effect" type="button" id="do_search">Search</button>
+                                    <button class="btn btn-outline-primary waves-effect" type="button" id="do_clear">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="content-body">
@@ -106,4 +129,48 @@
             }
         });
     });
+
+    $('#search_text').keypress(function(e) {
+        var key = e.which;
+        if (key == 13) // the enter key code
+        {
+            $('#do_search').click();
+            return false;
+        }
+    });
+
+    
+    
+    $('#do_clear').on('click', function() {
+        window.location.href = '<?php echo SITEURL; ?>pages/index';
+    });
+    $('#do_search').on('click', function() {
+
+        var t = $.trim($("#search_text").val());
+        if (t != '') {
+            var str = '<?php echo SITEURL; ?>pages/index?search=' + t;
+            window.location.href = str;
+        }
+    });
+
+
+
+
+    function mkEnt(id) {
+        var d = "<?php echo urlencode(SITEURL . "pages/add_stock/"); ?>"+id;
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo SITEURL; ?>pages/open_pop/',
+            data: {
+                url: d
+            },
+            success: function(data) {
+                $("#cover").html(data);
+            },
+            error: function(comment) {
+                $("#cover").html(comment);
+            }
+        });
+    }
+
 </script>

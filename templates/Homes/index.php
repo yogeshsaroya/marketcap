@@ -1,6 +1,6 @@
 <?php
-$this->assign('title', 'Companies ranked by Market Cap');
-$this->assign('description', "Ranking the world's top companies by market cap, market value, revenue and many more metrics");
+$this->assign('title', $seo->meta_title);
+$this->assign('description', $seo->meta_des);
 $cap = $this->Data->getCaps();
 $theme = $this->request->getSession()->read('theme');
 

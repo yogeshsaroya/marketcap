@@ -80,6 +80,9 @@ class Application extends BaseApplication
             if ($request->getParam('controller') === 'Homes' && in_array($request->getParam('action'),['openPop','theme','star']) ) {
                 return true;
             }
+            if ($request->getParam('controller') === 'Pages' && in_array($request->getParam('action'),['openPop']) ) {
+                return true;
+            }
             if ($request->getParam('controller') === 'Apis') {
                 return true;
             }

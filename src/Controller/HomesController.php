@@ -43,45 +43,43 @@ class HomesController extends AppController
     }
 
 
-    public function theme($type = null ){
+    public function theme($type = null)
+    {
         $this->disableAutoRender();
         $session = $this->request->getSession();
-        if($type == 2){
-            $session->write('theme','dark');
-        }
-        elseif($type == 1){
-            $session->write('theme','white');
+        if ($type == 2) {
+            $session->write('theme', 'dark');
+        } elseif ($type == 1) {
+            $session->write('theme', 'white');
         }
 
         exit;
-
     }
 
 
-    public function star($type = null, $id = null ){
+    public function star($type = null, $id = null)
+    {
         $this->disableAutoRender();
         if ($this->Auth->User('id') != "") {
-            if(!empty($type) && !empty($id)){
-                $query = $this->fetchTable('Watchlists')->find('all', [ 'conditions' => ['user_id' => $this->Auth->User('id'),'stock_id'=>$id] ]);
+            if (!empty($type) && !empty($id)) {
+                $query = $this->fetchTable('Watchlists')->find('all', ['conditions' => ['user_id' => $this->Auth->User('id'), 'stock_id' => $id]]);
                 $row = $query->first();
-                if($type == 'add'){
-                    if(empty($row)){
+                if ($type == 'add') {
+                    if (empty($row)) {
                         $watchlist = $this->fetchTable('Watchlists')->newEmptyEntity();
-                        $watchlist->user_id = $this->Auth->User('id') ;
+                        $watchlist->user_id = $this->Auth->User('id');
                         $watchlist->stock_id = $id;
                         $this->fetchTable('Watchlists')->save($watchlist);
-                        echo '<script>$("#sel_'.$id.'").removeClass("add_star").addClass("rm_star");$("#sel_'.$id.'").attr("src", "'.SITEURL.'img/star_dark.svg");</script>';
+                        echo '<script>$("#sel_' . $id . '").removeClass("add_star").addClass("rm_star");$("#sel_' . $id . '").attr("src", "' . SITEURL . 'img/star_dark.svg");</script>';
                     }
-                }
-                elseif($type == 'rm'){
-                    if(!empty($row)){
+                } elseif ($type == 'rm') {
+                    if (!empty($row)) {
                         $this->fetchTable('Watchlists')->delete($row);
-                        echo '<script>$("#sel_'.$id.'").removeClass("rm_star").addClass("add_star"); $("#sel_'.$id.'").attr("src", "'.SITEURL.'img/star.svg");</script>';
+                        echo '<script>$("#sel_' . $id . '").removeClass("rm_star").addClass("add_star"); $("#sel_' . $id . '").attr("src", "' . SITEURL . 'img/star.svg");</script>';
                     }
                 }
             }
-            
-        }else{
+        } else {
             if ($this->request->is('ajax')) {
                 $u = SITEURL . "login";
                 echo "<script>window.location.href ='" . $u . "'; </script>";
@@ -91,7 +89,6 @@ class HomesController extends AppController
             }
         }
         exit;
-
     }
 
 
@@ -99,17 +96,18 @@ class HomesController extends AppController
     {
         $star = $data = [];
         if ($this->Auth->User('id') != "") {
-            $query = $this->fetchTable('Watchlists')->find('list', ['conditions'=>['user_id'=>$this->Auth->User('id')], 'keyField' => 'stock_id','valueField' => 'stock_id']);
+            $query = $this->fetchTable('Watchlists')->find('list', ['conditions' => ['user_id' => $this->Auth->User('id')], 'keyField' => 'stock_id', 'valueField' => 'stock_id']);
             $star = $query->toArray();
         }
         try {
             $this->paginate = ['conditions' => ['type' => 'stock', 'name !=' => ''], 'limit' => 100, 'order' => ['market_cap' => 'desc']];
             $data = $this->paginate($this->fetchTable('Stocks')->find('all'));
-            
         } catch (\Throwable $th) {
             //throw $th;
         }
-        $this->set(compact('data','star'));
+
+        $seo = $this->fetchTable('Settings')->findById('1')->firstOrFail();
+        $this->set(compact('data', 'star','seo'));
     }
 
     public function search()
@@ -120,24 +118,24 @@ class HomesController extends AppController
         $session = $this->request->getSession();
         $theme = $session->read('theme');
 
-        if(!empty($q)){
+        if (!empty($q)) {
             $data = $this->fetchTable('Stocks')->find()
-            ->select(['id','name','slug','symbol','logo','logo_bright','logo_dark'])
-            ->where(['type' => 'stock', 'name !=' => '','name LIKE' =>"%" . trim($q) . "%"])
-            ->all();
+                ->select(['id', 'name', 'slug', 'symbol', 'logo', 'logo_bright', 'logo_dark'])
+                ->where(['type' => 'stock', 'name !=' => '', 'name LIKE' => "%" . trim($q) . "%"])
+                ->all();
             if (!$data->isEmpty()) {
                 foreach ($data as $list) {
-                    
+
                     $logo = $logo_dark = $logo_nrm =  $list->logo;
                     if (!empty($list->logo_bright)) {
-                        $logo_dark = $logo_nrm = SITEURL."logo/".$list->logo_bright;
+                        $logo_dark = $logo_nrm = SITEURL . "logo/" . $list->logo_bright;
                     }
                     if (!empty($list->logo_dark)) {
-                        $logo_dark = SITEURL."logo/".$list->logo_dark;
+                        $logo_dark = SITEURL . "logo/" . $list->logo_dark;
                     }
                     $logo = ($theme == 'dark' ? $logo_dark : $logo_nrm);
 
-                    $arr[]= ['name'=>$list->name,'symbol'=>$list->symbol,'logo'=>$logo,'url'=>$list->slug];
+                    $arr[] = ['name' => $list->name, 'symbol' => $list->symbol, 'logo' => $logo, 'url' => $list->slug];
                 }
             }
         }
@@ -304,18 +302,34 @@ class HomesController extends AppController
         }
     }
 
-     /* open new popup on ajax request */
-     public function openPop($id = null)
-     {
-         $this->autoRender = false;
-         $getData = $this->request->getData();
-         if (isset($getData['url']) && !empty($getData['url'])) {
-             if ($id == 1) {
-                 echo "<script> $.magnificPopup.open({items: { src: '" . urldecode($getData['url']) . "',type: 'ajax'}, closeOnContentClick: false, closeOnBgClick: false, showCloseBtn: false, enableEscapeKey: false, }); </script>";
-             } else {
-                 echo "<script> $.magnificPopup.open({items: { src: '" . urldecode($getData['url']) . "',type: 'ajax'}, closeMarkup: '<button class=\"mfp-close mfp-new-close\" type=\"button\" title=\"Close\">x</button>', closeOnContentClick: false, closeOnBgClick: false, showCloseBtn: true, enableEscapeKey: false}); </script>";
-             }
-         }
-         exit;
-     }
+    /* open new popup on ajax request */
+    public function openPop($id = null)
+    {
+        $this->autoRender = false;
+        $getData = $this->request->getData();
+        if (isset($getData['url']) && !empty($getData['url'])) {
+            if ($id == 1) {
+                echo "<script> $.magnificPopup.open({items: { src: '" . urldecode($getData['url']) . "',type: 'ajax'}, closeOnContentClick: false, closeOnBgClick: false, showCloseBtn: false, enableEscapeKey: false, }); </script>";
+            } else {
+                echo "<script> $.magnificPopup.open({items: { src: '" . urldecode($getData['url']) . "',type: 'ajax'}, closeMarkup: '<button class=\"mfp-close mfp-new-close\" type=\"button\" title=\"Close\">x</button>', closeOnContentClick: false, closeOnBgClick: false, showCloseBtn: true, enableEscapeKey: false}); </script>";
+            }
+        }
+        exit;
+    }
+
+    public function verified($id = null)
+    {
+        if (!empty($id)) {
+            $user_id = base64_decode($id);
+            $user = $this->fetchTable('Users')->find()->where(['id' => $user_id])->first();
+            if (!empty($user)) {
+                $data = $this->fetchTable('Portfolios')->find()->where(['user_id' => $user_id])->contain(['Stocks'])->limit(5000)->all();
+                $this->set(compact('data','user'));
+            } else {
+                $this->viewBuilder()->setLayout('error_404');
+            }
+        } else {
+            $this->viewBuilder()->setLayout('error_404');
+        }
+    }
 }
