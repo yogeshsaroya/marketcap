@@ -10,3 +10,4 @@ config/.env
 tmp/*
 
 /webroot/logo/*
+/webroot/vdconnect-3t73a2e5
