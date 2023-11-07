@@ -149,6 +149,14 @@ class HomesController extends AppController
             $data = $this->fetchTable('Stocks')->find()->where(['slug' => $this->request->getParam('slug')])->first();
             $d1 = date("Y-m-d", strtotime("-30 days", strtotime(TODAYDATE)));
             if (!empty($data)) {
+
+                $star = null;
+                if ($this->Auth->User('id') != "") {
+                    $star = $this->fetchTable('Watchlists')->find()->where(['user_id' => $this->Auth->User('id'),'stock_id'=>$data->id])->first();
+                }
+
+
+
                 $ticker = strtolower(Text::slug($data->symbol));
                 $s_time = $ticker . 'getTime';
                 $s_name = $ticker . 'apiData';
@@ -294,7 +302,7 @@ class HomesController extends AppController
                         $this->set(compact('outlook'));
                     }
                 }
-                $this->set(compact('data', 'type'));
+                $this->set(compact('data', 'type','star'));
             } else {
                 $this->viewBuilder()->setLayout('error_404');
             }

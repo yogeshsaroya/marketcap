@@ -53,6 +53,10 @@ $theme = $this->request->getSession()->read('theme');
                 <div class="company-name"><?= $data->name; ?></div>
                 <div class="company-code"><?= strtoupper($data->symbol); ?></div>
             </div>
+            <br>
+            <img src="<?= SITEURL . (isset($star->id) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" title="add to wishlist" width="32px" alt="" class="is_fev <?= (isset($star->id) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $data->id; ?>" data-id="<?= $data->id; ?>" />
+            
+
         </div>
         <div class="col-lg-6">
             <div class="row">
