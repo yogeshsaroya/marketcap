@@ -63,6 +63,9 @@ class PagesController extends AppController
 
                 $url = "https://financialmodelingprep.com/api/v3/profile/" . $postData['symbol'] . "?apikey=" . env('financialmodelingprep_api');
                 $getData = callApi($url);
+                if(empty($getData)){
+                    echo '<div class="alert alert-danger" role="alert"> Symbol not found..</div>'; exit;
+                }
                 $slug = strtolower(Text::slug($getData[0]['companyName']));
 
                 $postData['name'] = $getData[0]['companyName'];
