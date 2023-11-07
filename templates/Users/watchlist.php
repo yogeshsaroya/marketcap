@@ -19,10 +19,13 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
   
   <a href="<?= SITEURL ?>users/profile"><span class="option ">Profile</span></a>
   <a href="<?= SITEURL ?>users/logout"><span class="option ">Logout</span></a>
-
+  <br>
+  <small>You can add stock to your portfolio from this watchlist.</small>
 </div>
 
+
 <div class="table-container shadow">
+  
   <table class="default-table table marketcap-table dataTable" style="width:100%">
     <thead>
       <tr>

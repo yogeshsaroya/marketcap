@@ -22,7 +22,8 @@ tfoot tr>td {font-weight: 700;}
    
   <a href="<?= SITEURL?>users/profile"><span class="option ">Profile</span></a> 
   <a href="<?= SITEURL?>users/logout"><span class="option ">Logout</span></a> 
-  
+  <br>
+  <small>You can add more stock to your portfolio from watchlists.</small>
 </div>
 
 <div class="table-container shadow">
