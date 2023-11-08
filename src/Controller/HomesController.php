@@ -81,8 +81,8 @@ class HomesController extends AppController
             }
         } else {
             if ($this->request->is('ajax')) {
-                $u = SITEURL . "login";
-                echo "<script>window.location.href ='" . $u . "'; </script>";
+                
+                echo "<script>doLogin();</script>";
                 exit;
             } else {
                 $this->redirect('/login');
@@ -107,7 +107,7 @@ class HomesController extends AppController
         }
 
         $seo = $this->fetchTable('Settings')->findById('1')->firstOrFail();
-        $this->set(compact('data', 'star','seo'));
+        $this->set(compact('data', 'star', 'seo'));
     }
 
     public function search()
@@ -152,7 +152,7 @@ class HomesController extends AppController
 
                 $star = null;
                 if ($this->Auth->User('id') != "") {
-                    $star = $this->fetchTable('Watchlists')->find()->where(['user_id' => $this->Auth->User('id'),'stock_id'=>$data->id])->first();
+                    $star = $this->fetchTable('Watchlists')->find()->where(['user_id' => $this->Auth->User('id'), 'stock_id' => $data->id])->first();
                 }
 
 
@@ -302,7 +302,7 @@ class HomesController extends AppController
                         $this->set(compact('outlook'));
                     }
                 }
-                $this->set(compact('data', 'type','star'));
+                $this->set(compact('data', 'type', 'star'));
             } else {
                 $this->viewBuilder()->setLayout('error_404');
             }
@@ -332,7 +332,7 @@ class HomesController extends AppController
             $user = $this->fetchTable('Users')->find()->where(['id' => $user_id])->first();
             if (!empty($user)) {
                 $data = $this->fetchTable('Portfolios')->find()->where(['user_id' => $user_id])->contain(['Stocks'])->limit(5000)->all();
-                $this->set(compact('data','user'));
+                $this->set(compact('data', 'user'));
             } else {
                 $this->viewBuilder()->setLayout('error_404');
             }

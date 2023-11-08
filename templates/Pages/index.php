@@ -74,7 +74,7 @@
                                                 <td><img src="<?= $logo_nrm; ?>" alt="" width="64" /></td>
                                                 <td><a href="<?= SITEURL . $list->slug; ?>">
                                                         <div class="company-name"><?= $list->name; ?></div>
-                                                        <div class="company-code"><span class="rank d-none"></span><?= $list->symbol; ?></div>
+                                                        
                                                     </a></td>
                                                 <td><?= strtoupper($list->symbol); ?></td>
                                                 <td>$<?= num_2($list->stock_price); ?></td>

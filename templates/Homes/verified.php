@@ -1,7 +1,5 @@
 <?php
 $this->assign('title', 'My Verified P&L - ' . $user->first_name);
-
-$cap = $this->Data->getCaps();
 $theme = $this->request->getSession()->read('theme');
 $auth = $this->request->getSession()->read('Auth.User');
 

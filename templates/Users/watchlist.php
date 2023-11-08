@@ -1,7 +1,6 @@
 <?php
 $this->assign('title', 'Watchlist');
 
-$cap = $this->Data->getCaps();
 $theme = $this->request->getSession()->read('theme');
 echo $this->Html->css(['//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css','login'], ['block' => 'css']);
 echo $this->Html->script(['imask'], ['block' => 'script']);

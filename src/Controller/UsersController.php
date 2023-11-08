@@ -43,7 +43,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         /* https://book.cakephp.org/4/en/controllers/components/authentication.html#AuthComponent::allow */
-        $this->Auth->allow(['register', 'resetPassword', 'login', 'backend', 'logout', 'setPassword']);
+        $this->Auth->allow(['register', 'resetPassword', 'login', 'backend', 'logout', 'setPassword','loginPopup']);
         //$this->Auth->allow();
         // Form helper https://codethepixel.com/tutorial/cakephp/cakephp-4-common-helpers
         /* https://codethepixel.com/tutorial/cakephp/cakephp-4-find-sort-count */
@@ -250,8 +250,6 @@ class UsersController extends AppController
         exit;
     }
 
-
-
     public function resetPassword($type = null, $id = null)
     {
         if ($this->Auth->User('id') != "") {
@@ -335,7 +333,6 @@ class UsersController extends AppController
         exit;
     }
 
-
     public function register()
     {
         if ($this->Auth->User('id') != "") {
@@ -395,7 +392,8 @@ class UsersController extends AppController
                                 ->deliver($body);
                             $msg = ['status' => 1, 'msg' => 'Email has been sent.'];
                         } catch (\Throwable $th) {
-                            ec($th);die;
+                            ec($th);
+                            die;
                             $msg = ['status' => 2, 'msg' => 'Email not sent.'];
                         }
                     } else {
@@ -418,7 +416,6 @@ class UsersController extends AppController
      */
     public function login()
     {
-
         if ($this->Auth->User('id') != "") {
             if ($this->request->is('ajax')) {
                 $u = SITEURL . "watchlist";
@@ -456,6 +453,48 @@ class UsersController extends AppController
             exit;
         }
     }
+
+    public function loginPopup()
+    {
+        if ($this->request->is('ajax') && !empty($this->request->getData())) {
+
+            if ($this->Auth->User('id') != "") {
+                if ($this->request->is('ajax')) {
+                    echo '<script>location.reload();</script>';
+                    exit;
+                } else {
+                    $this->redirect('/');
+                }
+            }
+
+            $post_data = $this->request->getData();
+            if (empty($post_data['email'])) {
+                echo '<div class="alert alert-danger">Please enter email id.</div>';
+            } elseif (empty($post_data['password'])) {
+                echo '<div class="alert alert-danger">Please enter password.</div>';
+            } else {
+                $pwd = trim($post_data['password']);
+                $verify = $this->fetchTable('Users')->find('all')
+                    ->where(['Users.role' => 2, 'Users.email' => trim(strtolower($post_data['email']))])
+                    ->first();
+                if (!empty($verify)) {
+                    if (password_verify($pwd, $verify->password)) {
+                        $this->Auth->setUser($verify);
+                        echo '<script>location.reload();</script>';
+                        exit;
+                    } else {
+                        echo '<div class="alert alert-danger">Password is invalid</div>';
+                    }
+                } else {
+                    echo '<div class="alert alert-danger">User id or password is incorrect</div>';
+                }
+            }
+            exit;
+        }
+        
+    }
+
+    
 
     /**
      * Admin login page

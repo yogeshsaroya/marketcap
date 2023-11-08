@@ -1,7 +1,7 @@
 <?php
 $this->assign('title', 'Profile');
 
-$cap = $this->Data->getCaps();
+
 $theme = $this->request->getSession()->read('theme');
 echo $this->Html->css(['login'], ['block' => 'css'])
 

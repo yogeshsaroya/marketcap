@@ -7,7 +7,7 @@ $theme = $this->request->getSession()->read('theme');
 ?>
 
 <style>
-   
+
 </style>
 <h1 class="text-center h1-title">Largest Companies by Market Cap</h1>
 <div class="category-stats-bar">
@@ -81,7 +81,7 @@ $theme = $this->request->getSession()->read('theme');
 
                             <div class="name-div"><a href="<?= SITEURL . $list->slug; ?>">
                                     <div class="company-name"><?= $list->name; ?></div>
-                                    <div class="company-code"><span class="rank d-none"></span><?= $list->symbol; ?></div>
+                                    <div class="company-code"><span class="rank d-none"></span><?= $list->industry; ?></div>
                                 </a></div>
                         </td>
                         <td class="td-left"> <span class="badge badge-company"><?= strtoupper($list->symbol); ?></span></td>
@@ -186,7 +186,7 @@ $this->append('scriptBottom');  ?>
             if (thMcapLoss != null) {
                 thMcapLoss.innerHTML = 'Market Cap loss';
             }
-            
+
             thCountry.innerHTML = 'Country';
             table.querySelectorAll('tr').forEach(function(tr) {
                 tr.querySelector('th:nth-child(' + (rankIndex + 1) + '), td:nth-child(' + (rankIndex + 1) + ')').classList.remove("d-none")
@@ -243,33 +243,73 @@ $this->append('scriptBottom');  ?>
     window.addEventListener('resize', makeMobile);
 
 
-var searchInput = document.getElementById("search-input"); var xhr = new XMLHttpRequest()
-searchInput.addEventListener("keyup", function (e) {
-        xhr.abort(); if (searchInput.value.length == 0) { document.getElementById("typeahead-search-results").style.display = "none"; } else {
-                xhr.open('GET', 'homes/search?action=search&query=' + searchInput.value); xhr.responseType = 'json'; xhr.send(); xhr.onload = function () {
-                        let searchResponse = xhr.response; document.getElementById("typeahead-search-results").style.display = "block"; var aheadHtml = ''; var darkPathSupplement; var isDarkMode = document.body.classList.contains('dark'); for (var i in searchResponse) {
-                                if (isDarkMode && searchResponse[i]["img_dark_png"] == "1") { darkPathSupplement = '.D'; } else { darkPathSupplement = ''; }
-                                aheadHtml = aheadHtml.concat('<a href="' + searchResponse[i]["url"] + '">' +
-                                        '    <div class="float-left pt-1 clear-both"><img class="company-logo" src="' + searchResponse[i]["logo"] + '"></div>' +
-                                        '    <div class="pl-5">' +
-                                        '        <div class="company-name">' + searchResponse[i]["name"] + '</div>' +
-                                        '        <div class="company-code">' + searchResponse[i]["symbol"] + '</div>' +
-                                        '    </div>' +
-                                        '</a>');
-                        }
-                        document.getElementById("typeahead-search-results").innerHTML = aheadHtml;
-                };
+    var searchInput = document.getElementById("search-input");
+    var xhr = new XMLHttpRequest()
+    searchInput.addEventListener("keyup", function(e) {
+        xhr.abort();
+        if (searchInput.value.length == 0) {
+            document.getElementById("typeahead-search-results").style.display = "none";
+        } else {
+            xhr.open('GET', 'homes/search?action=search&query=' + searchInput.value);
+            xhr.responseType = 'json';
+            xhr.send();
+            xhr.onload = function() {
+                let searchResponse = xhr.response;
+                document.getElementById("typeahead-search-results").style.display = "block";
+                var aheadHtml = '';
+                var darkPathSupplement;
+                var isDarkMode = document.body.classList.contains('dark');
+                for (var i in searchResponse) {
+                    if (isDarkMode && searchResponse[i]["img_dark_png"] == "1") {
+                        darkPathSupplement = '.D';
+                    } else {
+                        darkPathSupplement = '';
+                    }
+                    aheadHtml = aheadHtml.concat('<a href="' + searchResponse[i]["url"] + '">' +
+                        '    <div class="float-left pt-1 clear-both"><img class="company-logo" src="' + searchResponse[i]["logo"] + '"></div>' +
+                        '    <div class="pl-5">' +
+                        '        <div class="company-name">' + searchResponse[i]["name"] + '</div>' +
+                        '        <div class="company-code">' + searchResponse[i]["symbol"] + '</div>' +
+                        '    </div>' +
+                        '</a>');
+                }
+                document.getElementById("typeahead-search-results").innerHTML = aheadHtml;
+            };
         }
-}); searchInput.onfocus = function () { if (searchInput.value.length > 0) { document.getElementById("typeahead-search-results").style.display = "block"; } }; var dropdowns = document.querySelectorAll(".dropdown-toggle"); var currentlyOpenedDropdown; for (var i = 0; i < dropdowns.length; i++) {
-        console.log(dropdowns); dropdowns[i].addEventListener("click", function (evt) {
-                evt.preventDefault(); var newCurrentlyOpenedDropdown = evt.target.parentNode; var wasOpen = false; if (newCurrentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) { wasOpen = true; }
-                if (typeof currentlyOpenedDropdown != 'undefined' && currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show"); }
-                currentlyOpenedDropdown = newCurrentlyOpenedDropdown; if (!wasOpen) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.add("show"); }
-        }); window.addEventListener('click', function (e) {
-                if (typeof currentlyOpenedDropdown != 'undefined' && !currentlyOpenedDropdown.contains(e.target)) { currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show"); }
-                if (!document.querySelector('.search-form').contains(e.target)) { document.querySelector("#typeahead-search-results").style.display = 'none'; }
+    });
+    searchInput.onfocus = function() {
+        if (searchInput.value.length > 0) {
+            document.getElementById("typeahead-search-results").style.display = "block";
+        }
+    };
+    var dropdowns = document.querySelectorAll(".dropdown-toggle");
+    var currentlyOpenedDropdown;
+    for (var i = 0; i < dropdowns.length; i++) {
+        console.log(dropdowns);
+        dropdowns[i].addEventListener("click", function(evt) {
+            evt.preventDefault();
+            var newCurrentlyOpenedDropdown = evt.target.parentNode;
+            var wasOpen = false;
+            if (newCurrentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) {
+                wasOpen = true;
+            }
+            if (typeof currentlyOpenedDropdown != 'undefined' && currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.contains("show")) {
+                currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show");
+            }
+            currentlyOpenedDropdown = newCurrentlyOpenedDropdown;
+            if (!wasOpen) {
+                currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.add("show");
+            }
         });
-}
+        window.addEventListener('click', function(e) {
+            if (typeof currentlyOpenedDropdown != 'undefined' && !currentlyOpenedDropdown.contains(e.target)) {
+                currentlyOpenedDropdown.querySelector(".dropdown-menu").classList.remove("show");
+            }
+            if (!document.querySelector('.search-form').contains(e.target)) {
+                document.querySelector("#typeahead-search-results").style.display = 'none';
+            }
+        });
+    }
 </script>
 
 <?php $this->end();  ?>

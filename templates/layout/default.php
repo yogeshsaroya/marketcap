@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="shortcut icon" href="<?= SITEURL;?>favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= SITEURL; ?>favicon.png" type="image/x-icon">
     <meta name="robots" content="INDEX,FOLLOW" />
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
@@ -11,17 +11,17 @@
     <meta http-equiv="content-language" content="en-us">
 
     <title><?= $this->fetch('title') ?></title>
-    <meta name="description" content="<?= $this->fetch('description') ?>"/>
+    <meta name="description" content="<?= $this->fetch('description') ?>" />
 
-    <?= $this->Html->css(['bt-replacement', 'style','magnific-popup']) ?>
+    <?= $this->Html->css(['bt-replacement', 'style', 'magnific-popup']) ?>
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>
     <?= $this->fetch('script'); ?>
-    <?php 
+    <?php
     $theme = $this->request->getSession()->read('theme');
-    $cap = $this->Data->getCaps(); 
+    $cap = $this->Data->getCaps();
     $auth = $this->request->getSession()->read('Auth.User');
-    
+
     ?>
 
 </head>
@@ -33,13 +33,13 @@
             total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
 
             <div class="header-actions responsive-hidden1">
-                <?php 
-                if( isset($auth->email) && !empty($auth->email) ){
-                    echo $this->html->link('Dashboard','/dashboard',['class'=>'login_btn']);
-                }else{
-                    echo $this->html->link('Login','/login',['class'=>'login_btn']);
+                <?php
+                if (isset($auth->email) && !empty($auth->email)) {
+                    echo $this->html->link('Dashboard', '/dashboard', ['class' => 'login_btn']);
+                } else {
+                    echo $this->html->link('Login', 'javascript:void(0);', ['class' => 'login_btn', 'onclick' => 'doLogin()']);
                 }
-                
+
                 ?>
                 <a href="javascript:void(0);" onclick="web_bg(2)" class="dark-hidden" id="light-off-btn" title="change to dark mode">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 70 1000 1000" width="16" height="16">
@@ -272,11 +272,11 @@
             </div>
         </div>
     </div>
-    
-    
-    
-    <?php echo $this->Html->script(['jquery-3.6.3.min','jquery.form.min','script', 'jquery.magnific-popup.min']); ?>
-    
+
+
+
+    <?php echo $this->Html->script(['jquery-3.6.3.min', 'jquery.form.min', 'script', 'jquery.magnific-popup.min']); ?>
+
     <script>
         $(".is_fev").click(function() {
             var id = $(this).attr('data-id');
@@ -333,9 +333,26 @@
                 }
             });
         }
+
+        function doLogin() {
+            var d = "<?php echo urlencode(SITEURL . "users/login_popup/"); ?>";
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo SITEURL; ?>homes/open_pop/2',
+                data: {
+                    url: d
+                },
+                success: function(data) {
+                    $("#cover").html(data);
+                },
+                error: function(comment) {
+                    $("#cover").html(comment);
+                }
+            });
+        }
     </script>
 
-    
+
     <?= $this->fetch('scriptBottom'); ?>
     <div id="cover"></div>
 </body>
