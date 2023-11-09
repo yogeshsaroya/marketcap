@@ -48,7 +48,9 @@ $theme = $this->request->getSession()->read('theme');
                 <th tid="4" class="th-id-4 th-name sorting">Symbol</th>
                 <th tid="5" class="th-id-5 th-mcap sorting text-right">Market Cap</th>
                 <th tid="6" class="th-id-6 th-price sorting text-right">Price</th>
-                <th tid="7" class="th-id-7 th-country sorting">Country</th>
+                <th tid="7" class="th-id-7 sorting text-right">24h</th>
+                <th tid="8" class="th-id-8 th-id-sorting text-right">5d</th>
+                <th tid="9" class="th-id-9 th-country sorting">Country</th>
             </tr>
         </thead>
         <tbody>
@@ -64,7 +66,13 @@ $theme = $this->request->getSession()->read('theme');
                         $logo_dark = SITEURL . "logo/" . $list->logo_dark;
                     }
                     $logo = ($theme == 'dark' ? $logo_dark : $logo_nrm);
-
+                    $p = [];
+                    if(!empty($list->price_change)){
+                        $p = json_decode($list->price_change,true);
+                    }else{
+                        $p['1D'] = 0;
+                        $p['5D'] = 0;
+                    }
             ?>
                     <tr>
                         <td>
@@ -87,6 +95,8 @@ $theme = $this->request->getSession()->read('theme');
                         <td class="td-left"> <span class="badge badge-company"><?= strtoupper($list->symbol); ?></span></td>
                         <td class="td-left" data-sort="<?= $list->market_cap; ?>">$<?= nice_number($list->market_cap); ?></td>
                         <td class="td-left" data-sort="<?= $list->stock_price; ?>">$<?= num_2($list->stock_price); ?></td>
+                        <td class="td-left <?= ($p['1D'] < 0 ? 'text-red':'text-green');?>" data-sort="<?= $p['1D']; ?>"><?= num_2($p['1D']); ?>%</td>
+                        <td class="td-left <?= ($p['5D'] < 0 ? 'text-red':'text-green');?>" data-sort="<?= $p['5D']; ?>"><?= num_2($p['5D']); ?>%</td>
 
                         <td class="td-left">
                             <?php if (!empty($list->country)) { ?>

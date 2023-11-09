@@ -169,6 +169,66 @@ class CronsController extends AppController
         exit;
     }
 
+    public function priceChange()
+    {
+        $date = date("Y-m-d H:i:s", strtotime("-2 hrs", strtotime(DATE)));
+        $data = $this->fetchTable('Stocks')->find('all')
+            ->limit(1000)
+            ->order(['market_cap' => 'desc'])
+            ->where(['OR' => ['price_updated IS NULL', 'price_updated <' => $date]])->all();
+
+        $symbol = $tickers = null;
+        if (!$data->isEmpty()) {
+            foreach ($data as $list) {
+                $symbol[] = $list->symbol;
+            }
+            $tickers = implode(',', $symbol);
+            $url = "https://financialmodelingprep.com/api/v3/stock-price-change/$tickers?apikey=" . env('financialmodelingprep_api');
+            $getData = callApi($url);
+            $app_ids = $up_arr = [];
+            if (isset($getData['Error Message'])) {
+                ec($getData['Error Message']);
+                die;
+            } else {
+                foreach ($data as $li) {
+                    $arr = search($getData, 'symbol', strtoupper($li->symbol));
+                    if (!empty($arr[0]['symbol'])) {
+                        unset($arr[0]['symbol']);
+                        $p =  $arr[0];
+                        $app_ids[] = $li->id;
+                        $up_arr[] = [
+                            'id' => $li->id,
+                            'price_change' => json_encode($p),
+                            'price_updated' => DATE,
+                        ];
+                    } else {
+                        $app_ids[] = $li->id;
+                        $up_arr[] = [
+                            'id' => $li->id,
+                            'price_updated' => DATE,
+                            'error' => 2
+                        ];
+                    }
+                }
+            }
+            if (!empty($up_arr)) {
+                $chkApp = $this->fetchTable('Stocks')->find()->where(['id IN' => $app_ids])->all();
+                $appEnt = $this->fetchTable('Stocks')->patchEntities($chkApp, $up_arr, ['validate' => false]);
+                try {
+                    $res = $this->fetchTable('Stocks')->saveMany($appEnt);
+                } catch (\Throwable $th) {
+                    throw $th;
+                }
+                echo "Saved";
+            } else {
+                ec('empty.');
+            }
+        } else {
+            ec('empty');
+        }
+        exit;
+    }
+
     function curl_get_file_contents($URL)
     {
         $c = curl_init();
@@ -191,11 +251,11 @@ class CronsController extends AppController
         $data = $this->fetchTable('Stocks')->find('all')
             ->limit(20)
             ->order(['market_cap' => 'desc'])
-            ->where(['logo_bright IS NULL', 'type' => 'stock','name !=' => '', 'symbol IS NOT NULL'])->all();
+            ->where(['logo_bright IS NULL', 'type' => 'stock', 'name !=' => '', 'symbol IS NOT NULL'])->all();
         if (!$data->isEmpty()) {
             foreach ($data as $li) {
 
-                $u = 'https://companieslogo.com/api/1.0/?symbol='.strtoupper($li->symbol).'&api_key=1c6923454b9e996ea78572';
+                $u = 'https://companieslogo.com/api/1.0/?symbol=' . strtoupper($li->symbol) . '&api_key=1c6923454b9e996ea78572';
                 $res = $this->curl_get_file_contents($u);
                 $arr = json_decode($res, true);
                 $slug = strtolower(Text::slug($li->symbol));
@@ -211,7 +271,7 @@ class CronsController extends AppController
                     $li->logo_dark =  $slug . "-dark.png";
                 }
                 $this->fetchTable('Stocks')->save($li);
-                ec("Logo Saved for ( ".$li->symbol." )" . $li->name);
+                ec("Logo Saved for ( " . $li->symbol . " )" . $li->name);
             }
         } else {
             ec('Empty');
@@ -327,4 +387,6 @@ class CronsController extends AppController
             die;
         }
     }
+
+    
 }
