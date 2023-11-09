@@ -49,7 +49,7 @@ $theme = $this->request->getSession()->read('theme');
                 <th tid="5" class="th-id-5 th-mcap sorting text-right">Market Cap</th>
                 <th tid="6" class="th-id-6 th-price sorting text-right">Price</th>
                 <th tid="7" class="th-id-7 sorting text-right">24h</th>
-                <th tid="8" class="th-id-8 th-id-sorting text-right">5d</th>
+                <th tid="8" class="th-id-8 sorting text-right">5d</th>
                 <th tid="9" class="th-id-9 th-country sorting">Country</th>
             </tr>
         </thead>
