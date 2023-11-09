@@ -29,8 +29,10 @@
 <body class="cmkt <?= ($theme == 'dark' ? 'dark' : null); ?>" id="cmkt">
     <div class="row site-header-row">
         <div class="site-header">
+            <span class="responsive-hidden">
             companies: <span class="font-weight-bold"><?= number_format($cap['companies']); ?></span> &nbsp;&nbsp;&nbsp;
             total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
+            </span>
 
             <div class="header-actions responsive-hidden1">
                 <?php
