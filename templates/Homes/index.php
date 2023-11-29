@@ -162,11 +162,11 @@ $this->append('scriptBottom');  ?>
     const thMcap = table.querySelector('.th-mcap');
     const thMcapLoss = table.querySelector('.th-mcap-loss');
     const thMcapGain = table.querySelector('.th-mcap-gain');
-    const th1d = table.querySelector('.th-1d');
+    
     const thCountry = table.querySelector('.th-country');
     var rankIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(thRank);
     var priceIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(thPrice);
-    var th1dIndex = Array.prototype.slice.call(thRank.parentNode.children).indexOf(th1d);
+    
     var addedMovers = false;
 
     function makeMobile() {
@@ -219,7 +219,7 @@ $this->append('scriptBottom');  ?>
             if (thMcapLoss != null) {
                 thMcapLoss.innerHTML = 'M. Cap loss';
             }
-            th1d.innerHTML = '1d';
+            
             thCountry.innerHTML = 'C.';
             table.querySelectorAll('tr').forEach(function(tr) {
                 tr.querySelector('th:nth-child(' + (rankIndex + 1) + '), td:nth-child(' + (rankIndex + 1) + ')').classList.add("d-none")
@@ -234,7 +234,7 @@ $this->append('scriptBottom');  ?>
                         if (!priceTd.classList.contains('pt-2')) {
                             priceTd.classList.add('pt-2');
                             if (priceTd != null) {
-                                priceTd.innerHTML = '<div class="price">' + priceTd.innerHTML + '</div><div>' + tr.querySelector('td:nth-child(' + (th1dIndex + 1) + ')').innerHTML + '</div>';
+                                priceTd.innerHTML = '<div class="price">' + priceTd.innerHTML + '</div><div></div>';
                             }
                         }
                     } else {
