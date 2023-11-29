@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="shortcut icon" href="<?= SITEURL; ?>favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= SITEURL; ?>favicon.ico" type="image/x-icon">
     <meta name="robots" content="INDEX,FOLLOW" />
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
