@@ -81,7 +81,7 @@ class HomesController extends AppController
             }
         } else {
             if ($this->request->is('ajax')) {
-                
+
                 echo "<script>doLogin();</script>";
                 exit;
             } else {
@@ -193,19 +193,21 @@ class HomesController extends AppController
 
                 if (empty($type) || $type == 'marketcap') {
                     $url2 = "https://financialmodelingprep.com/api/v4/stock_peers?symbol=" . $data->symbol . "&apikey=" . env('financialmodelingprep_api');
-                    $url4 = "https://financialmodelingprep.com/api/v3/historical-market-capitalization/" . $data->symbol . "?limit=100&apikey=" . env('financialmodelingprep_api');
-
+                    $url4 = "https://financialmodelingprep.com/api/v3/historical-market-capitalization/" . strtoupper($data->symbol) . "?limit=500&apikey=" . env('financialmodelingprep_api');
                     if ($cache === false ||  empty($apiData['stock_peers'])) {
                         $apiData['stock_peers'] = $stock_peers = callApi($url2);
                     } else {
                         $stock_peers = $apiData['stock_peers'];
                     }
-                    if ($cache === false ||  empty($apiData['market_cap'])) {
+
+                    if ($cache === false || empty($apiData['market_cap'])) {
                         $apiData['market_cap'] = $market_cap = callApi($url4);
                         $session->write($s_name, $apiData);
                     } else {
                         $market_cap = $apiData['market_cap'];
                     }
+
+
                     $data->stock_peers = json_encode($stock_peers);
                     $data->market_cap_list = json_encode($market_cap);
 
