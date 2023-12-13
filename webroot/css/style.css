@@ -710,11 +710,7 @@ ul.navbar-nav {
 
 @media(min-width:992px) {
     
-    .navbar #navbarSupportedContent {
-        float: right;
-        max-width: 85%;
-        display: flex
-    }
+
     .navbar-expand-lg .navbar-nav {
         -ms-flex-direction: row;
         flex-direction: row
@@ -2024,7 +2020,11 @@ a.text-underline {
     fill: orange
 }
 
-
+.navbar #navbarSupportedContent {
+    float: left;
+    max-width: 650px;
+    display: flex !important
+}
 
 .is_fev{
     cursor: pointer;
