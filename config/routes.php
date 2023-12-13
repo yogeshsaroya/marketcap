@@ -52,6 +52,8 @@ return static function (RouteBuilder $routes) {
          */
         $builder->connect('/', ['controller' => 'Homes', 'action' => 'index']);
         $builder->connect('/verified-pnl/*', ['controller' => 'Homes', 'action' => 'verified']);
+
+        $builder->connect('/country/*', ['controller' => 'Homes', 'action' => 'country']);
         
         $builder->connect('/{slug}/*', ['controller' => 'Homes', 'action' => 'profile']);
 
