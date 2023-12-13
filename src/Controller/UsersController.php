@@ -43,7 +43,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         /* https://book.cakephp.org/4/en/controllers/components/authentication.html#AuthComponent::allow */
-        $this->Auth->allow(['register', 'resetPassword', 'login', 'backend', 'logout', 'setPassword','loginPopup']);
+        $this->Auth->allow(['register', 'resetPassword', 'login', 'backend', 'logout', 'setPassword', 'loginPopup']);
         //$this->Auth->allow();
         // Form helper https://codethepixel.com/tutorial/cakephp/cakephp-4-common-helpers
         /* https://codethepixel.com/tutorial/cakephp/cakephp-4-find-sort-count */
@@ -335,6 +335,9 @@ class UsersController extends AppController
 
     public function register()
     {
+        $settings = $this->fetchTable('Settings')->findById('1')->firstOrFail();
+        $this->set(compact('settings'));
+
         if ($this->Auth->User('id') != "") {
             if ($this->request->is('ajax')) {
                 $u = SITEURL . "dashboard";
@@ -347,24 +350,42 @@ class UsersController extends AppController
 
         if ($this->request->is('ajax') && !empty($this->request->getData())) {
             $post_data = $this->request->getData();
-            $post_data['role'] = 2;
-            $getData = $this->Users->newEmptyEntity();
-            $chkData = $this->Users->patchEntity($getData, $post_data, ['validate' => true]);
-            if ($chkData->getErrors()) {
-                $st = null;
-                foreach ($chkData->getErrors() as $elist) {
-                    foreach ($elist as $k => $v); {
-                        $st .= "<div class='alert bg-danger'>" . $v . "</div>";
+
+            if (isset($settings->hcaptcha_secret) && !empty($settings->hcaptcha_secret)) {
+                if (isset($post_data['h-captcha-response']) && !empty($post_data['h-captcha-response'])) {
+                    $verifyResponse = file_get_contents('https://hcaptcha.com/siteverify?secret=' . $settings->hcaptcha_secret . '&response=' . $post_data['h-captcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR']);
+                    $responseData = json_decode($verifyResponse);
+                    if ($responseData->success) {
+                        $post_data['role'] = 2;
+                        $getData = $this->Users->newEmptyEntity();
+                        $chkData = $this->Users->patchEntity($getData, $post_data, ['validate' => true]);
+                        if ($chkData->getErrors()) {
+                            $st = null;
+                            foreach ($chkData->getErrors() as $elist) {
+                                foreach ($elist as $k => $v); {
+                                    $st .= "<div class='alert bg-danger'>" . $v . "</div>";
+                                }
+                            }
+                            echo $st;
+                            exit;
+                        } else {
+                            $verify = $this->Users->save($chkData);
+                            $this->Auth->setUser($verify);
+                            $q_url = SITEURL . "watchlist";
+                            echo '<script>$("#login_sbtn").remove(); window.location.href = "' . $q_url . '"</script>';
+                        }
                     }
+                } else {
+                    echo "<div class='alert bg-danger'>Invalid Captcha</div>";
+                    exit;
                 }
-                echo $st;
-                exit;
             } else {
-                $verify = $this->Users->save($chkData);
-                $this->Auth->setUser($verify);
-                $q_url = SITEURL . "watchlist";
-                echo '<script>$("#login_sbtn").remove(); window.location.href = "' . $q_url . '"</script>';
+                echo "<div class='alert bg-danger'>Invalid Captcha</div>";
+                exit;
             }
+
+
+
             exit;
         }
     }
@@ -491,10 +512,9 @@ class UsersController extends AppController
             }
             exit;
         }
-        
     }
 
-    
+
 
     /**
      * Admin login page

@@ -123,11 +123,67 @@ class PagesController extends AppController
 
     public function users()
     {
+        if ($this->request->getQuery('del')  && !empty($this->request->getQuery('del'))) {
+            $readData = $this->fetchTable('Users')->findById($this->request->getQuery('del'))->firstOrFail();
+            if ($this->fetchTable('Users')->delete($readData)) {
+            }
+            $this->redirect('/pages/users');
+        }
+        
         $menu_act = 'users';
         $this->paginate = ['conditions' => ['role' => 2], 'limit' => 200, 'order' => ['created' => 'desc']];
         $data = $this->paginate($this->fetchTable('Users')->find('all'));
         $this->set(compact('data'));
     }
+
+    public function manageUser($id = null)
+    {
+        $menu_act = 'users';
+        $this->set(compact('menu_act'));
+        $get_data = null;
+        if ($this->request->is('ajax') && !empty($this->request->getData())) {
+            $postData = $this->request->getData();
+            $val = ['validate' => true];
+            if (!empty($postData['password1'])) {
+                $postData['password'] = $postData['password1'];
+            } else {
+                $val = ['validate' => 'OnlyCheck'];
+            }
+
+            if (isset($postData['id']) && !empty($postData['id'])) {
+                $getData = $this->fetchTable('Users')->get($postData['id']);
+                $chkData = $this->fetchTable('Users')->patchEntity($getData, $postData, $val);
+            } else {
+                $getData = $this->fetchTable('Users')->newEmptyEntity();
+                $chkData = $this->fetchTable('Users')->patchEntity($getData, $postData, $val);
+            }
+            if ($chkData->getErrors()) {
+                $st = null;
+                foreach ($chkData->getErrors() as $elist) {
+                    foreach ($elist as $k => $v); {
+                        $st .= "<div class='alert alert-danger'>" . ucwords($v) . "</div>";
+                    }
+                }
+                echo $st;
+                exit;
+            } else {
+                if ($this->fetchTable('Users')->save($chkData)) {
+                    $u = SITEURL . "pages/users";
+                    echo '<div class="alert alert-success" role="alert"> Saved.</div>';
+                    echo "<script>window.location.href ='" . $u . "'; </script>";
+                } else {
+                    echo '<div class="alert alert-danger" role="alert"> Not saved.</div>';
+                }
+            }
+            exit;
+        }
+
+        if (!empty($id)) {
+            $get_data = $this->fetchTable('Users')->findById($id)->firstOrFail();
+        }
+        $this->set(compact('get_data'));
+    }
+
 
 
     public function settings()

@@ -74,6 +74,24 @@
                                         </div>
                                     </div>
                                 </section>
+
+                                <section>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">hCaptcha API</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-12 form-group mb-2"><?= $this->Form->control('hcaptcha_sitekey', ['label' => ['escape' => false, 'text' => 'Site Key'], 'class' => 'form-control', 'required' => true]); ?><div class="help-block with-errors"></div></div>
+                                                        <div class="col-md-4 col-12 form-group mb-2"><?= $this->Form->control('hcaptcha_secret', ['label' => ['escape' => false, 'text' => 'Secret Key'], 'class' => 'form-control', 'required' => true]); ?><div class="help-block with-errors"></div></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                                 <section>
                                     <div class="row">
                                         <div class="col-md-12">

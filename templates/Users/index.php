@@ -3,23 +3,25 @@ $this->assign('title', 'Portfolio Summary');
 $theme = $this->request->getSession()->read('theme');
 $auth = $this->request->getSession()->read('Auth.User');
 
-echo $this->Html->css(['//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css','login'], ['block' => 'css']);
+echo $this->Html->css(['//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css', 'login'], ['block' => 'css']);
 echo $this->Html->script(['imask'], ['block' => 'script']);
 ?>
 <style>
-tfoot tr>td {font-weight: 700;}
-
+  tfoot tr>td {
+    font-weight: 700;
+  }
 </style>
 <br>
 <h1 class="text-center h1-title">Portfolio Summary</h1>
 <br>
 
 <div class="ranking-bar">
-<a href="<?= SITEURL?>watchlist"><span class="option ">Watchlist</span></a>
-  <a href="<?= SITEURL?>dashboard"><span class="option active">Portfolio</span></a> 
-   
-  <a href="<?= SITEURL?>users/profile"><span class="option ">Profile</span></a> 
-  <a href="<?= SITEURL?>users/logout"><span class="option ">Logout</span></a> 
+  <a href="<?= SITEURL ?>"><span class="option ">All Assets</span></a>
+  <a href="<?= SITEURL ?>watchlist"><span class="option ">Watchlist</span></a>
+  <a href="<?= SITEURL ?>dashboard"><span class="option active">Portfolio</span></a>
+
+  <a href="<?= SITEURL ?>users/profile"><span class="option ">Profile</span></a>
+  <a href="<?= SITEURL ?>users/logout"><span class="option ">Logout</span></a>
   <br>
   <small>You can add more stock to your portfolio from watchlists.</small>
 </div>
@@ -39,12 +41,12 @@ tfoot tr>td {font-weight: 700;}
         <th tid="9" class="th-id-9 sorting">Profit/Loss</th>
         <th tid="10" class="th-id-10 sorting">Overall Gain</th>
         <th tid="11" class="th-id-11">Action</th>
-        
+
       </tr>
     </thead>
     <tbody>
       <?php if (!$data->isEmpty()) {
-        $a =$b =$c = $d  = 0;
+        $a = $b = $c = $d  = 0;
         foreach ($data as $list) {
           $logo = $logo_dark = $logo_nrm =  $list->stock->logo;
           if (!empty($list->stock->logo_bright)) {
@@ -58,7 +60,7 @@ tfoot tr>td {font-weight: 700;}
           $inv_val = num_2($list->qty * $list->rate);
           $a = $a + $inv_val;
           $live_val = num_2($list->qty * $list->stock->stock_price);
-          $b = $b + $live_val; 
+          $b = $b + $live_val;
           $profit = num_2($live_val - $inv_val);
           $gain = num_2(($live_val - $inv_val) / $inv_val);
       ?>
@@ -83,43 +85,43 @@ tfoot tr>td {font-weight: 700;}
             <td class="td-left" data-sort="<?= $inv_val; ?>">$<?= $inv_val; ?></td>
             <td class="td-left" data-sort="<?= $live_val; ?>">$<?= $live_val ?></td>
 
-            <td class="td-left <?= ($profit < 0 ? 'text-red':'text-green');?>" data-sort="<?= $profit; ?>">$<?= $profit; ?></td>
-            <td class="td-left <?= ($gain < 0 ? 'text-red':'text-green');?>" data-sort="<?= $gain; ?>"><?= $gain; ?>%</td>
+            <td class="td-left <?= ($profit < 0 ? 'text-red' : 'text-green'); ?>" data-sort="<?= $profit; ?>">$<?= $profit; ?></td>
+            <td class="td-left <?= ($gain < 0 ? 'text-red' : 'text-green'); ?>" data-sort="<?= $gain; ?>"><?= $gain; ?>%</td>
 
             <td class="td-left">
               <a href="javascript:void(0);" onclick="add_to_portfolio(<?= $list->id; ?>);">Edit</a>
             </td>
           </tr>
-          <?php 
-        } ?> 
-        <tfoot>
-<?php 
-$a_pro = num_2($b - $a);
-$a_gain = num_2(($b - $a) / $a);
-?>
-        <tr>
-          <td colspan="5" align="right"> Overall Summary </td>
-          <td colspan="1"></td>
-          <td colspan="1">$<?= $a;?></td>
-          <td colspan="1">$<?= $b;?></td>
-          <td colspan="1" class="<?= ($a_pro < 0 ? 'text-red':'text-green');?>">$<?= $a_pro;?></td>
-          <td colspan="1" class="<?= ($a_gain < 0 ? 'text-red':'text-green');?>"><?= $a_gain;?>%</td>
-          <td colspan="1"></td>
+        <?php
+        } ?>
+    <tfoot>
+      <?php
+        $a_pro = num_2($b - $a);
+        $a_gain = num_2(($b - $a) / $a);
+      ?>
+      <tr>
+        <td colspan="5" align="right"> Overall Summary </td>
+        <td colspan="1"></td>
+        <td colspan="1">$<?= $a; ?></td>
+        <td colspan="1">$<?= $b; ?></td>
+        <td colspan="1" class="<?= ($a_pro < 0 ? 'text-red' : 'text-green'); ?>">$<?= $a_pro; ?></td>
+        <td colspan="1" class="<?= ($a_gain < 0 ? 'text-red' : 'text-green'); ?>"><?= $a_gain; ?>%</td>
+        <td colspan="1"></td>
       </tr>
-        </tfoot>
-        
-        <?php 
+    </tfoot>
+
+  <?php
       } else { ?>
-        <td colspan="8" align="center">Portfolio is empty</td>
-      <?php } ?>
+    <td colspan="8" align="center">Portfolio is empty</td>
+  <?php } ?>
 
 
-    </tbody>
+  </tbody>
   </table>
 </div>
 <div class="bottom-table-description">
   <p>
-    Share your portfolio by using this url. <?= $this->Html->link(SITEURL."verified-pnl/".base64_encode($auth->id),SITEURL."verified-pnl/".base64_encode($auth->id));?>
+    Share your portfolio by using this url. <?= $this->Html->link(SITEURL . "verified-pnl/" . base64_encode($auth->id), SITEURL . "verified-pnl/" . base64_encode($auth->id)); ?>
   </p>
 </div>
 <?php
@@ -139,27 +141,26 @@ $a_gain = num_2(($b - $a) / $a);
 
 
 <?php
-echo $this->Html->script(['tableScript','https://code.jquery.com/ui/1.13.2/jquery-ui.js'], ['block' => 'scriptBottom']);
+echo $this->Html->script(['tableScript', 'https://code.jquery.com/ui/1.13.2/jquery-ui.js'], ['block' => 'scriptBottom']);
 
 $this->append('scriptBottom');  ?>
 <script>
-
-function add_to_portfolio(id) {
-        var d = "<?php echo urlencode(SITEURL . "users/edit_portfolio/"); ?>" + id;
-        $.ajax({
-            type: 'POST',
-            url: '<?php echo SITEURL; ?>homes/open_pop/2',
-            data: {
-                url: d
-            },
-            success: function(data) {
-                $("#cover").html(data);
-            },
-            error: function(comment) {
-                $("#cover").html(comment);
-            }
-        });
-    }
+  function add_to_portfolio(id) {
+    var d = "<?php echo urlencode(SITEURL . "users/edit_portfolio/"); ?>" + id;
+    $.ajax({
+      type: 'POST',
+      url: '<?php echo SITEURL; ?>homes/open_pop/2',
+      data: {
+        url: d
+      },
+      success: function(data) {
+        $("#cover").html(data);
+      },
+      error: function(comment) {
+        $("#cover").html(comment);
+      }
+    });
+  }
 
 
   const table = document.querySelector('.marketcap-table');

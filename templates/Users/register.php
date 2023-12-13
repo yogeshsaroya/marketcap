@@ -2,7 +2,11 @@
 $this->assign('title', 'Register | ' . env('APP_NAME'));
 
 $theme = $this->request->getSession()->read('theme');
-echo $this->Html->css(['login'], ['block' => 'css'])
+echo $this->Html->css(['login'], ['block' => 'css']);
+if (isset($settings->hcaptcha_sitekey) && !empty($settings->hcaptcha_sitekey)) {
+  echo $this->Html->script(['https://www.hCaptcha.com/1/api.js'], ['block' => 'scriptBottom', 'async', 'defer']);
+}
+
 ?>
 <div class="login-page">
   <div class="form">
@@ -13,6 +17,13 @@ echo $this->Html->css(['login'], ['block' => 'css'])
     <div class="mb-2 form-group"><?= $this->Form->control('last_name', ['label' => 'Last Name', 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-last-name']); ?></div>
     <div class="mb-2 form-group"><?= $this->Form->control('email', ['label' => 'Email', 'type' => 'email', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-email']); ?></div>
     <div class="mb-2 form-group"><?= $this->Form->control('password', ['label' => 'Enter Password', 'type' => 'password', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-password']); ?></div>
+
+    <?php if (isset($settings->hcaptcha_sitekey) && !empty($settings->hcaptcha_sitekey)) { ?>
+      <div class="mb-2 form-group">
+        <div class="h-captcha" data-sitekey="<?= $settings->hcaptcha_sitekey; ?>"></div>
+      </div>
+    <?php } ?>
+
     <div class="mb-2">
       <div id="f_err"></div>
     </div>
@@ -34,25 +45,31 @@ echo $this->Html->css(['login'], ['block' => 'css'])
   $(document).ready(function() {
 
     $("#login_sbtn").click(function() {
-      $("#e_frm").ajaxForm({
-        target: '#f_err',
-        headers: {
-          'X-CSRF-Token': $('[name="_csrfToken"]').val()
-        },
-        beforeSubmit: function() {
-          $("#login_sbtn").prop("disabled", true);
-          $("#login_sbtn").val('Please wait..');
-        },
-        success: function(response) {
-          $("#login_sbtn").prop("disabled", false);
-          $("#login_sbtn").val('Register');
-        },
-        error: function(response) {
-          $('#f_err').html('<div class="alert alert-danger">Sorry, this is not working at the moment. Please try again later.</div>');
-          $("#login_sbtn").prop("disabled", false);
-          $("#login_sbtn").val('Register');
-        },
-      }).submit();
+
+      var hcaptchaVal = $('[name=h-captcha-response]').val();
+      if (hcaptchaVal === "") {
+        $('#f_err').html('<div class="alert alert-danger">Please complete the hCaptcha</div>');
+      } else {
+        $("#e_frm").ajaxForm({
+          target: '#f_err',
+          headers: {
+            'X-CSRF-Token': $('[name="_csrfToken"]').val()
+          },
+          beforeSubmit: function() {
+            $("#login_sbtn").prop("disabled", true);
+            $("#login_sbtn").val('Please wait..');
+          },
+          success: function(response) {
+            $("#login_sbtn").prop("disabled", false);
+            $("#login_sbtn").val('Register');
+          },
+          error: function(response) {
+            $('#f_err').html('<div class="alert alert-danger">Sorry, this is not working at the moment. Please try again later.</div>');
+            $("#login_sbtn").prop("disabled", false);
+            $("#login_sbtn").val('Register');
+          },
+        }).submit();
+      }
     });
   });
 </script>

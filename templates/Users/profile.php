@@ -11,11 +11,11 @@ echo $this->Html->css(['login'], ['block' => 'css'])
 <br>
 
 <div class="ranking-bar">
+    <a href="<?= SITEURL ?>"><span class="option ">All Assets</span></a>
+    <a href="<?= SITEURL ?>watchlist"><span class="option ">Watchlist</span></a>
+    <a href="<?= SITEURL ?>dashboard"><span class="option ">Portfolio</span></a>
 
-<a href="<?= SITEURL ?>watchlist"><span class="option ">Watchlist</span></a>
-    <a href="<?= SITEURL ?>dashboard"><span class="option active">Portfolio</span></a>
-    
-    <a href="<?= SITEURL ?>users/profile"><span class="option ">Profile</span></a>
+    <a href="<?= SITEURL ?>users/profile"><span class="option active">Profile</span></a>
     <a href="<?= SITEURL ?>users/logout"><span class="option ">Logout</span></a>
 
 </div>
@@ -25,8 +25,8 @@ echo $this->Html->css(['login'], ['block' => 'css'])
         <div class="form">
             <h2>Update Profile</h2>
             <br>
-            <?php 
-            echo $this->Form->create($profile, ['url' => ['controller' => 'users', 'action' => 'profile'], 'autocomplete' => 'off', 'class' => 'login-form', 'id' => 'e_frm']); 
+            <?php
+            echo $this->Form->create($profile, ['url' => ['controller' => 'users', 'action' => 'profile'], 'autocomplete' => 'off', 'class' => 'login-form', 'id' => 'e_frm']);
             echo $this->Form->hidden('id');
             ?>
             <div class="mb-2 form-group"><?= $this->Form->control('first_name', ['label' => 'First Name', 'type' => 'text', 'class' => 'form-control', 'required' => true, 'autocomplete' => 'new-first-name']); ?></div>

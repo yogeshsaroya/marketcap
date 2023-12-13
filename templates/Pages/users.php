@@ -21,6 +21,7 @@
                                         <th><?= $this->Paginator->sort('first_name'); ?></th>
                                         <th><?= $this->Paginator->sort('last_name'); ?></th>
                                         <th><?= $this->Paginator->sort('email'); ?></th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -31,6 +32,15 @@
                                                 <td><?= $list->first_name; ?></td>
                                                 <td><?= $list->last_name; ?></td>
                                                 <td><?= $list->email; ?></td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown"><i data-feather="more-vertical"></i></button>
+                                                        <div class="dropdown-menu">
+                                                            <?php echo $this->Html->link('<i data-feather="edit-2" class="mr-50"></i> Edit', SITEURL . "pages/manage_user/" . $list->id, ['escape' => false, 'class' => 'dropdown-item']); ?>
+                                                            <?php echo $this->Html->link('<i data-feather="trash" class="mr-50"></i> Delete', SITEURL . "pages/users?del=" . $list->id, ['escape' => false, 'class' => 'dropdown-item', 'onclick' => "return confirm('Are you sure you want to delete this user?')"]); ?>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
                                     <?php }
                                     } ?>
