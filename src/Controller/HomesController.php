@@ -110,29 +110,6 @@ class HomesController extends AppController
         $this->set(compact('data', 'star', 'seo'));
     }
 
-    public function country($id = null, $st = null ){
-        if(empty($id)){
-            return $this->redirect('/');
-            exit;
-        }
-        $star = $data = [];
-        if ($this->Auth->User('id') != "") {
-            $query = $this->fetchTable('Watchlists')->find('list', ['conditions' => ['user_id' => $this->Auth->User('id')], 'keyField' => 'stock_id', 'valueField' => 'stock_id']);
-            $star = $query->toArray();
-        }
-        try {
-            $this->paginate = ['conditions' => ['type' => 'stock', 'name !=' => '','country'=>$id], 'limit' => 500, 'order' => ['market_cap' => 'desc']];
-            $data = $this->paginate($this->fetchTable('Stocks')->find('all'));
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-
-        $st = str_replace("-"," ",$st);
-        $st = str_replace("market cap","market capitalization",$st);
-        $st = ucwords($st);
-        $this->set(compact('data', 'star', 'st','id'));
-    }
-
     public function search()
     {
         $this->disableAutoRender();

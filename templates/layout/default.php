@@ -27,12 +27,11 @@
 </head>
 
 <body class="cmkt <?= ($theme == 'dark' ? 'dark' : null); ?>" id="cmkt">
-
     <div class="row site-header-row">
         <div class="site-header">
-
+            <span class="responsive-hidden">
             companies: <span class="font-weight-bold"><?= number_format($cap['companies']); ?></span> &nbsp;&nbsp;&nbsp;
-            <span class="responsive-hidden"> total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
+            total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
             </span>
 
             <div class="header-actions responsive-hidden1">
@@ -44,7 +43,6 @@
                 }
 
                 ?>
-
                 <a href="javascript:void(0);" onclick="web_bg(2)" class="dark-hidden" id="light-off-btn" title="change to dark mode">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 70 1000 1000" width="16" height="16">
                         <path d="M525.3,989.5C241.2,989.5,10,758.3,10,474.1c0-196.8,109.6-373.6,285.9-461.4c7.9-3.9,17.5-2.4,23.7,3.8c6.2,6.2,7.9,15.8,4,23.7c-32.2,65.4-48.5,135.7-48.5,208.9c0,261.4,212.7,474.1,474.1,474.1c74,0,145-16.7,211-49.5c7.9-3.9,17.5-2.4,23.7,3.8c6.3,6.3,7.9,15.8,3.9,23.7C900.5,879,723.3,989.5,525.3,989.5z">
@@ -56,152 +54,175 @@
                         <path d="M120,189.697c-38.492,0-69.696-31.205-69.696-69.697S81.508,50.303,120,50.303c38.494,0,69.699,31.205,69.699,69.697 S158.494,189.697,120,189.697z M203.975,140L240,120l-36.025-20V140z M36.025,100L0,120l36.025,20V100z M120,240l20-36.025h-40 L120,240z M120,0l-20,36.025h40L120,0z M46.481,165.238l-11.333,39.615l39.616-11.33L46.481,165.238z M165.238,46.477l28.283,28.285 l11.332-39.613L165.238,46.477z M35.148,35.148L46.48,74.762l28.283-28.285L35.148,35.148z M165.238,193.523l39.615,11.33 l-11.332-39.615L165.238,193.523z" />
                     </svg>
                 </a>
+
             </div>
         </div>
     </div>
     <nav class="navbar nav-bar-companiesmarketcap navbar-expand-lg navbar-light">
         <div class="navbar-collapse-container">
+            <div class="navbar-toggler" style="display: none;"></div>
+            <?php /*?>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="<?= SITEURL; ?>" title="Marketcap.tools - companies ranked by market capitalization" class="responsive-hidden1">
+            
+            <form class="search-form form-inline">
+                <input id="search-input" class="form-control search-input" type="search" placeholder="Company name, ticker..." aria-label="Company name, ticker..." autocomplete="off">
+                <button onclick="return false;" class="btn-search" type="submit" disabled><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="18" height="18">
+                        <g stroke-width="2" stroke="#6c6c6c" fill="none">
+                            <path d="M11.29 11.71l-4-4"></path>
+                            <circle cx="5" cy="5" r="4"></circle>
+                        </g>
+                    </svg></button>
+                <div id="typeahead-search-results" class="typeahead-search-results"></div>
+            </form>
+            <?php */ ?>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <a href="<?= SITEURL; ?>" title="Marketcap.tools - companies ranked by market capitalization" class="responsive-hidden1">
                     <?php /* ?><div class="companiesmarketcap-logo"></div><?php */ ?>
                     <img src="<?= SITEURL; ?>img/logo.svg" style="width: auto;height: 25px;margin: 8px 0;">
                 </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                
                 <ul class="navbar-nav">
-
+                    <?php /*?>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-companiesmarketcap" href="<?= SITEURL; ?>"><?= env('APP_NAME'); ?></a>
+                    </li>
+                    
                     <li class="nav-item dropdown megamenu-li">
                         <a class="nav-link nav-link-companiesmarketcap dropdown-toggle" href="#" id="dropdown-countries" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ranking by countries</a>
                         <div class="dropdown-menu megamenu" aria-labelledby="dropdown-countries">
                             <div class="row">
                                 <div class="col-sm-6 col-lg-3">
                                     <h5>America</h5>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/us/largest-companies-in-the-usa-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/us.png"> United States</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/ca/largest-companies-in-canada-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/ca.png"> Canada</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/mx/largest-companies-in-mexico-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/mx.png"> Mexico</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/br/largest-companies-in-brazil-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/br.png"> Brazil</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/cl/largest-companies-in-chile-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/cl.png"> Chile</a>
+                                    <a class="dropdown-item" href="usa/largest-companies-in-the-usa-by-market-cap.html"><img class="flag" src="img/flags/us.png"> United States</a>
+                                    <a class="dropdown-item" href="canada/largest-companies-in-canada-by-market-cap.html"><img class="flag" src="img/flags/ca.png"> Canada</a>
+                                    <a class="dropdown-item" href="mexico/largest-companies-in-mexico-by-market-cap.html"><img class="flag" src="img/flags/mx.png"> Mexico</a>
+                                    <a class="dropdown-item" href="brazil/largest-companies-in-brazil-by-market-cap.html"><img class="flag" src="img/flags/br.png"> Brazil</a>
+                                    <a class="dropdown-item" href="chile/largest-companies-in-chile-by-market-cap.html"><img class="flag" src="img/flags/cl.png"> Chile</a>
                                 </div>
                                 <div class="col-sm-6 col-lg-3 border-left">
                                     <h5>Europe</h5>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/de/largest-companies-in-germany-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/de.png"> Germany</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/uk/largest-companies-in-the-uk-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/uk.png"> United Kingdom</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/fr/largest-companies-in-france-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/fr.png"> France</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/es/largest-companies-in-spain-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/es.png"> Spain</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/nl/largest-companies-in-the-netherlands-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/nl.png"> Netherlands</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/se/largest-companies-in-sweden-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/se.png"> Sweden</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/it/largest-companies-in-italy-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/it.png"> Italy</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/ch/largest-companies-in-switzerland-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/ch.png"> Switzerland</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/pl/largest-companies-in-poland-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/pl.png"> Poland</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/fi/largest-companies-in-finland-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/fi.png"> Finland</a>
+                                    <a class="dropdown-item" href="european-union/largest-companies-in-the-eu-by-market-cap.html">eu European
+                                        Union</a>
+                                    <a class="dropdown-item" href="germany/largest-companies-in-germany-by-market-cap.html"><img class="flag" src="img/flags/de.png"> Germany</a>
+                                    <a class="dropdown-item" href="united-kingdom/largest-companies-in-the-uk-by-market-cap.html"><img class="flag" src="img/flags/uk.png"> United Kingdom</a>
+                                    <a class="dropdown-item" href="france/largest-companies-in-france-by-market-cap.html"><img class="flag" src="img/flags/fr.png"> France</a>
+                                    <a class="dropdown-item" href="spain/largest-companies-in-spain-by-market-cap.html"><img class="flag" src="img/flags/es.png"> Spain</a>
+                                    <a class="dropdown-item" href="netherlands/largest-companies-in-the-netherlands-by-market-cap.html"><img class="flag" src="img/flags/nl.png"> Netherlands</a>
+                                    <a class="dropdown-item" href="sweden/largest-companies-in-sweden-by-market-cap.html"><img class="flag" src="img/flags/se.png"> Sweden</a>
+                                    <a class="dropdown-item" href="italy/largest-companies-in-italy-by-market-cap.html"><img class="flag" src="img/flags/it.png"> Italy</a>
+                                    <a class="dropdown-item" href="switzerland/largest-companies-in-switzerland-by-market-cap.html"><img class="flag" src="img/flags/ch.png"> Switzerland</a>
+                                    <a class="dropdown-item" href="poland/largest-companies-in-poland-by-market-cap.html"><img class="flag" src="img/flags/pl.png"> Poland</a>
+                                    <a class="dropdown-item" href="finland/largest-companies-in-finland-by-market-cap.html"><img class="flag" src="img/flags/fi.png"> Finland</a>
                                 </div>
                                 <div class="col-sm-6 col-lg-3 border-left">
                                     <h5>Asia</h5>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/fn/largest-companies-in-china-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/cn.png"> China</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/jp/largest-companies-in-japan-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/jp.png"> Japan</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/kr/largest-companies-in-south-korea-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/kr.png"> South Korea</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/hk/largest-companies-in-hong-kong-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/hk.png"> Hong Kong</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/sg/largest-companies-in-singapore-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/sg.png"> Singapore</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/id/largest-companies-in-indonesia-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/id.png"> Indonesia</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/in/largest-companies-in-india-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/in.png"> India</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/my/largest-companies-in-malaysia-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/my.png"> Malaysia</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/tw/largest-companies-in-taiwan-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/tw.png"> Taiwan</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/th/largest-companies-in-thailand-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/th.png"> Thailand</a>
+                                    <a class="dropdown-item" href="china/largest-companies-in-china-by-market-cap.html"><img class="flag" src="img/flags/cn.png"> China</a>
+                                    <a class="dropdown-item" href="japan/largest-companies-in-japan-by-market-cap.html"><img class="flag" src="img/flags/jp.png"> Japan</a>
+                                    <a class="dropdown-item" href="south-korea/largest-companies-in-south-korea-by-market-cap.html"><img class="flag" src="img/flags/kr.png"> South Korea</a>
+                                    <a class="dropdown-item" href="hong-kong/largest-companies-in-hong-kong-by-market-cap.html"><img class="flag" src="img/flags/hk.png"> Hong Kong</a>
+                                    <a class="dropdown-item" href="singapore/largest-companies-in-singapore-by-market-cap.html"><img class="flag" src="img/flags/sg.png"> Singapore</a>
+                                    <a class="dropdown-item" href="indonesia/largest-companies-in-indonesia-by-market-cap.html"><img class="flag" src="img/flags/id.png"> Indonesia</a>
+                                    <a class="dropdown-item" href="india/largest-companies-in-india-by-market-cap.html"><img class="flag" src="img/flags/in.png"> India</a>
+                                    <a class="dropdown-item" href="malaysia/largest-companies-in-malaysia-by-market-cap.html"><img class="flag" src="img/flags/my.png"> Malaysia</a>
+                                    <a class="dropdown-item" href="taiwan/largest-companies-in-taiwan-by-market-cap.html"><img class="flag" src="img/flags/tw.png"> Taiwan</a>
+                                    <a class="dropdown-item" href="thailand/largest-companies-in-thailand-by-market-cap.html"><img class="flag" src="img/flags/th.png"> Thailand</a>
                                 </div>
                                 <div class="col-sm-6 col-lg-3 border-left">
                                     <h5>Others</h5>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/au/largest-companies-in-australia-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/au.png"> Australia</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/nz/largest-companies-in-new-zealand-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/nz.png"> New Zealand</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/il/largest-companies-in-israel-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/il.png"> Israel</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/sa/largest-companies-in-saudi-arabia-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/sa.png"> Saudi Arabia</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/tr/largest-companies-in-turkey-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/tr.png"> Turkey</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/ru/largest-companies-in-russia-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/ru.png"> Russia</a>
-                                    <a class="dropdown-item" href="<?= SITEURL;?>country/za/largest-companies-in-south-africa-by-market-cap"><img class="flag" src="<?= SITEURL;?>img/flags/za.png"> South Africa</a>
+                                    <a class="dropdown-item" href="australia/largest-companies-in-australia-by-market-cap.html"><img class="flag" src="img/flags/au.png"> Australia</a>
+                                    <a class="dropdown-item" href="new-zealand/largest-companies-in-new-zealand-by-market-cap.html"><img class="flag" src="img/flags/nz.png"> New Zealand</a>
+                                    <a class="dropdown-item" href="israel/largest-companies-in-israel-by-market-cap.html"><img class="flag" src="img/flags/il.png"> Israel</a>
+                                    <a class="dropdown-item" href="saudi-arabia/largest-companies-in-saudi-arabia-by-market-cap.html"><img class="flag" src="img/flags/sa.png"> Saudi Arabia</a>
+                                    <a class="dropdown-item" href="turkey/largest-companies-in-turkey-by-market-cap.html"><img class="flag" src="img/flags/tr.png"> Turkey</a>
+                                    <a class="dropdown-item" href="russia/largest-companies-in-russia-by-market-cap.html"><img class="flag" src="img/flags/ru.png"> Russia</a>
+                                    <a class="dropdown-item" href="south-africa/largest-companies-in-south-africa-by-market-cap.html"><img class="flag" src="img/flags/za.png"> South Africa</a>
+                                    <a class="dropdown-item" href="all-countries.html"><strong>&#x3E;&#x3E; All
+                                            Countries</strong></a>
                                 </div>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item dropdown megamenu-li">
-                        <a class="nav-link nav-link-companiesmarketcap dropdown-toggle" href="index#" id="dropdown-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ranking by categories</a>
+                        <a class="nav-link nav-link-companiesmarketcap dropdown-toggle" href="index.html#" id="dropdown-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ranking by categories</a>
                         <div class="dropdown-menu megamenu" aria-labelledby="dropdown-categories">
                             <div class="row">
                                 <div class="col-sm-6 col-lg-3">
-                                    <a class="dropdown-item" href="assets-by-market-cap">🏆 All assets by Market
+                                    <a class="dropdown-item" href="assets-by-market-cap.html">🏆 All assets by Market
                                         Cap</a>
-                                    <a class="dropdown-item" href="automakers/largest-automakers-by-market-cap">🚗
+                                    <a class="dropdown-item" href="automakers/largest-automakers-by-market-cap.html">🚗
                                         Automakers</a>
-                                    <a class="dropdown-item" href="airlines/largest-airlines-by-market-cap">✈️
+                                    <a class="dropdown-item" href="airlines/largest-airlines-by-market-cap.html">✈️
                                         Airlines</a>
-                                    <a class="dropdown-item" href="airports/largest-airport-operating-companies-by-market-cap">🛫
+                                    <a class="dropdown-item" href="airports/largest-airport-operating-companies-by-market-cap.html">🛫
                                         Airports</a>
-                                    <a class="dropdown-item" href="aircraft-manufacturers/largest-aircraft-manufacturers-by-market-cap">✈️
+                                    <a class="dropdown-item" href="aircraft-manufacturers/largest-aircraft-manufacturers-by-market-cap.html">✈️
                                         Aircraft manufacturers</a>
-                                    <a class="dropdown-item" href="banks/largest-banks-by-market-cap">🏦 Banks</a>
-                                    <a class="dropdown-item" href="hotels/largest-hotel-companies-by-market-cap">🏨
+                                    <a class="dropdown-item" href="banks/largest-banks-by-market-cap.html">🏦 Banks</a>
+                                    <a class="dropdown-item" href="hotels/largest-hotel-companies-by-market-cap.html">🏨
                                         Hotels</a>
-                                    <a class="dropdown-item" href="pharmaceuticals/largest-pharmaceutical-companies-by-market-cap">💊
+                                    <a class="dropdown-item" href="pharmaceuticals/largest-pharmaceutical-companies-by-market-cap.html">💊
                                         Pharmaceuticals</a>
-                                    <a class="dropdown-item" href="e-commerce/largest-e-commerce-companies-by-market-cap">🛒
+                                    <a class="dropdown-item" href="e-commerce/largest-e-commerce-companies-by-market-cap.html">🛒
                                         E-Commerce</a>
-                                    <a class="dropdown-item" href="healthcare/largest-healthcare-companies-by-market-cap">⚕️
+                                    <a class="dropdown-item" href="healthcare/largest-healthcare-companies-by-market-cap.html">⚕️
                                         Healthcare</a>
                                 </div>
                                 <div class="col-sm-6 col-lg-3 border-left">
-                                    <a class="dropdown-item" href="delivery-services/largest-delivery-companies-by-market-cap">📦
+                                    <a class="dropdown-item" href="delivery-services/largest-delivery-companies-by-market-cap.html">📦
                                         Courier services</a>
-                                    <a class="dropdown-item" href="media-press/largest-media-and-press-companies-by-market-cap">📰
+                                    <a class="dropdown-item" href="media-press/largest-media-and-press-companies-by-market-cap.html">📰
                                         Media/Press</a>
-                                    <a class="dropdown-item" href="alcoholic-beverages/largest-alcoholic-beverage-companies-by-market-cap">🍷
+                                    <a class="dropdown-item" href="alcoholic-beverages/largest-alcoholic-beverage-companies-by-market-cap.html">🍷
                                         Alcoholic beverages</a>
-                                    <a class="dropdown-item" href="beverages/largest-beverage-companies-by-market-cap">🥤 Beverages</a>
-                                    <a class="dropdown-item" href="clothing/largest-clothing-companies-by-market-cap">👚 Clothing</a>
-                                    <a class="dropdown-item" href="mining/largest-mining-companies-by-market-cap">⛏️ Mining</a>
-                                    <a class="dropdown-item" href="railways/largest-railways-companies-by-market-cap">🚂 Railways</a>
-                                    <a class="dropdown-item" href="insurance/largest-insurance-companies-by-market-cap">🏦 Insurance</a>
-                                    <a class="dropdown-item" href="real-estate/largest-real-estate-companies-by-market-cap">🏠 Real
+                                    <a class="dropdown-item" href="beverages/largest-beverage-companies-by-market-cap.html">🥤 Beverages</a>
+                                    <a class="dropdown-item" href="clothing/largest-clothing-companies-by-market-cap.html">👚 Clothing</a>
+                                    <a class="dropdown-item" href="mining/largest-mining-companies-by-market-cap.html">⛏️ Mining</a>
+                                    <a class="dropdown-item" href="railways/largest-railways-companies-by-market-cap.html">🚂 Railways</a>
+                                    <a class="dropdown-item" href="insurance/largest-insurance-companies-by-market-cap.html">🏦 Insurance</a>
+                                    <a class="dropdown-item" href="real-estate/largest-real-estate-companies-by-market-cap.html">🏠 Real
                                         estate</a>
                                 </div>
                                 <div class="col-sm-6 col-lg-3 border-left">
-                                    <a class="dropdown-item" href="ports/largest-port-operating-companies-by-market-cap">⚓ Ports</a>
-                                    <a class="dropdown-item" href="professional-services/largest-professional-service-companies-by-market-cap">💼
+                                    <a class="dropdown-item" href="ports/largest-port-operating-companies-by-market-cap.html">⚓ Ports</a>
+                                    <a class="dropdown-item" href="professional-services/largest-professional-service-companies-by-market-cap.html">💼
                                         Professional services</a>
-                                    <a class="dropdown-item" href="food/largest-food-companies-by-market-cap">🍴
+                                    <a class="dropdown-item" href="food/largest-food-companies-by-market-cap.html">🍴
                                         Food</a>
-                                    <a class="dropdown-item" href="restaurant-chains/largest-restaurant-chain-companies-by-market-cap">🍔
+                                    <a class="dropdown-item" href="restaurant-chains/largest-restaurant-chain-companies-by-market-cap.html">🍔
                                         Restaurant chains</a>
-                                    <a class="dropdown-item" href="software/largest-software-companies-by-market-cap">‍💻 Software</a>
-                                    <a class="dropdown-item" href="semiconductors/largest-semiconductor-companies-by-market-cap">📟
+                                    <a class="dropdown-item" href="software/largest-software-companies-by-market-cap.html">‍💻 Software</a>
+                                    <a class="dropdown-item" href="semiconductors/largest-semiconductor-companies-by-market-cap.html">📟
                                         Semiconductors</a>
-                                    <a class="dropdown-item" href="tobacco/largest-tobacco-companies-by-market-cap"> 🚬 Tobacco</a>
-                                    <a class="dropdown-item" href="financial-services/largest-financial-service-companies-by-market-cap">💳
+                                    <a class="dropdown-item" href="tobacco/largest-tobacco-companies-by-market-cap.html"> 🚬 Tobacco</a>
+                                    <a class="dropdown-item" href="financial-services/largest-financial-service-companies-by-market-cap.html">💳
                                         Financial services</a>
-                                    <a class="dropdown-item" href="oil-gas/largest-oil-and-gas-companies-by-market-cap">🛢 Oil&Gas</a>
-                                    <a class="dropdown-item" href="electricity/largest-electricity-companies-by-market-cap">🔋
+                                    <a class="dropdown-item" href="oil-gas/largest-oil-and-gas-companies-by-market-cap.html">🛢 Oil&Gas</a>
+                                    <a class="dropdown-item" href="electricity/largest-electricity-companies-by-market-cap.html">🔋
                                         Electricity</a>
                                 </div>
                                 <div class="col-sm-6 col-lg-3 border-left">
-                                    <a class="dropdown-item" href="chemicals/largest-chemical-companies-by-market-cap">🧪 Chemicals</a>
-                                    <a class="dropdown-item" href="investment/largest-investment-companies-by-market-cap">💰
+                                    <a class="dropdown-item" href="chemicals/largest-chemical-companies-by-market-cap.html">🧪 Chemicals</a>
+                                    <a class="dropdown-item" href="investment/largest-investment-companies-by-market-cap.html">💰
                                         Investment</a>
-                                    <a class="dropdown-item" href="telecommunication/largest-telecommunication-companies-by-market-cap">📡
+                                    <a class="dropdown-item" href="telecommunication/largest-telecommunication-companies-by-market-cap.html">📡
                                         Telecommunication</a>
-                                    <a class="dropdown-item" href="retail/largest-retail-companies-by-market-cap">🛍️ Retail</a>
-                                    <a class="dropdown-item" href="internet/largest-internet-companies-by-market-cap">🖥️ Internet</a>
-                                    <a class="dropdown-item" href="construction/largest-construction-companies-by-market-cap">🏗
+                                    <a class="dropdown-item" href="retail/largest-retail-companies-by-market-cap.html">🛍️ Retail</a>
+                                    <a class="dropdown-item" href="internet/largest-internet-companies-by-market-cap.html">🖥️ Internet</a>
+                                    <a class="dropdown-item" href="construction/largest-construction-companies-by-market-cap.html">🏗
                                         Construction</a>
-                                    <a class="dropdown-item" href="video-games/largest-video-game-companies-by-market-cap">🎮 Video
+                                    <a class="dropdown-item" href="video-games/largest-video-game-companies-by-market-cap.html">🎮 Video
                                         Game</a>
-                                    <a class="dropdown-item" href="tech/largest-tech-companies-by-market-cap">💻
+                                    <a class="dropdown-item" href="tech/largest-tech-companies-by-market-cap.html">💻
                                         Tech</a>
-                                    <a class="dropdown-item" href="artificial-intelligence/largest-ai-companies-by-marketcap">🦾 AI</a>
-                                    <a class="dropdown-item" href="all-categories"><strong>&#x3E;&#x3E; All
+                                    <a class="dropdown-item" href="artificial-intelligence/largest-ai-companies-by-marketcap.html">🦾 AI</a>
+                                    <a class="dropdown-item" href="all-categories.html"><strong>&#x3E;&#x3E; All
                                             Categories</strong></a>
                                 </div>
                             </div>
                         </div>
                     </li>
+                    <?php */ ?>
                 </ul>
             </div>
         </div>
@@ -218,7 +239,7 @@
             <div class="footer row">
                 <div class="col-sm-6">
                     <br>
-                    <h4><a href="lexicon/market-cap-of-a-company">What is the market capitalization of a
+                    <h4><a href="lexicon/market-cap-of-a-company.html">What is the market capitalization of a
                             company?</a></h4>
                     The market capitalization sometimes referred as Marketcap, is the value of a publicly listed
                     company.
@@ -269,10 +290,10 @@
                     type: 'POST',
                     url: '<?php echo SITEURL; ?>homes/star/add/' + id,
                     success: function(data) {
-                        $("#cover")(data);
+                        $("#cover").html(data);
                     },
                     error: function(comment) {
-                        $("#cover")(comment);
+                        $("#cover").html(comment);
                     }
                 });
 
@@ -286,10 +307,10 @@
                     type: 'POST',
                     url: '<?php echo SITEURL; ?>homes/star/rm/' + id,
                     success: function(data) {
-                        $("#cover")(data);
+                        $("#cover").html(data);
                     },
                     error: function(comment) {
-                        $("#cover")(comment);
+                        $("#cover").html(comment);
                     }
                 });
             }
@@ -307,10 +328,10 @@
                 type: 'POST',
                 url: '<?php echo SITEURL; ?>homes/theme/' + t,
                 success: function(data) {
-                    $("#cover")(data);
+                    $("#cover").html(data);
                 },
                 error: function(comment) {
-                    $("#cover")(comment);
+                    $("#cover").html(comment);
                 }
             });
         }
@@ -324,10 +345,10 @@
                     url: d
                 },
                 success: function(data) {
-                    $("#cover")(data);
+                    $("#cover").html(data);
                 },
                 error: function(comment) {
-                    $("#cover")(comment);
+                    $("#cover").html(comment);
                 }
             });
         }
