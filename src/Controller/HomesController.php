@@ -94,6 +94,9 @@ class HomesController extends AppController
 
     public function index()
     {
+        $settings = $this->fetchTable('Settings')->findById('1')->firstOrFail();
+        $this->set(compact('settings'));
+
         $star = $data = [];
         if ($this->Auth->User('id') != "") {
             $query = $this->fetchTable('Watchlists')->find('list', ['conditions' => ['user_id' => $this->Auth->User('id')], 'keyField' => 'stock_id', 'valueField' => 'stock_id']);
@@ -143,6 +146,9 @@ class HomesController extends AppController
     }
     public function profile($type = null)
     {
+        $settings = $this->fetchTable('Settings')->findById('1')->firstOrFail();
+        $this->set(compact('settings'));
+        
         $session = $this->request->getSession();
         $setTime = date("Y-m-d H:i:s", strtotime('+3 hours', strtotime(DATE)));
         if (!empty($this->request->getParam('slug'))) {
@@ -154,9 +160,6 @@ class HomesController extends AppController
                 if ($this->Auth->User('id') != "") {
                     $star = $this->fetchTable('Watchlists')->find()->where(['user_id' => $this->Auth->User('id'), 'stock_id' => $data->id])->first();
                 }
-
-
-
                 $ticker = strtolower(Text::slug($data->symbol));
                 $s_time = $ticker . 'getTime';
                 $s_name = $ticker . 'apiData';
@@ -329,6 +332,8 @@ class HomesController extends AppController
 
     public function verified($id = null)
     {
+        $settings = $this->fetchTable('Settings')->findById('1')->firstOrFail();
+        $this->set(compact('settings'));
         if (!empty($id)) {
             $user_id = base64_decode($id);
             $user = $this->fetchTable('Users')->find()->where(['id' => $user_id])->first();

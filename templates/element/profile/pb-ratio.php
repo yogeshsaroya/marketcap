@@ -23,6 +23,9 @@ $last = array_key_last ( $pb );
         <h2 class="big">P/B ratio history for <?= $data->name; ?> from <?= $pb[$last]['calendarYear'];?> to <?= $pb[0]['calendarYear']?></h2>
         <svg id="marketcapchart" class="companiesmarketcap-chart" height="550" width="100%" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
+    <?php if (!empty($settings->banner)) { ?>
+        <center class="ads"><?= $settings->banner; ?></center>
+    <?php } ?>
     <div style="overflow-y: scroll;">
         <h3>P/B ratio at the end of each year</h3>
         <table class="table" style="width:100%">

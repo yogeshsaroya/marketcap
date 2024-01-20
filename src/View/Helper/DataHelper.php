@@ -37,4 +37,10 @@ class DataHelper extends Helper
         }
         
     }
+
+    public function getSettings()
+    {
+        $tbl = TableRegistry::get('Settings');
+        return $tbl->findById('1')->firstOrFail();
+    }
 }

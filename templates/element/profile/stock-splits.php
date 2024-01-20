@@ -7,7 +7,9 @@
         The most recent stock split occured on <?= date('M d, Y',strtotime($splits['historical'][0]['date']));?>.
         <?php } ?>
     </p>
-
+    <?php if (!empty($settings->banner)) { ?>
+        <center class="ads"><?= $settings->banner; ?></center>
+    <?php } ?>
     <?php if (!empty($splits['historical'])) { ?>
         <h3>Annual Revenue</h3>
         <div style="overflow-y: scroll;">

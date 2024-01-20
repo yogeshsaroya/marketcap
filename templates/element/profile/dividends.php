@@ -18,6 +18,10 @@ $last = array_key_last ( $dev );
         The sum of all dividends (adjusted for stock splits) is : $<?= num_2($tot*$data->usd_rate) ?><br /></p>
     <h2 class="big">Dividend payments for <?= $data->name; ?> (<?= strtoupper($data->symbol); ?>) from <?= date('Y',strtotime($dev[$last]['date']));?> to <?= date('Y',strtotime($dev[0]['date']));?></h2>
     <svg id="dividendschart" class="companiesmarketcap-chart" height="550" width="100%" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    
+    <?php if (!empty($settings->banner)) { ?>
+        <center class="ads"><?= $settings->banner; ?></center>
+    <?php } ?>
     <h3>Annual dividend payments</h3>
     <table class="table" style="width:100%">
         <thead>

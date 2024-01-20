@@ -302,7 +302,7 @@ $this->append('scriptBottom');  ?>
   var dropdowns = document.querySelectorAll(".dropdown-toggle");
   var currentlyOpenedDropdown;
   for (var i = 0; i < dropdowns.length; i++) {
-    console.log(dropdowns);
+    //console.log(dropdowns);
     dropdowns[i].addEventListener("click", function(evt) {
       evt.preventDefault();
       var newCurrentlyOpenedDropdown = evt.target.parentNode;

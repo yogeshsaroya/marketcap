@@ -45,9 +45,9 @@ $theme = $this->request->getSession()->read('theme');
                 <th tid="1" class="th-id-1 th-name sorting"></th>
                 <th tid="2" class="th-id-2 th-rank sorting">Rank</th>
                 <th tid="3" class="th-id-3 th-name sorting">Name</th>
-                <th tid="4" class="th-id-4 th-name sorting">Symbol</th>
-                <th tid="5" class="th-id-5 th-mcap sorting text-right">Market Cap</th>
-                <th tid="6" class="th-id-6 th-price sorting text-right">Price</th>
+                <th tid="4" class="th-id-4 th-price sorting text-right">Price</th>
+                <th tid="5" class="th-id-5 th-name sorting">Symbol</th>
+                <th tid="6" class="th-id-6 th-mcap sorting text-right">Market Cap</th>
                 <th tid="7" class="th-id-7 sorting text-right">24h</th>
                 <th tid="8" class="th-id-8 sorting text-right">5d</th>
                 <th tid="9" class="th-id-9 th-country sorting">Country</th>
@@ -56,6 +56,7 @@ $theme = $this->request->getSession()->read('theme');
         <tbody>
             <?php if (!$data->isEmpty()) {
                 $num = $this->Paginator->counter('{{start}}');
+                $ad_num = 1;
                 foreach ($data as $list) {
 
                     $logo = $logo_dark = $logo_nrm =  $list->logo;
@@ -73,6 +74,10 @@ $theme = $this->request->getSession()->read('theme');
                         $p['1D'] = 0;
                         $p['5D'] = 0;
                     }
+
+                   if( in_array($ad_num,[26,51,76]) && !empty($settings->banner)){
+                        //echo '<tr class="no-sort"><td colspan="8"><center class="ads">'.$settings->banner.'</center></tr></td>';
+                   } 
             ?>
                     <tr>
                         <td>
@@ -92,9 +97,10 @@ $theme = $this->request->getSession()->read('theme');
                                     <div class="company-code"><span class="rank d-none"></span><?= $list->industry; ?></div>
                                 </a></div>
                         </td>
+                        <td class="td-left" data-sort="<?= $list->stock_price; ?>">$<?= num_2($list->stock_price); ?></td>
                         <td class="td-left"> <span class="badge badge-company"><?= strtoupper($list->symbol); ?></span></td>
                         <td class="td-left" data-sort="<?= $list->market_cap; ?>">$<?= nice_number($list->market_cap); ?></td>
-                        <td class="td-left" data-sort="<?= $list->stock_price; ?>">$<?= num_2($list->stock_price); ?></td>
+                        
                         <td class="td-left <?= ($p['1D'] < 0 ? 'text-red':'text-green');?>" data-sort="<?= $p['1D']; ?>"><?= num_2($p['1D']); ?>%</td>
                         <td class="td-left <?= ($p['5D'] < 0 ? 'text-red':'text-green');?>" data-sort="<?= $p['5D']; ?>"><?= num_2($p['5D']); ?>%</td>
 
@@ -105,6 +111,7 @@ $theme = $this->request->getSession()->read('theme');
                         </td>
                     </tr>
             <?php $num++;
+            $ad_num++;
                 }
             } ?>
 
@@ -152,7 +159,12 @@ $theme = $this->request->getSession()->read('theme');
     </ul>
 </nav>
 
+<?php if(!empty($settings->banner)){?>
+<center class="ads"><?= $settings->banner;?></center>
+<?php }?>
+
 <?php
+
 echo $this->Html->script(['tableScript'], ['block' => 'scriptBottom']);
 $this->append('scriptBottom');  ?>
 <script>
@@ -295,7 +307,7 @@ $this->append('scriptBottom');  ?>
     var dropdowns = document.querySelectorAll(".dropdown-toggle");
     var currentlyOpenedDropdown;
     for (var i = 0; i < dropdowns.length; i++) {
-        console.log(dropdowns);
+        //console.log(dropdowns);
         dropdowns[i].addEventListener("click", function(evt) {
             evt.preventDefault();
             var newCurrentlyOpenedDropdown = evt.target.parentNode;

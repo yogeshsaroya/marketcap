@@ -118,7 +118,10 @@ echo $this->Html->script(['imask'], ['block' => 'script']);
         </table>
     </div>
     <br><br>
-
+    <?php if (!empty($settings->banner)) { ?>
+        <center class="ads"><?= $settings->banner; ?></center>
+    <?php } ?>
+    
     <?php
 
     echo $this->Html->script(['tableScript'], ['block' => 'scriptBottom']);

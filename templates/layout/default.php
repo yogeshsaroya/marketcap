@@ -20,6 +20,8 @@
     <?php
     $theme = $this->request->getSession()->read('theme');
     $cap = $this->Data->getCaps();
+    $getSettings = $this->Data->getSettings();
+    
     $auth = $this->request->getSession()->read('Auth.User');
 
     ?>
@@ -30,8 +32,8 @@
     <div class="row site-header-row">
         <div class="site-header">
             <span class="responsive-hidden">
-            companies: <span class="font-weight-bold"><?= number_format($cap['companies']); ?></span> &nbsp;&nbsp;&nbsp;
-            total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
+                companies: <span class="font-weight-bold"><?= number_format($cap['companies']); ?></span> &nbsp;&nbsp;&nbsp;
+                total market cap: <span class="font-weight-bold">$<?= $cap['market_cap']; ?></span>
             </span>
 
             <div class="header-actions responsive-hidden1">
@@ -280,6 +282,10 @@
     <?php echo $this->Html->script(['jquery-3.6.3.min', 'jquery.form.min', 'script', 'jquery.magnific-popup.min']); ?>
 
     <script>
+        $(".more_link").click(function() {
+            $("#cap_link").toggle();
+        });
+
         $(".is_fev").click(function() {
             var id = $(this).attr('data-id');
             if ($(this).hasClass("add_star") === true) {
@@ -300,7 +306,7 @@
 
             } else {
                 // $(this).removeClass("rm_star").addClass("add_star");
-                // $(this).attr("src", "<?= SITEURL; ?>img/star.svg");
+                // $(this).attr("src", "< ?= SITEURL; ?>img/star.svg");
 
 
                 $.ajax({
@@ -356,5 +362,8 @@
 
 
     <?= $this->fetch('scriptBottom'); ?>
+<?= $getSettings->live_chat;?>
+<?= $getSettings->footer_script;?>
+
     <div id="cover"></div>
 </body>

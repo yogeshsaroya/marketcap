@@ -1,6 +1,6 @@
 <?php
 $this->assign('title', $data->name . ' - Market capitalization');
-$this->assign('description', substr($data->description,0,120));
+$this->assign('description', substr($data->description, 0, 120));
 $price_history = json_decode($data->price_history, true);
 $stock_peers = json_decode($data->stock_peers, true);
 $company_outlook = json_decode($data->company_outlook, true);
@@ -30,6 +30,7 @@ $theme = $this->request->getSession()->read('theme');
         }
     }
 </style>
+
 <div class="table-container">
     <div class="row">
         <div class="col-lg-2">
@@ -37,10 +38,10 @@ $theme = $this->request->getSession()->read('theme');
                 <?php
                 $clogo = $logo_dark = $logo_nrm =  $data->logo;
                 if (!empty($data->logo_bright)) {
-                    $logo_dark = $logo_nrm = SITEURL."logo/".$data->logo_bright;
+                    $logo_dark = $logo_nrm = SITEURL . "logo/" . $data->logo_bright;
                 }
                 if (!empty($data->logo_dark)) {
-                    $logo_dark = SITEURL."logo/".$data->logo_dark;
+                    $logo_dark = SITEURL . "logo/" . $data->logo_dark;
                 }
                 $clogo = ($theme == 'dark' ? $logo_dark : $logo_nrm);
 
@@ -55,7 +56,7 @@ $theme = $this->request->getSession()->read('theme');
             </div>
             <br>
             <img src="<?= SITEURL . (isset($star->id) ? 'img/star_dark.svg' : 'img/star.svg'); ?>" title="add to wishlist" width="32px" alt="" class="is_fev <?= (isset($star->id) ? 'rm_star' : 'add_star'); ?>" id="sel_<?= $data->id; ?>" data-id="<?= $data->id; ?>" />
-            
+
 
         </div>
         <div class="col-lg-6">
@@ -110,8 +111,8 @@ $theme = $this->request->getSession()->read('theme');
         <li class="nav-item"> <a class="nav-link tab-medium-hide <?= ($type == 'pe-ratio' ? 'active' : null); ?>" href="<?= SITEURL . $data->slug; ?>/pe-ratio">P/E ratio</a> </li>
         <li class="nav-item"> <a class="nav-link tab-medium-hide <?= ($type == 'ps-ratio' ? 'active' : null); ?>" href="<?= SITEURL . $data->slug; ?>/ps-ratio">P/S ratio</a> </li>
         <li class="nav-item dropdown position-relative">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
-            <div class="dropdown-menu">
+            <a class="nav-link dropdown-toggle more_link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
+            <div class="dropdown-menu" id="cap_link">
                 <a class="dropdown-item tab-medium-show" href="<?= SITEURL . $data->slug; ?>/pe-ratio">P/E ratio</a>
                 <a class="dropdown-item tab-medium-show" href="<?= SITEURL . $data->slug; ?>/ps-ratio">P/S ratio</a>
                 <a class="dropdown-item tab-medium-show" href="<?= SITEURL . $data->slug; ?>/stock-price-history">Price history</a>
@@ -122,32 +123,32 @@ $theme = $this->request->getSession()->read('theme');
             </div>
         </li>
     </ul>
+    <?php if (!empty($settings->banner)) { ?>
+        <center class="ads"><?= $settings->banner; ?></center>
+    <?php } ?>
+
     <?php
     if (empty($type) || $type == 'marketcap') {
-        echo $this->element('profile/marketcap', ['data' => $data, 'market_cap' => $market_cap]);
+        echo $this->element('profile/marketcap', ['data' => $data, 'market_cap' => $market_cap,'settings'=>$settings]);
     } elseif ($type == 'revenue') {
-        echo $this->element('profile/revenue', ['data' => $data, 'revenue' => $revenue]);
+        echo $this->element('profile/revenue', ['data' => $data, 'revenue' => $revenue,'settings'=>$settings]);
     } elseif ($type == 'earnings') {
-        echo $this->element('profile/earnings', ['data' => $data, 'revenue' => $earnings]);
+        echo $this->element('profile/earnings', ['data' => $data, 'revenue' => $earnings,'settings'=>$settings]);
     } elseif ($type == 'stock-price-history') {
-        echo $this->element('profile/stock-price-history', ['data' => $data, 'price' => $price]);
+        echo $this->element('profile/stock-price-history', ['data' => $data, 'price' => $price,'settings'=>$settings]);
     } elseif ($type == 'pe-ratio') {
-        echo $this->element('profile/pe-ratio', ['data' => $data, 'pe' => $pe]);
+        echo $this->element('profile/pe-ratio', ['data' => $data, 'pe' => $pe,'settings'=>$settings]);
     } elseif ($type == 'ps-ratio') {
-        echo $this->element('profile/ps-ratio', ['data' => $data, 'ps' => $ps]);
+        echo $this->element('profile/ps-ratio', ['data' => $data, 'ps' => $ps,'settings'=>$settings]);
     } elseif ($type == 'pb-ratio') {
-        echo $this->element('profile/pb-ratio', ['data' => $data, 'pb' => $pb]);
+        echo $this->element('profile/pb-ratio', ['data' => $data, 'pb' => $pb,'settings'=>$settings]);
     } elseif ($type == 'dividends') {
-        echo $this->element('profile/dividends', ['data' => $data, 'dividends' => $dividends]);
+        echo $this->element('profile/dividends', ['data' => $data, 'dividends' => $dividends,'settings'=>$settings]);
     } elseif ($type == 'stock-splits') {
-        echo $this->element('profile/stock-splits', ['data' => $data, 'splits' => $splits]);
+        echo $this->element('profile/stock-splits', ['data' => $data, 'splits' => $splits,'settings'=>$settings]);
     } elseif ($type == 'outlook') {
-        echo $this->element('profile/outlook', ['data' => $data, 'outlook' => $outlook]);
+        echo $this->element('profile/outlook', ['data' => $data, 'outlook' => $outlook,'settings'=>$settings]);
     }
-
-
-
-
     ?>
     <div>
 
@@ -182,7 +183,7 @@ $theme = $this->request->getSession()->read('theme');
                                     <td class="name-td"><a href="<?= SITEURL . $plist->slug; ?>">
                                             <div class="float-left pt-1">
                                                 <?php if (!empty($logo)) { ?>
-                                                    <img loading="lazy" class="company-logo" alt=" Logo" src="<?= $logo; ?>" data-img-path="<?= $logo_nrm; ?>" data-img-dark-path="<?= $logo_dark; ?>"/>
+                                                    <img loading="lazy" class="company-logo" alt=" Logo" src="<?= $logo; ?>" data-img-path="<?= $logo_nrm; ?>" data-img-dark-path="<?= $logo_dark; ?>" />
                                                 <?php } ?>
                                             </div>
                                             <div class="name-div">
@@ -206,3 +207,7 @@ $theme = $this->request->getSession()->read('theme');
             </div>
         <?php } ?>
     </div>
+
+    <?php if (!empty($settings->banner)) { ?>
+        <center class="ads"><?= $settings->banner; ?></center>
+    <?php } ?>

@@ -23,6 +23,9 @@ $last = array_key_last ( $pe );
         <h2 class="big">P/E ratio history for <?= $data->name; ?> from <?= $pe[$last]['calendarYear'];?> to <?= $pe[0]['calendarYear']?></h2>
         <svg id="marketcapchart" class="companiesmarketcap-chart" height="550" width="100%" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
+    <?php if (!empty($settings->banner)) { ?>
+        <center class="ads"><?= $settings->banner; ?></center>
+    <?php } ?>
     <div style="overflow-y: scroll;">
         <h3>PE ratio at the end of each year</h3>
         <table class="table" style="width:100%">

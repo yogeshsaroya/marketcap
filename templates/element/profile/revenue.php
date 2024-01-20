@@ -11,6 +11,9 @@
         <h2 class="big">Revenue history of <?= $data->name; ?></h2>
         <svg id="marketcapchart" class="companiesmarketcap-chart" height="550" width="100%" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
+    <?php if (!empty($settings->banner)) { ?>
+        <center class="ads"><?= $settings->banner; ?></center>
+    <?php } ?>
     <?php if (!empty($revenue)) { ?>
         <h3>Annual Revenue</h3>
         <div style="overflow-y: scroll;">

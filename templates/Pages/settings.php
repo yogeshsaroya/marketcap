@@ -92,6 +92,30 @@
                                         </div>
                                     </div>
                                 </section>
+
+
+                                <section>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Ads and other script</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-12 form-group mb-2"><?= $this->Form->control('square', ['label' => ['escape' => false, 'text' => 'Square'], 'class' => 'form-control', 'required' => false]); ?><div class="help-block with-errors"></div></div>
+                                                        <div class="col-md-6 col-12 form-group mb-2"><?= $this->Form->control('banner', ['label' => ['escape' => false, 'text' => 'Banner'], 'class' => 'form-control', 'required' => false]); ?><div class="help-block with-errors"></div></div>
+                                                        <div class="col-md-6 col-12 form-group mb-2"><?= $this->Form->control('skyscraper', ['label' => ['escape' => false, 'text' => 'Skyscraper'], 'class' => 'form-control', 'required' => false]); ?><div class="help-block with-errors"></div></div>
+                                                        <div class="col-md-6 col-12 form-group mb-2"><?= $this->Form->control('live_chat', ['label' => ['escape' => false, 'text' => 'Live Chat'], 'class' => 'form-control', 'required' => false]); ?><div class="help-block with-errors"></div></div>
+                                                        <div class="col-md-6 col-12 form-group mb-2"><?= $this->Form->control('footer_script', ['label' => ['escape' => false, 'text' => 'Other Script'], 'class' => 'form-control', 'required' => false]); ?><div class="help-block with-errors"></div></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+
                                 <section>
                                     <div class="row">
                                         <div class="col-md-12">
