@@ -7,6 +7,9 @@ $theme = $this->request->getSession()->read('theme');
 ?>
 
 <style>
+     @media only screen and (min-width: 300px) and (max-width: 767px)  {
+        .price {line-height: 43px;}
+       }
 
 </style>
 <h1 class="text-center h1-title">Largest Companies by Market Cap</h1>
@@ -246,7 +249,7 @@ $this->append('scriptBottom');  ?>
                         if (!priceTd.classList.contains('pt-2')) {
                             priceTd.classList.add('pt-2');
                             if (priceTd != null) {
-                                priceTd.innerHTML = '<div class="price">' + priceTd.innerHTML + '</div><div></div>';
+                                priceTd.innerHTML = '<div class="price">' + priceTd.innerHTML + '</div>';
                             }
                         }
                     } else {
