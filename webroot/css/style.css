@@ -2051,6 +2051,14 @@ a.login_btn {
 
 .search-form{ width: 90%;}
 
+@media only screen and (min-width:1440px) {
+    .search-form{ width: 45%;}
+}
+
+@media only screen and (min-width:2560px) {
+    .search-form{ width: 30%;}
+}
+
 
 /* iPads (portrait and landscape) ----------- */
 /*
