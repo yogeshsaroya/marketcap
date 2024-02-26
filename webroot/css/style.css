@@ -709,7 +709,7 @@ ul.navbar-nav {
 }
 
 @media(min-width:992px) {
-    
+
 
     .navbar-expand-lg .navbar-nav {
         -ms-flex-direction: row;
@@ -1676,65 +1676,6 @@ button {
 }
 
 
-/* iPads (portrait and landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1440px) {
-    .search-form input.search-input {
-        width: 720px;
-        max-width: 720px;
-    }
-}
-
-
-
-/* iPads (portrait) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : portrait) {
-    .search-form input.search-input {
-        width: 720px;
-        max-width: 720px;
-    }
-}
-/* iPads (landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : landscape) {
-    .search-form input.search-input {
-        width: 720px;
-        max-width: 720px;
-    }
-}
-
-@media only screen and (max-width:400px) {
-    .search-form input.search-input {
-        width: 280px;
-        max-width: 380px;
-        padding-right: 25px
-    }
-
-    .site-header {
-        padding-left: 10px
-    }
-
-    .info-box .line1 {
-        font-size: 20px
-    }
-}
-
-
-@media only screen 
-and (min-device-width : 300px) 
-and (max-device-width : 425px) {
-    .search-form input.search-input {
-        width: 300px;
-        max-width: 400px;
-    }
-}
-
 .eod-marketcap-rows {
     text-align: center;
     clear: both
@@ -2029,7 +1970,7 @@ a.text-underline {
     display: flex !important
 }
 
-.is_fev{
+.is_fev {
     cursor: pointer;
 }
 
@@ -2039,18 +1980,23 @@ a.login_btn {
     background-color: #efefef;
     font-size: 14px;
     font-weight: 500;
-    
+
     padding: 15px;
 }
-.dark a.login_btn { color: #fff; background-color: unset;}
+
+.dark a.login_btn {
+    color: #fff;
+    background-color: unset;
+}
 
 .badge-company {
     background-color: #197CB8;
 }
+
 .badge {
     border-radius: 14px;
     padding: 3px 15px;
-    
+
     color: #fff;
 }
 
@@ -2089,5 +2035,67 @@ a.login_btn {
     margin: 30px 0;
 }
 
-.alert-success{ color: green !important;}
-.ads { margin: 15px 0;}
+.alert-success {
+    color: green !important;
+}
+
+.ads {
+    margin: 15px 0;
+}
+
+
+
+
+
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1440px) {
+    .search-form input.search-input {
+        width: 520px;
+        max-width: 520px;
+    }
+}
+
+
+
+/* iPads (portrait) ----------- */
+/*
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+    .search-form input.search-input {
+        width: 720px;
+        max-width: 720px;
+    }
+}
+*/
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
+    .search-form input.search-input {
+        width: 720px;
+        max-width: 720px;
+    }
+}
+
+@media only screen and (max-width:400px) {
+    .search-form input.search-input {
+        width: 280px;
+        max-width: 380px;
+        padding-right: 25px
+    }
+
+    .site-header {
+        padding-left: 10px
+    }
+
+    .info-box .line1 {
+        font-size: 20px
+    }
+}
+
+
+@media only screen and (min-device-width : 300px) and (max-device-width : 425px) {
+    .search-form input.search-input {
+        width: 300px;
+        max-width: 400px;
+    }
+}
