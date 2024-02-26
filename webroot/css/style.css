@@ -1675,14 +1675,6 @@ button {
     background-color: #ccc
 }
 
-@media only screen 
-and (min-device-width : 300px) 
-and (max-device-width : 425px) {
-    .search-form input.search-input {
-        width: 300px;
-        max-width: 400px;
-    }
-}
 
 /* iPads (portrait and landscape) ----------- */
 @media only screen 
@@ -1694,22 +1686,23 @@ and (max-device-width : 1440px) {
     }
 }
 
-/* iPads (landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : landscape) {
-    .search-form input.search-input {
-        width: 720px;
-        max-width: 720px;
-    }
-}
+
 
 /* iPads (portrait) ----------- */
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
+    .search-form input.search-input {
+        width: 720px;
+        max-width: 720px;
+    }
+}
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
     .search-form input.search-input {
         width: 720px;
         max-width: 720px;
@@ -1729,6 +1722,16 @@ and (orientation : portrait) {
 
     .info-box .line1 {
         font-size: 20px
+    }
+}
+
+
+@media only screen 
+and (min-device-width : 300px) 
+and (max-device-width : 425px) {
+    .search-form input.search-input {
+        width: 300px;
+        max-width: 400px;
     }
 }
 
