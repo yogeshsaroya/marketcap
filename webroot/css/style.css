@@ -2044,18 +2044,23 @@ a.login_btn {
 }
 
 
+.search-form input.search-input {
+    width: 100%;
+    max-width: 100%;
+}
 
-
+.search-form{ width: 90%;}
 
 
 /* iPads (portrait and landscape) ----------- */
+/*
 @media only screen and (min-device-width : 768px) and (max-device-width : 1440px) {
     .search-form input.search-input {
-        width: 520px;
-        max-width: 520px;
+        width: 100%;
+        max-width: 100%;
     }
 }
-
+*/
 
 
 /* iPads (portrait) ----------- */
@@ -2069,19 +2074,23 @@ a.login_btn {
 */
 
 /* iPads (landscape) ----------- */
+/*
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
     .search-form input.search-input {
-        width: 720px;
-        max-width: 720px;
+        width: 100%;
+        max-width: 100%;
     }
 }
+*/
 
 @media only screen and (max-width:400px) {
+    /*
     .search-form input.search-input {
         width: 280px;
         max-width: 380px;
         padding-right: 25px
     }
+    */
 
     .site-header {
         padding-left: 10px
@@ -2092,10 +2101,11 @@ a.login_btn {
     }
 }
 
-
+/*
 @media only screen and (min-device-width : 300px) and (max-device-width : 425px) {
     .search-form input.search-input {
         width: 300px;
         max-width: 400px;
     }
 }
+*/
